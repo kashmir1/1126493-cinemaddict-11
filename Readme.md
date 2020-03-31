@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Коровацкий](https://up.htmlacademy.ru/ecmascript/11/user/1126493).
-* Наставник: `Неизвестно`.
+* Наставник: [Вячеслав Зайцев](https://htmlacademy.ru/profile/id428459).
 
 ---
 
