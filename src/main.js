@@ -42,7 +42,7 @@ const createMovieCardList = () => {
 
 const createMoveCard = () => {
   return (
-    `        <article class="film-card">
+    ` <article class="film-card">
           <h3 class="film-card__title">The Dance of Life</h3>
           <p class="film-card__rating">8.3</p>
           <p class="film-card__info">
@@ -134,6 +134,12 @@ const createMoveCard = () => {
   );
 };
 
+const createShowMoreButton = () => {
+  return (
+    `<button class="films-list__show-more">Show more</button>`
+  );
+};
+
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -145,9 +151,12 @@ render(siteHeaderElement, createUserRank(), `beforeend`);
 render(siteMainElement, createNavigation(), `beforeend`);
 render(siteMainElement, createMovieCardList(), `beforeend`);
 
-const siteMoveCardElement = document.querySelector(`.films-list__container`);
-const filmCard = document.querySelectorAll(`.film-card`);
+const siteMoveCardElement = siteMainElement.querySelector(`.films-list__container`);
+const filmCard = siteMainElement.querySelectorAll(`.film-card`);
 
 for (let i = 0; i <= filmCard.length; i++) {
   render(siteMoveCardElement, createMoveCard(), `beforeend`);
 }
+
+render(siteMainElement, createShowMoreButton(), `beforeend`);
+
