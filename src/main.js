@@ -31,30 +31,32 @@ const createNavigation = () => {
   );
 };
 
-const createAllFilmsContainer = () => {
+const createFilmsList = () => {
   return (
     `<section class="films">
-    </section>`
-  );
-};
-
-const createFilmList = () => {
-  return (
-    `<section class="films-list">
+    <section class="films-list">
       <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+      <div class="films-list__container"></div>
+    </section>
     </section>`
   );
 };
 
-const createFilmListContainer = () => {
+const createTopList = () => {
   return (
-    `<div class="films-list__container"></div>`
+    ` <section class="films-list--extra">
+      <h2 class="films-list__title">Top rated</h2>
+      <div class="films-list__container"></div>
+       </section>`
   );
 };
 
-const createFilmListExtra = () => {
+const createCommentList = () => {
   return (
-    `<section class="films-list--extra"></section>`
+    ` <section class="films-list--extra">
+      <h2 class="films-list__title">Most commented</h2>
+      <div class="films-list__container"></div>
+       </section>`
   );
 };
 
@@ -80,12 +82,6 @@ const createFilmCard = () => {
   );
 };
 
-const createFilmListTitle = () => {
-  return (
-    `<h2 class="films-list__title">Top rated</h2>`
-  );
-};
-
 const createShowMoreButton = () => {
   return (
     `<button class="films-list__show-more">Show more</button>`
@@ -96,51 +92,40 @@ const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-
+// Рендерим звание пользователя
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
 
 render(headerElem, createUserRank(), `beforeend`);
 render(mainElem, createNavigation(), `beforeend`);
-render(mainElem, createAllFilmsContainer(), `beforeend`);
 
+// Выводим контейнер для фильмов
+render(mainElem, createFilmsList(), `beforeend`);
 
-const filmsElem = mainElem.querySelector(`.films`);
-render(filmsElem, createFilmList(), `beforeend`);
-
-const filmsListElem = filmsElem.querySelector(`.films-list`);
-render(filmsListElem, createFilmListContainer(), `beforeend`);
-
-const filmListContainerElem = filmsListElem.querySelector(`.films-list__container`);
+// Рендерим карточки
+const filmsListContainer = mainElem.querySelector(`.films-list__container`);
 for (let i = 0; i < MOVIE_CARD_QUANTITY; i++) {
-  render(filmListContainerElem, createFilmCard(), `beforeend`);
+  render(filmsListContainer, createFilmCard(), `beforeend`);
 }
-render(filmsListElem, createShowMoreButton(), `beforeend`);
 
+// Рендерим кнопку
+const filmsList = mainElem.querySelector(`.films-list`);
+render(filmsList, createShowMoreButton(), `beforeend`);
+
+// Топовые и комментируемые фильмы
+const films = mainElem.querySelector(`.films`);
+render(films, createTopList(), `beforeend`);
+render(films, createCommentList(), `beforeend`);
+
+// Заполняем топовые фильмы карточками
+const topFilms = films.querySelector(`.films-list--extra .films-list__container`);
 for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
-  render(filmsElem, createFilmListExtra(), `beforeend`);
+  render(topFilms, createFilmCard(), `beforeend`);
 }
 
-// Рендерим топ
-const filmsTopElem = filmsElem.querySelector(`.films-list--extra`);
-
-render(filmsTopElem, createFilmListTitle(), `beforeend`);
-render(filmsTopElem, createFilmListContainer(), `beforeend`);
-
-const filmListExtraContainerElem = filmsTopElem.querySelector(`.films-list__container`);
-
-for (let i = 0; i < 2; i++) {
-  render(filmListExtraContainerElem, createFilmCard(), `beforeend`);
+// Заполняем комментируемые фильмы карточками
+const commentFilms = films.querySelector(`.films-list--extra:last-child .films-list__container`);
+for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+  render(commentFilms, createFilmCard(), `beforeend`);
 }
 
-// рендерим комменты
-const filmsCommentElem = filmsElem.querySelector(`.films-list--extra:last-child`);
-
-render(filmsCommentElem, createFilmListTitle(), `beforeend`);
-render(filmsCommentElem, createFilmListContainer(), `beforeend`);
-
-const filmListTopContainerElem = filmsCommentElem.querySelector(`.films-list__container`);
-
-for (let i = 0; i < 2; i++) {
-  render(filmListTopContainerElem, createFilmCard(), `beforeend`);
-}
