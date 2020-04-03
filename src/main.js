@@ -1,5 +1,8 @@
 "use strict";
 
+const MOVIE_CARD_QUANTITY = 5;
+const FILM_LIST_EXTRA_QUANTITY = 2;
+
 const createUserRank = () => {
   return (
     `<section class="header__profile profile">
@@ -28,19 +31,34 @@ const createNavigation = () => {
   );
 };
 
-const createMovieCardList = () => {
+const createAllFilmsContainer = () => {
   return (
-    `<section class="films-list">
-      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-
-      <div class="films-list__container">
-
-      </div>
+    `<section class="films">
     </section>`
   );
 };
 
-const createMoveCard = () => {
+const createFilmList = () => {
+  return (
+    `<section class="films-list">
+      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+    </section>`
+  );
+};
+
+const createFilmListContainer = () => {
+  return (
+    `<div class="films-list__container"></div>`
+  );
+};
+
+const createFilmListExtra = () => {
+  return (
+    `<section class="films-list--extra"></section>`
+  );
+};
+
+const createFilmCard = () => {
   return (
     ` <article class="film-card">
           <h3 class="film-card__title">The Dance of Life</h3>
@@ -58,79 +76,13 @@ const createMoveCard = () => {
             <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
             <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
           </form>
-        </article>
-
-        <article class="film-card">
-          <h3 class="film-card__title">Sagebrush Trail</h3>
-          <p class="film-card__rating">3.2</p>
-          <p class="film-card__info">
-            <span class="film-card__year">1933</span>
-            <span class="film-card__duration">54m</span>
-            <span class="film-card__genre">Western</span>
-          </p>
-          <img src="./images/posters/sagebrush-trail.jpg" alt="" class="film-card__poster">
-          <p class="film-card__description">Sentenced for a murder he did not commit, John Brant escapes from prison determined to find the real killer. By chance Brant's narrow escap…</p>
-          <a class="film-card__comments">89 comments</a>
-          <form class="film-card__controls">
-            <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
-            <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-            <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
-          </form>
-        </article>
-
-        <article class="film-card">
-          <h3 class="film-card__title">The Man with the Golden Arm</h3>
-          <p class="film-card__rating">9.0</p>
-          <p class="film-card__info">
-            <span class="film-card__year">1955</span>
-            <span class="film-card__duration">1h 59m</span>
-            <span class="film-card__genre">Drama</span>
-          </p>
-          <img src="./images/posters/the-man-with-the-golden-arm.jpg" alt="" class="film-card__poster">
-          <p class="film-card__description">Frankie Machine (Frank Sinatra) is released from the federal Narcotic Farm in Lexington, Kentucky with a set of drums and a new outlook on…</p>
-          <a class="film-card__comments">18 comments</a>
-          <form class="film-card__controls">
-            <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-            <button class="film-card__controls-item button film-card__controls-item--mark-as-watched film-card__controls-item--active">Mark as watched</button>
-            <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
-          </form>
-        </article>
-
-        <article class="film-card">
-          <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
-          <p class="film-card__rating">2.3</p>
-          <p class="film-card__info">
-            <span class="film-card__year">1964</span>
-            <span class="film-card__duration">1h 21m</span>
-            <span class="film-card__genre">Comedy</span>
-          </p>
-          <img src="./images/posters/santa-claus-conquers-the-martians.jpg" alt="" class="film-card__poster">
-          <p class="film-card__description">The Martians Momar ("Mom Martian") and Kimar ("King Martian") are worried that their children Girmar ("Girl Martian") and Bomar ("Boy Marti…</p>
-          <a class="film-card__comments">465 comments</a>
-          <form class="film-card__controls">
-            <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-            <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-            <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active">Mark as favorite</button>
-          </form>
-        </article>
-
-        <article class="film-card">
-          <h3 class="film-card__title">Popeye the Sailor Meets Sindbad the Sailor</h3>
-          <p class="film-card__rating">6.3</p>
-          <p class="film-card__info">
-            <span class="film-card__year">1936</span>
-            <span class="film-card__duration">16m</span>
-            <span class="film-card__genre">Cartoon</span>
-          </p>
-          <img src="./images/posters/popeye-meets-sinbad.png" alt="" class="film-card__poster">
-          <p class="film-card__description">In this short, Sindbad the Sailor (presumably Bluto playing a "role") proclaims himself, in song, to be the greatest sailor, adventurer and…</p>
-          <a class="film-card__comments">0 comments</a>
-          <form class="film-card__controls">
-            <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
-            <button class="film-card__controls-item button film-card__controls-item--mark-as-watched film-card__controls-item--active">Mark as watched</button>
-            <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active">Mark as favorite</button>
-          </form>
         </article>`
+  );
+};
+
+const createFilmListTitle = () => {
+  return (
+    `<h2 class="films-list__title">Top rated</h2>`
   );
 };
 
@@ -144,19 +96,51 @@ const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const siteHeaderElement = document.querySelector(`.header`);
-const siteMainElement = document.querySelector(`.main`);
 
-render(siteHeaderElement, createUserRank(), `beforeend`);
-render(siteMainElement, createNavigation(), `beforeend`);
-render(siteMainElement, createMovieCardList(), `beforeend`);
+const headerElem = document.querySelector(`.header`);
+const mainElem = document.querySelector(`.main`);
 
-const siteMoveCardElement = siteMainElement.querySelector(`.films-list__container`);
-const filmCard = siteMainElement.querySelectorAll(`.film-card`);
+render(headerElem, createUserRank(), `beforeend`);
+render(mainElem, createNavigation(), `beforeend`);
+render(mainElem, createAllFilmsContainer(), `beforeend`);
 
-for (let i = 0; i <= filmCard.length; i++) {
-  render(siteMoveCardElement, createMoveCard(), `beforeend`);
+
+const filmsElem = mainElem.querySelector(`.films`);
+render(filmsElem, createFilmList(), `beforeend`);
+
+const filmsListElem = filmsElem.querySelector(`.films-list`);
+render(filmsListElem, createFilmListContainer(), `beforeend`);
+
+const filmListContainerElem = filmsListElem.querySelector(`.films-list__container`);
+for (let i = 0; i < MOVIE_CARD_QUANTITY; i++) {
+  render(filmListContainerElem, createFilmCard(), `beforeend`);
+}
+render(filmsListElem, createShowMoreButton(), `beforeend`);
+
+for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+  render(filmsElem, createFilmListExtra(), `beforeend`);
 }
 
-render(siteMainElement, createShowMoreButton(), `beforeend`);
+// Рендерим топ
+const filmsTopElem = filmsElem.querySelector(`.films-list--extra`);
 
+render(filmsTopElem, createFilmListTitle(), `beforeend`);
+render(filmsTopElem, createFilmListContainer(), `beforeend`);
+
+const filmListExtraContainerElem = filmsTopElem.querySelector(`.films-list__container`);
+
+for (let i = 0; i < 2; i++) {
+  render(filmListExtraContainerElem, createFilmCard(), `beforeend`);
+}
+
+// рендерим комменты
+const filmsCommentElem = filmsElem.querySelector(`.films-list--extra:last-child`);
+
+render(filmsCommentElem, createFilmListTitle(), `beforeend`);
+render(filmsCommentElem, createFilmListContainer(), `beforeend`);
+
+const filmListTopContainerElem = filmsCommentElem.querySelector(`.films-list__container`);
+
+for (let i = 0; i < 2; i++) {
+  render(filmListTopContainerElem, createFilmCard(), `beforeend`);
+}
