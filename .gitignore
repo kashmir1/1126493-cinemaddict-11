@@ -14,3 +14,14 @@ node_modules/
 # Файлы сборки (допишите самостоятельно)
 public/bundle.js
 public/bundle.js.map
+src/components/commentlist.js
+src/components/filmcard.js
+src/components/filmdetail.js
+src/components/filmlist.js
+src/components/navigation.js
+src/components/rank.js
+src/components/showmore.js
+src/components/toplist.js
+
+
+
