@@ -3,12 +3,12 @@ const FILM_LIST_EXTRA_QUANTITY = 2;
 
 import {createUserRank} from "./components/rank";
 import {createNavigation} from "./components/navigation";
-import {createFilmsList} from "./components/filmlist";
-import {createTopList} from "./components/toplist";
-import {createCommentList} from "./components/commentlist";
-import {createFilmCard} from "./components/filmcard";
-import {createShowMoreButton} from "./components/showmore";
-import {createFilmDetail} from "./components/filmdetail";
+import {createFilmsList} from "./components/film-list";
+import {createTopList} from "./components/top-list";
+import {createCommentList} from "./components/comment-list";
+import {createFilmCard} from "./components/film-card";
+import {createShowMoreButton} from "./components/show-more";
+import {createFilmDetail} from "./components/film-detail";
 
 
 const render = (container, template, place) => {
