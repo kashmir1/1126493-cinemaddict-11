@@ -1,27 +1,70 @@
-const filmData = {
-  title: `The Dance of Life`,
-  poster: `./public/images/posters/the-dance-of-life.jpg`,
-  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
-  comment: {
-    count: 4,
-    emoji: `.public/images/emoji/angry.png`,
-    author: `John Doe`,
-    date: `2 days ago`
-  }
-};
-
 export const createFilmCard = () => {
+
+  // Массив названий фильмов
+  const filmTitles = [
+    `Jocker`,
+    `Hellraser`,
+    `Rambo: first blood`,
+    `Departed`,
+    `Terminator`,
+  ];
+
+  // Массив постеров
+  const filmPosters = [
+    `made-for-each-other.png`,
+    `popeye-meets-sinbad.png`,
+    `sagebrush-trail.jpg`,
+    `santa-claus-conquers-the-martians.jpg`,
+    `the-dance-of-life.jpg`,
+    `the-great-flamarion.jpg`,
+    `the-man-with-the-golden-arm.jpg`,
+  ];
+
+  // Массив описаний
+  const filmDescs = [
+    `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+    `Cras aliquet varius magna, non porta ligula feugiat eget.`,
+    `Fusce tristique felis at fermentum pharetra.`,
+    `Fusce tristique felis at fermentum pharetra.`,
+    `Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.`,
+    `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
+    `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
+  ];
+
+  for (let i = 0; i < filmDescs.length; i++) {
+
+  }
+
+
+
+  // Рандом
+  const getRandom = (arr) => {
+    return Math.floor(Math.random() * arr.length);
+  };
+
+  const filmData = {
+    title: filmTitles[getRandom(filmTitles)],
+    poster: `./images/posters/` + filmPosters[getRandom(filmPosters)],
+    description: filmDescs[getRandom(filmDescs)],
+    comment: {
+      count: 4,
+      emoji: `.public/images/emoji/angry.png`,
+      author: `John Doe`,
+      date: `2 days ago`
+    }
+  };
+
   return (
     ` <article class="film-card">
-          <h3 class="film-card__title">The Dance of Life</h3>
+          <h3 class="film-card__title">${filmData.title}</h3>
           <p class="film-card__rating">8.3</p>
           <p class="film-card__info">
             <span class="film-card__year">1929</span>
             <span class="film-card__duration">1h 55m</span>
             <span class="film-card__genre">Musical</span>
           </p>
-          <img src="./images/posters/the-dance-of-life.jpg" alt="" class="film-card__poster">
-          <p class="film-card__description">Burlesque comic Ralph "Skid" Johnson (Skelly), and specialty dancer Bonny Lee King (Carroll), end up together on a cold, rainy night at a tr…</p>
+          <img src="${filmData.poster}" alt="" class="film-card__poster">
+          <p class="film-card__description">${filmData.description}</p>
           <a class="film-card__comments">5 comments</a>
           <form class="film-card__controls">
             <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
