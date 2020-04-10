@@ -8,7 +8,7 @@ import {createTopList} from "./components/top-list";
 import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
-import {createFilmDetail} from "./components/film-detail";
+// import {createFilmDetail} from "./components/film-detail";
 
 
 const render = (container, template, place) => {

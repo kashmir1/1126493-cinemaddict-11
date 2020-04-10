@@ -1,3 +1,15 @@
+const filmData = {
+  title: `The Dance of Life`,
+  poster: `./public/images/posters/the-dance-of-life.jpg`,
+  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+  comment: {
+    count: 4,
+    emoji: `.public/images/emoji/angry.png`,
+    author: `John Doe`,
+    date: `2 days ago`
+  }
+};
+
 export const createFilmCard = () => {
   return (
     ` <article class="film-card">
