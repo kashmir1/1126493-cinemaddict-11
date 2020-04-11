@@ -43,21 +43,25 @@ export const createFilmCard = () => {
     return Math.floor(Math.random() * arr.length);
   };
 
-  // создаем пустой массив
-  const arr = [];
+  // создаем пустой массив описаний
+  const descriptions = [];
 
   // цикл для рандомной записи в новый массив
-  for (let i = 0; i <= randomInt(1, 5); i++) {
-    arr.push(filmDescs[randomInt(1, 5)]);
-  }
+  const getRandomStr = (emptyArr, donor) => {
+    for (let i = 0; i <= randomInt(1, 5); i++) {
+      emptyArr.push(donor[randomInt(1, 5)]);
+    }
+  };
+
+  getRandomStr(descriptions, filmDescs);
 
   // Создаем троку из элементов массива
-  const str = arr.join(` `);
+  const description = descriptions.join(` `);
 
   const filmData = {
     title: filmTitles[getRandom(filmTitles)],
     poster: `./images/posters/` + filmPosters[getRandom(filmPosters)],
-    description: str,
+    description, // ключ совпадает со значенеим
     comment: {
       count: 4,
       emoji: `.public/images/emoji/angry.png`,
