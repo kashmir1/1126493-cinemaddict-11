@@ -31,21 +31,33 @@ export const createFilmCard = () => {
     `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
   ];
 
-  for (let i = 0; i < filmDescs.length; i++) {
-
-  }
-
-
+  // Случайное число из диапазона
+  const randomInt = (min, max) => {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  };
 
   // Рандом
   const getRandom = (arr) => {
     return Math.floor(Math.random() * arr.length);
   };
 
+  // создаем пустой массив
+  const arr = [];
+
+  // цикл для рандомной записи в новый массив
+  for (let i = 0; i <= randomInt(1, 5); i++) {
+    arr.push(filmDescs[randomInt(1, 5)]);
+  }
+
+  // Создаем троку из элементов массива
+  const str = arr.join(` `);
+
   const filmData = {
     title: filmTitles[getRandom(filmTitles)],
     poster: `./images/posters/` + filmPosters[getRandom(filmPosters)],
-    description: filmDescs[getRandom(filmDescs)],
+    description: str,
     comment: {
       count: 4,
       emoji: `.public/images/emoji/angry.png`,
