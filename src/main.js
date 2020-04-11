@@ -8,8 +8,10 @@ import {createTopList} from "./components/top-list";
 import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
-// import {createFilmDetail} from "./components/film-detail";
+import {createFilmDetail} from "./components/film-detail";
+import {generateFilms} from "./mock/film-data";
 
+const film = generateFilms(MOVIE_CARD_QUANTITY);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -27,8 +29,8 @@ render(mainElem, createFilmsList(), `beforeend`);
 
 // Рендерим карточки
 const filmsListContainer = mainElem.querySelector(`.films-list__container`);
-for (let i = 0; i < MOVIE_CARD_QUANTITY; i++) {
-  render(filmsListContainer, createFilmCard(), `beforeend`);
+for (let i = 0; i < film.length; i++) {
+  render(filmsListContainer, createFilmCard(film[i]), `beforeend`); // Обращаемся к объекту
 }
 
 // Рендерим кнопку
