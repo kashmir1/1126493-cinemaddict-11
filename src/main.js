@@ -1,5 +1,6 @@
-const MOVIE_CARD_QUANTITY = 5;
+const MOVIE_CARD_QUANTITY = 15;
 const FILM_LIST_EXTRA_QUANTITY = 2;
+const FILM_DETAIL_QUANTITY = 1;
 
 import {createUserRank} from "./components/rank";
 import {createNavigation} from "./components/navigation";
@@ -8,8 +9,9 @@ import {createTopList} from "./components/top-list";
 import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
-import {createFilmDetail} from "./components/film-detail";
 import {generateFilms} from "./mock/film-data";
+import {createFilmDetail} from "./components/film-detail";
+import {createComments} from "./components/comments";
 
 const film = generateFilms(MOVIE_CARD_QUANTITY);
 
@@ -37,23 +39,27 @@ for (let i = 0; i < film.length; i++) {
 const filmsList = mainElem.querySelector(`.films-list`);
 render(filmsList, createShowMoreButton(), `beforeend`);
 
-// Топовые и комментируемые фильмы
-const films = mainElem.querySelector(`.films`);
-render(films, createTopList(), `beforeend`);
-render(films, createCommentList(), `beforeend`);
-
-// Заполняем топовые фильмы карточками
-const topFilms = films.querySelector(`.films-list--extra .films-list__container`);
-for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
-  render(topFilms, createFilmCard(), `beforeend`);
-}
-
-// Заполняем комментируемые фильмы карточками
-const commentFilms = films.querySelector(`.films-list--extra:last-child .films-list__container`);
-for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
-  render(commentFilms, createFilmCard(), `beforeend`);
-}
+// // Топовые и комментируемые фильмы
+// const films = mainElem.querySelector(`.films`);
+// render(films, createTopList(), `beforeend`);
+// render(films, createCommentList(), `beforeend`);
+//
+// // Заполняем топовые фильмы карточками
+// const topFilms = films.querySelector(`.films-list--extra .films-list__container`);
+// for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+//   render(topFilms, createFilmCard(), `beforeend`);
+// }
+//
+// // Заполняем комментируемые фильмы карточками
+// const commentFilms = films.querySelector(`.films-list--extra:last-child .films-list__container`);
+// for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+//   render(commentFilms, createFilmCard(), `beforeend`);
+// }
 
 // Рендерим попап
 const siteBody = document.querySelector(`body`);
-render(siteBody, createFilmDetail(), `beforeend`);
+render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
+
+// Рендерим комментарии
+const commentContainer = document.querySelector(`.form-details__bottom-container`);
+render(commentContainer, createComments(), `beforeend`);
