@@ -1,4 +1,6 @@
-export const createComments = () => {
+export const createComments = (task) => {
+
+  const {} = task;
 
   return (
     ` <li class="film-details__comment">

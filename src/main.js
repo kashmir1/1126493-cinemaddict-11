@@ -14,8 +14,10 @@ import {createShowMoreButton} from "./components/show-more";
 import {generateFilms} from "./mock/film-data";
 import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
+import {generateComments} from "./mock/comments";
 
 const film = generateFilms(MOVIE_CARD_QUANTITY);
+const comment = generateComments(3);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -65,5 +67,5 @@ render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
 // Рендерим комментарии
 const commentsList = siteBody.querySelector(`.film-details__comments-list`);
 for (let i = 0; i < randomInt(1, 5); i++) {
-  render(commentsList, createComments(), `beforeend`);
+  render(commentsList, createComments(comment[i]), `beforeend`);
 }

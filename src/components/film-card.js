@@ -1,6 +1,6 @@
 export const createFilmCard = (film) => {
 
-  // создаем пустые моки для карточки
+  // создаем моки для карточки
   const {title, description, poster, commentCount} = film;
 
   // выносим данные для карточки в переменные из разметки

@@ -1,8 +1,7 @@
-export const generateComment = () => {
+const generateComment = () => {
 
   // Создаем cтроку из элементов массива
   return {
-
   };
 };
 
