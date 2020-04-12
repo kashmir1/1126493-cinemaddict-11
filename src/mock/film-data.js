@@ -1,11 +1,8 @@
-import {randomInt} from "../utils";
-import {getRandom} from "../utils";
-import {getRandomStr} from "../utils";
+import {randomInt, getRandomStr, getRandom} from "../utils";
 
 // Импортируем константы
-import {filmTitles} from "../consts";
-import {filmPosters} from "../consts";
-import {filmDescs} from "../consts";
+import {filmTitles, filmDescs, filmPosters} from "../consts";
+
 
 // создаем пустой массив описаний
 const descriptions = [];

@@ -2,6 +2,8 @@ const MOVIE_CARD_QUANTITY = 15;
 const FILM_LIST_EXTRA_QUANTITY = 2;
 const FILM_DETAIL_QUANTITY = 1;
 
+import {randomInt} from "./utils";
+
 import {createUserRank} from "./components/rank";
 import {createNavigation} from "./components/navigation";
 import {createFilmsList} from "./components/film-list";
@@ -61,5 +63,7 @@ const siteBody = document.querySelector(`body`);
 render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
 
 // Рендерим комментарии
-const commentContainer = document.querySelector(`.form-details__bottom-container`);
-render(commentContainer, createComments(), `beforeend`);
+const commentsList = siteBody.querySelector(`.film-details__comments-list`);
+for (let i = 0; i < randomInt(1, 5); i++) {
+  render(commentsList, createComments(), `beforeend`);
+}
