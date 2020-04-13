@@ -4,17 +4,21 @@ const FILM_DETAIL_QUANTITY = 1;
 
 import {randomInt} from "./utils";
 
+import {generateFilms} from "./mock/film-data";
+import {generateComments} from "./mock/comments";
+
 import {createUserRank} from "./components/rank";
 import {createNavigation} from "./components/navigation";
+import {createFilters} from "./components/filters";
+
 import {createFilmsList} from "./components/film-list";
 import {createTopList} from "./components/top-list";
 import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
-import {generateFilms} from "./mock/film-data";
-// import {createFilmDetail} from "./components/film-detail";
+import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
-import {generateComments} from "./mock/comments";
+
 
 const film = generateFilms(MOVIE_CARD_QUANTITY);
 const comment = generateComments(3);
@@ -29,6 +33,9 @@ const mainElem = document.querySelector(`.main`);
 
 render(headerElem, createUserRank(), `beforeend`);
 render(mainElem, createNavigation(), `beforeend`);
+
+const filterItems = mainElem.querySelector(`.main-navigation__items`);
+render(filterItems, createFilters(), `beforeend`);
 
 // Выводим контейнер для фильмов
 render(mainElem, createFilmsList(), `beforeend`);
@@ -60,9 +67,9 @@ for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
   render(commentFilms, createFilmCard(film[i]), `beforeend`);
 }
 
-// Рендерим попап
-const siteBody = document.querySelector(`body`);
-render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
+// // Рендерим попап
+// const siteBody = document.querySelector(`body`);
+// render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
 
 // Рендерим комментарии
 const commentsList = siteBody.querySelector(`.film-details__comments-list`);
