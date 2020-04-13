@@ -54,7 +54,6 @@ export const commentator = [
 ];
 
 // Массив месяцев
-
 export const MONTH_NAMES = [
   `1`,
   `2`,
@@ -69,3 +68,4 @@ export const MONTH_NAMES = [
   `11`,
   `12`,
 ];
+

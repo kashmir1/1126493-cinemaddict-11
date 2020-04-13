@@ -4,13 +4,10 @@ const FILM_DETAIL_QUANTITY = 1;
 
 import {randomInt} from "./utils";
 
-import {generateFilms} from "./mock/film-data";
-import {generateComments} from "./mock/comments";
+
 
 import {createUserRank} from "./components/rank";
 import {createNavigation} from "./components/navigation";
-import {createFilters} from "./components/filters";
-
 import {createFilmsList} from "./components/film-list";
 import {createTopList} from "./components/top-list";
 import {createCommentList} from "./components/comment-list";
@@ -19,9 +16,13 @@ import {createShowMoreButton} from "./components/show-more";
 import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
 
-
 const film = generateFilms(MOVIE_CARD_QUANTITY);
 const comment = generateComments(3);
+const filters = generateFilters();
+
+import {generateFilms} from "./mock/film-data";
+import {generateComments} from "./mock/comments";
+import {generateFilters} from "./mock/filter";
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -32,10 +33,7 @@ const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
 
 render(headerElem, createUserRank(), `beforeend`);
-render(mainElem, createNavigation(), `beforeend`);
-
-const filterItems = mainElem.querySelector(`.main-navigation__items`);
-render(filterItems, createFilters(), `beforeend`);
+render(mainElem, createNavigation(filters), `beforeend`);
 
 // Выводим контейнер для фильмов
 render(mainElem, createFilmsList(), `beforeend`);
