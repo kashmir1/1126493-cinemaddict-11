@@ -19,8 +19,8 @@ export const getRandomStr = (emptyArr, donor) => {
 
 // Время
 const commentTimeFormat = (value) => {
-  return value < 10 ? `${value}` : String(value);
-}; // Если значение < 10, возвращаем
+  return value < 10 ? `0${value}` : String(value);
+}; // Если значение < 10, добавляем 0
 
 export const formatTime = (date) => {
   const hours = commentTimeFormat(date.getHours() % 12);
@@ -29,7 +29,9 @@ export const formatTime = (date) => {
   return `${hours}:${minutes}`;
 };
 
+// Формат месяца
 export const commentMonthFormat = (value) => {
   return value < 10 ? `0${value}` : String(value);
+  // Если значение < 10, добавляем 0
 };
 

@@ -12,7 +12,7 @@ import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
 import {generateFilms} from "./mock/film-data";
-import {createFilmDetail} from "./components/film-detail";
+// import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
 import {generateComments} from "./mock/comments";
 
@@ -43,22 +43,22 @@ for (let i = 0; i < film.length; i++) {
 const filmsList = mainElem.querySelector(`.films-list`);
 render(filmsList, createShowMoreButton(), `beforeend`);
 
-// // Топовые и комментируемые фильмы
-// const films = mainElem.querySelector(`.films`);
-// render(films, createTopList(), `beforeend`);
-// render(films, createCommentList(), `beforeend`);
+// Топовые и комментируемые фильмы
+const films = mainElem.querySelector(`.films`);
+render(films, createTopList(), `beforeend`);
+render(films, createCommentList(), `beforeend`);
+
+// Заполняем топовые фильмы карточками
+const topFilms = films.querySelector(`.films-list--extra .films-list__container`);
+for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+  render(topFilms, createFilmCard(film[i]), `beforeend`);
+}
 //
-// // Заполняем топовые фильмы карточками
-// const topFilms = films.querySelector(`.films-list--extra .films-list__container`);
-// for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
-//   render(topFilms, createFilmCard(), `beforeend`);
-// }
-//
-// // Заполняем комментируемые фильмы карточками
-// const commentFilms = films.querySelector(`.films-list--extra:last-child .films-list__container`);
-// for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
-//   render(commentFilms, createFilmCard(), `beforeend`);
-// }
+// Заполняем комментируемые фильмы карточками
+const commentFilms = films.querySelector(`.films-list--extra:last-child .films-list__container`);
+for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
+  render(commentFilms, createFilmCard(film[i]), `beforeend`);
+}
 
 // Рендерим попап
 const siteBody = document.querySelector(`body`);
