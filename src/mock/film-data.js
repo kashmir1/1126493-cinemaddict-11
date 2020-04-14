@@ -6,11 +6,8 @@ import {filmTitles, filmDescs, filmPosters} from "../consts";
 const MIN_SENTENCE_QTY = 1;
 const MAX_SENTENCE_QTY = 5;
 
-// создаем пустой массив описаний
-const descriptions = [];
-
 // Вызываем функцию массива описаний и вызываем метод joun
-getRandomStr(descriptions, filmDescs);
+const descriptions = getRandomStr(filmDescs, 5);
 const description = descriptions.join(` `);
 
 const generateFilm = () => {
