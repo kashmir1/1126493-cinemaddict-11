@@ -3,6 +3,9 @@ const FILM_LIST_EXTRA_QUANTITY = 2;
 const FILM_DETAIL_QUANTITY = 1;
 const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
+const MAX_COMMENTS = 5;
+const MIN_COMMENT_VALUE = 1;
+const MAX_COMMENT_VALUE = 5;
 
 import {randomInt} from "./utils";
 
@@ -22,7 +25,7 @@ import {generateComments} from "./mock/comments";
 import {generateFilters} from "./mock/filter";
 
 const film = generateFilms(MOVIE_CARD_QUANTITY);
-const comment = generateComments(3);
+const comment = generateComments(MAX_COMMENTS);
 const filters = generateFilters();
 
 const render = (container, template, place) => {
@@ -89,6 +92,6 @@ render(siteBody, createFilmDetail(film[FILM_DETAIL_QUANTITY]), `beforeend`);
 
 // Рендерим комментарии
 const commentsList = siteBody.querySelector(`.film-details__comments-list`);
-for (let i = 0; i < randomInt(1, 5); i++) {
+for (let i = 0; i < randomInt(MIN_COMMENT_VALUE, MAX_COMMENT_VALUE); i++) {
   render(commentsList, createComments(comment[i]), `beforeend`);
 }

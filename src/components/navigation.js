@@ -12,8 +12,6 @@ export const createNavigation = (filters) => {
 
   const filtersMarkup = filters.map((it) => createFilterMarkup(it.name, it.count)).join(``);
 
-  // const filtersMarkup = filters.map((it) => createFilters(it.name, it.count)).join(``);
-
   return (
     `<nav class="main-navigation">
       <div class="main-navigation__items">

@@ -10,16 +10,22 @@ export const getRandom = (arr) => {
   return Math.floor(Math.random() * arr.length);
 };
 
+const MIN_ARR_VALUE = 1;
+const MAX_ARR_VALUE = 5;
+
 // цикл для рандомной записи в новый массив
 export const getRandomStr = (emptyArr, donor) => {
-  for (let i = 0; i <= randomInt(1, 5); i++) {
-    emptyArr.push(donor[randomInt(1, 5)]);
+  for (let i = 0; i <= randomInt(MIN_ARR_VALUE, MAX_ARR_VALUE); i++) {
+    emptyArr.push(donor[randomInt(MIN_ARR_VALUE, MAX_ARR_VALUE)]);
   }
 };
 
+const TARGET_LENGTH = 2;
+const FILL_STRING = `2`;
+
 // Время и дата
 export const commentWriteTimeFormat = (value) => {
-  return String(value).padStart(2, `0`);
+  return String(value).padStart(TARGET_LENGTH, FILL_STRING);
 }; // Если значение < 10, добавляем 0
 
 export const formatTime = (date) => {

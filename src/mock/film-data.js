@@ -3,6 +3,8 @@ import {randomInt, getRandomStr, getRandom} from "../utils";
 // Импортируем константы
 import {filmTitles, filmDescs, filmPosters} from "../consts";
 
+const MIN_SENTENCE_QTY = 1;
+const MAX_SENTENCE_QTY = 5;
 
 // создаем пустой массив описаний
 const descriptions = [];
@@ -18,7 +20,7 @@ const generateFilm = () => {
     title: filmTitles[getRandom(filmTitles)],
     poster: `./images/posters/` + filmPosters[getRandom(filmPosters)],
     description, // ключ совпадает со значенеим
-    commentCount: randomInt(1, 5),
+    commentCount: randomInt(MIN_SENTENCE_QTY, MAX_SENTENCE_QTY),
   };
 };
 
