@@ -17,21 +17,15 @@ export const getRandomStr = (emptyArr, donor) => {
   }
 };
 
-// Время
-const commentTimeFormat = (value) => {
-  return value < 10 ? `0${value}` : String(value);
+// Время и дата
+export const commentWriteTimeFormat = (value) => {
+  return String(value).padStart(2, `0`);
 }; // Если значение < 10, добавляем 0
 
 export const formatTime = (date) => {
-  const hours = commentTimeFormat(date.getHours() % 12);
-  const minutes = commentTimeFormat(date.getMinutes());
+  const hours = commentWriteTimeFormat(date.getHours() % 12);
+  const minutes = commentWriteTimeFormat(date.getMinutes());
 
   return `${hours}:${minutes}`;
-};
-
-// Формат месяца
-export const commentMonthFormat = (value) => {
-  return value < 10 ? `0${value}` : String(value);
-  // Если значение < 10, добавляем 0
 };
 

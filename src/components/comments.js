@@ -1,4 +1,4 @@
-import {formatTime, commentMonthFormat} from "../utils";
+import {formatTime, commentWriteTimeFormat} from "../utils";
 import {MONTH_NAMES} from "../consts";
 
 export const createComments = (comment) => {
@@ -7,7 +7,7 @@ export const createComments = (comment) => {
   const isDateShowing = !!commentDate;
 
   // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
-  const date = isDateShowing ? `${commentDate.getFullYear()}/${commentMonthFormat(MONTH_NAMES[commentDate.getMonth()])}/${commentDate.getDate()} ` : ``;
+  const date = isDateShowing ? `${commentDate.getFullYear()}/${commentWriteTimeFormat(MONTH_NAMES[4])}/${commentDate.getDate()} ` : ``;
 
   // Выводим время с помощью фунции в utils
   const time = isDateShowing ? formatTime(commentDate) : ``;
