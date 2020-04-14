@@ -15,8 +15,9 @@ const MAX_ARR_VALUE = 5;
 
 // цикл для рандомной записи в новый массив
 export const getRandomStr = (emptyArr, donor) => {
-  for (let i = 0; i <= randomInt(MIN_ARR_VALUE, MAX_ARR_VALUE); i++) {
-    emptyArr.push(donor[randomInt(MIN_ARR_VALUE, MAX_ARR_VALUE)]);
+  for (let i = 0; i <= donor.left; i++) {
+    donor.length = randomInt(MIN_ARR_VALUE, MAX_ARR_VALUE);
+    emptyArr.push(donor.length);
   }
 };
 
