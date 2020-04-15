@@ -6,8 +6,9 @@ export const randomInt = (min, max) => {
 };
 
 // Рандом
-export const getRandom = (arr) => {
-  return Math.floor(Math.random() * arr.length);
+export const getRandomItem = (arr) => {
+  const rand = Math.floor(Math.random() * arr.length);
+  return arr[rand];
 };
 
 // цикл для рандомной записи в новый массив

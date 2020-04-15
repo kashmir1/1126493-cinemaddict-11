@@ -1,6 +1,21 @@
-export const createFilmDetail = (film) => {
+export const createFilmDetail = (filmsDetail) => {
 
-  const {title, description, poster} = film;
+  const {
+    title,
+    poster,
+    originalName,
+    rate,
+    description,
+    director,
+    writers,
+    actors,
+    dateRelease,
+    runtime,
+    country,
+    genres,
+    agesRate,
+  } = filmsDetail;
+
 
   return (
     `<section class="film-details">
@@ -13,52 +28,51 @@ export const createFilmDetail = (film) => {
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="${poster}" alt="">
 
-          <p class="film-details__age">18+</p>
+          <p class="film-details__age">${agesRate}</p>
         </div>
 
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
               <h3 class="film-details__title">${title}</h3>
-              <p class="film-details__title-original">Original: ${title}</p>
+              <p class="film-details__title-original">Original: ${originalName}</p>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">8.9</p>
+              <p class="film-details__total-rating">${rate}</p>
             </div>
           </div>
 
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">Anthony Mann</td>
+              <td class="film-details__cell">${director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+              <td class="film-details__cell">${writers}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+              <td class="film-details__cell">${actors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">30 March 1945</td>
+              <td class="film-details__cell">${dateRelease}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">1h 18m</td>
+              <td class="film-details__cell">${runtime}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">USA</td>
+              <td class="film-details__cell">${country}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">Drama</span>
-                <span class="film-details__genre">Film-Noir</span>
-                <span class="film-details__genre">Mystery</span></td>
+                 ${genres}
+                </td>
             </tr>
           </table>
 
@@ -123,3 +137,11 @@ export const createFilmDetail = (film) => {
 </section>`
   );
 };
+
+
+
+// // Рендерим жанры
+// const filmGenres = document.querySelector(`.film-details__row:last-child .film-details__cell`);
+// for (let i = 0; i < 3; i++) {
+//   render(filmGenres, createGenres(), `beforeend`);
+// }
