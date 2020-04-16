@@ -69,3 +69,17 @@ export const MONTH_NAMES = [
   `12`,
 ];
 
+export const MONTH_NAMES_LETTER = [
+  `January`,
+  `February`,
+  `March`,
+  `April`,
+  `May`,
+  `June`,
+  `July`,
+  `August`,
+  `September`,
+  `October`,
+  `November`,
+  `December`,
+];

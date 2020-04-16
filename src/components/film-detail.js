@@ -1,3 +1,6 @@
+import {writeTimeFormat} from "../utils";
+import {MONTH_NAMES, MONTH_NAMES_LETTER} from "../consts";
+
 export const createFilmDetail = (filmsDetail) => {
 
   const {
@@ -16,6 +19,9 @@ export const createFilmDetail = (filmsDetail) => {
     agesRate,
   } = filmsDetail;
 
+  const isDateShowing = !!dateRelease;
+  // const date = isDateShowing ? `${dateRelease.getFullYear()}/${writeTimeFormat(MONTH_NAMES[4], 2, 0)}/${dateRelease.getDate()} ` : ``;
+  const date = isDateShowing ? `${dateRelease.getDate()} ${writeTimeFormat(MONTH_NAMES_LETTER[3])} ${dateRelease.getFullYear()}` : ``;
 
   return (
     `<section class="film-details">
@@ -54,7 +60,7 @@ export const createFilmDetail = (filmsDetail) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${dateRelease}</td>
+              <td class="film-details__cell">${date}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>

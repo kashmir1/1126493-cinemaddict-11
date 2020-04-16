@@ -22,7 +22,7 @@ const generateFilm = () => {
     director: `Peter Jackson`,
     writers: `J.R.R. Tolkien (novel), Fran Walsh`,
     actors: ` Elijah Wood, Ian McKellen, Orlando Bloom`,
-    dateRelease: `01 March 2002`,
+    dateRelease: new Date(),
     runtime: {
       hours: randomInt(0, 4) + `h`,
       minutes: randomInt(0, 60) + `m`,
