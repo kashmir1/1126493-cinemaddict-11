@@ -37,6 +37,14 @@ export const smiles = [
   `smile.png`,
 ];
 
+const filmComments = [
+  {
+    commentText: `Interesting setting and a good cast`,
+    commentator: `Frodo`,
+    smiles: `angry.png`
+  }
+];
+
 // Массив комментариев
 export const commentText = [
   `Interesting setting and a good cast`,

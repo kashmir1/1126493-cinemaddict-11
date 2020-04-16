@@ -1,9 +1,8 @@
-import {smiles, commentText, commentator} from "../consts";
+import {smiles, commentText, commentator, filmComments} from "../consts";
 import {getRandomItem} from "../utils";
 
 const generateComment = () => {
 
-  // Создаем cтроку из элементов массива
   return {
     smile: `./images/emoji/` + getRandomItem(smiles),
     commentText: getRandomItem(commentText),
@@ -11,6 +10,7 @@ const generateComment = () => {
     commentDate: new Date(),
   };
 };
+
 
 const generateComments = (count) => {
   return new Array(count)

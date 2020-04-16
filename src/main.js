@@ -6,7 +6,6 @@ const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 const MAX_COMMENTS = 5;
 const MIN_COMMENT_VALUE = 1;
 const MAX_COMMENT_VALUE = 5;
-const GENRE_QTY = 3;
 
 import {randomInt} from "./utils";
 
@@ -97,8 +96,6 @@ render(siteBody, createFilmDetail(filmsDetail[FILM_DETAIL_QUANTITY]), `beforeend
 
 
 // Рендерим комментарии
-const commentsList = siteBody.querySelector(`.film-details__comments-list`);
-for (let i = 0; i < randomInt(MIN_COMMENT_VALUE, MAX_COMMENT_VALUE); i++) {
-  render(commentsList, createComments(comment[i]), `beforeend`);
-}
+const commentsContainer = siteBody.querySelector(`.form-details__bottom-container`);
+render(commentsContainer, createComments(), `beforeend`);
 
