@@ -1,5 +1,5 @@
 // Массив названий фильмов
-export const filmTitles = [
+export const FILM_TITLES = [
   `Jocker`,
   `Hellraser`,
   `Rambo: first blood`,
@@ -8,7 +8,7 @@ export const filmTitles = [
 ];
 
 // Массив постеров
-export const filmPosters = [
+export const FILM_POSTERS = [
   `made-for-each-other.png`,
   `popeye-meets-sinbad.png`,
   `sagebrush-trail.jpg`,
@@ -19,7 +19,7 @@ export const filmPosters = [
 ];
 
 // Массив описаний
-export const filmDescs = [
+export const FILM_DESCS = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
   `Cras aliquet varius magna, non porta ligula feugiat eget.`,
   `Fusce tristique felis at fermentum pharetra.`,
@@ -30,23 +30,15 @@ export const filmDescs = [
 ];
 
 // Массив смайликов
-export const smiles = [
+export const SMILES = [
   `angry.png`,
   `puke.png`,
   `sleeping.png`,
   `smile.png`,
 ];
 
-const filmComments = [
-  {
-    commentText: `Interesting setting and a good cast`,
-    commentator: `Frodo`,
-    smiles: `angry.png`
-  }
-];
-
 // Массив комментариев
-export const commentText = [
+export const COMMENT_TEXTS = [
   `Interesting setting and a good cast`,
   `My favorite movie`,
   `Outstanding movie with a haunting performance and best character development ever seen`,
@@ -55,7 +47,7 @@ export const commentText = [
 ];
 
 // Массив комментаторов
-export const commentator = [
+export const AUTHORS = [
   `Frodo`,
   `Sam`,
   `Aragorn`,

@@ -6,6 +6,7 @@ const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 const MAX_COMMENTS = 5;
 const MIN_COMMENT_VALUE = 1;
 const MAX_COMMENT_VALUE = 5;
+const COMMENT_COUNT = 1;
 
 import {randomInt} from "./utils";
 
@@ -18,6 +19,7 @@ import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
 import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
+import {createCommentCount} from "./components/comments-count";
 
 // Моки
 import {generateFilmsDetail} from "./mock/film-detail-data";
@@ -94,8 +96,12 @@ for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
 const siteBody = document.querySelector(`body`);
 render(siteBody, createFilmDetail(filmsDetail[FILM_DETAIL_QUANTITY]), `beforeend`);
 
+// Рендерим количество комментариев
+const commentContainer = siteBody.querySelector(`.film-details__comments-wrap`);
+render(commentContainer, createCommentCount(comment[COMMENT_COUNT]), `afterbegin`);
 
 // Рендерим комментарии
-const commentsContainer = siteBody.querySelector(`.form-details__bottom-container`);
-render(commentsContainer, createComments(), `beforeend`);
-
+const commentsList = siteBody.querySelector(`.film-details__comments-list`);
+for (let i = 0; i < randomInt(MIN_COMMENT_VALUE, MAX_COMMENT_VALUE); i++) {
+  render(commentsList, createComments(comment[i]), `beforeend`);
+}
