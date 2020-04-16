@@ -58,7 +58,7 @@ export const createFilmDetail = (filmsDetail) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${runtime}</td>
+              <td class="film-details__cell">${runtime.hours} ${runtime.minutes}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
@@ -87,7 +87,7 @@ export const createFilmDetail = (filmsDetail) => {
     </div>
     <div class="form-details__bottom-container">
         <section class="film-details__comments-wrap">
-        
+
         <ul class="film-details__comments-list">
         </ul>
         <div class="film-details__new-comment">

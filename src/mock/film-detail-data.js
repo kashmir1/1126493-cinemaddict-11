@@ -23,11 +23,13 @@ const generateFilm = () => {
     writers: `J.R.R. Tolkien (novel), Fran Walsh`,
     actors: ` Elijah Wood, Ian McKellen, Orlando Bloom`,
     dateRelease: `01 March 2002`,
-    runtime: `1h 36m`,
+    runtime: {
+      hours: randomInt(0, 4) + `h`,
+      minutes: randomInt(0, 60) + `m`,
+    },
     country: `USA`,
     description, // ключ совпадает со значенеим
     year: 1929,
-    duration: `1h 55m`,
     genres: `Comedy`,
     agesRate: `12+`,
     commentCount: randomInt(MIN_SENTENCE_QTY, MAX_SENTENCE_QTY),
