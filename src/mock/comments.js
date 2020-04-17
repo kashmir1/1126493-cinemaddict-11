@@ -6,7 +6,6 @@ const MAX_COMMENT_COUNT = 5;
 
 const generateComment = () => {
 
-  // Создаем cтроку из элементов массива
   return [{
     commentCount: randomInt(MIN_COMMENT_COUNT, MAX_COMMENT_COUNT),
     smile: `./images/emoji/` + getRandomItem(SMILES),

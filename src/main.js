@@ -23,12 +23,11 @@ import {createCommentCount} from "./components/comments-count";
 
 // Моки
 import {generateFilmsDetail} from "./mock/film-detail-data";
-import {generateFilms} from "./mock/film-data";
 import {generateComments} from "./mock/comments";
 import {generateFilters} from "./mock/filter";
 
-const films = generateFilms(MOVIE_CARD_QUANTITY);
-const comment = generateComments(MAX_COMMENTS);
+const films = generateFilmsDetail(MOVIE_CARD_QUANTITY);
+const comments = generateComments(MAX_COMMENTS);
 const filters = generateFilters();
 const filmsDetail = generateFilmsDetail(MOVIE_CARD_QUANTITY);
 
@@ -98,10 +97,10 @@ render(siteBody, createFilmDetail(filmsDetail[FILM_DETAIL_QUANTITY]), `beforeend
 
 // Рендерим количество комментариев
 const commentContainer = siteBody.querySelector(`.film-details__comments-wrap`);
-render(commentContainer, createCommentCount(comment[COMMENT_COUNT]), `afterbegin`);
+render(commentContainer, createCommentCount(comments[COMMENT_COUNT]), `afterbegin`);
 
 // Рендерим комментарии
 const commentsList = siteBody.querySelector(`.film-details__comments-list`);
 for (let i = 0; i < randomInt(MIN_COMMENT_VALUE, MAX_COMMENT_VALUE); i++) {
-  render(commentsList, createComments(comment[i]), `beforeend`);
+  render(commentsList, createComments(comments[i]), `beforeend`);
 }

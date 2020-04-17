@@ -1,38 +1,54 @@
-import {randomInt, getRandomStr, getRandomItem} from "../utils";
+import {randomInt, getArrJoin, getRandomItem} from "../utils";
 
 // Импортируем константы
-import {FILM_TITLES, FILM_DESCS, FILM_POSTERS} from "../consts";
+import {
+  FILM_TITLES,
+  FILM_DESCS,
+  FILM_POSTERS,
+  RATE,
+  DIRECTORS,
+  WRITERS,
+  ACTORS,
+  COUNTRIES,
+  GENRES, AGE_RATE, YEARS
+} from "../consts";
 
-const MIN_SENTENCE_QTY = 1;
-const MAX_SENTENCE_QTY = 5;
+
+const MIN_HOURS = 0;
+const MAX_HOURS = 4;
+const MIN_MINUTES = 0;
+const MAX_MINUTES = 60;
 const MAX_ARR_ELEM = 5;
 
-// Вызываем функцию массива описаний и вызываем метод joun
-const descriptions = getRandomStr(FILM_DESCS, MAX_ARR_ELEM);
+
+// Вызываем функцию массива описаний и сценаристов и вызываем метод join
+const descriptions = getArrJoin(FILM_DESCS, MAX_ARR_ELEM);
 const description = descriptions.join(` `);
+const writers = getArrJoin(WRITERS, MAX_ARR_ELEM);
+const writer = writers.join(`, `);
+const genres = getArrJoin(GENRES, MAX_ARR_ELEM);
+const genre = genres.join(`, `);
 
 const generateFilm = () => {
 
-  // Создаем cтроку из элементов массива
   return {
     title: getRandomItem(FILM_TITLES),
     poster: `./images/posters/` + getRandomItem(FILM_POSTERS),
     originalName: getRandomItem(FILM_TITLES),
-    rate: `8.9`,
-    director: `Peter Jackson`,
-    writers: `J.R.R. Tolkien (novel), Fran Walsh`,
-    actors: ` Elijah Wood, Ian McKellen, Orlando Bloom`,
+    rate: getRandomItem(RATE),
+    year: getRandomItem(YEARS),
+    director: getRandomItem(DIRECTORS),
+    writers: writer,
+    actors: getRandomItem(ACTORS),
     dateRelease: new Date(),
     runtime: {
-      hours: randomInt(0, 4) + `h`,
-      minutes: randomInt(0, 60) + `m`,
+      hours: randomInt(MIN_HOURS, MAX_HOURS) + `h`,
+      minutes: randomInt(MIN_MINUTES, MAX_MINUTES) + `m`,
     },
-    country: `USA`,
+    country: getRandomItem(COUNTRIES),
     description, // ключ совпадает со значенеим
-    year: 1929,
-    genres: `Comedy`,
-    agesRate: `12+`,
-    commentCount: randomInt(MIN_SENTENCE_QTY, MAX_SENTENCE_QTY),
+    genres: genre,
+    agesRate: getRandomItem(AGE_RATE),
   };
 };
 

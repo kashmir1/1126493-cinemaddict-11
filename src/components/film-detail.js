@@ -1,5 +1,5 @@
 import {writeTimeFormat} from "../utils";
-import {MONTH_NAMES, MONTH_NAMES_LETTER} from "../consts";
+import {MONTH_NAMES_LETTER} from "../consts";
 
 export const createFilmDetail = (filmsDetail) => {
 
@@ -17,6 +17,7 @@ export const createFilmDetail = (filmsDetail) => {
     country,
     genres,
     agesRate,
+    comments,
   } = filmsDetail;
 
   const isDateShowing = !!dateRelease;
@@ -80,6 +81,7 @@ export const createFilmDetail = (filmsDetail) => {
           <p class="film-details__film-description">
            ${description}
           </p>
+
         </div>
       </div>
       <section class="film-details__controls">

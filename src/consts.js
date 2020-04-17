@@ -83,3 +83,66 @@ export const MONTH_NAMES_LETTER = [
   `November`,
   `December`,
 ];
+
+export const RATE = [
+  `8.9`,
+  `8.1`,
+  `5.2`,
+  `7.9`,
+  `6,2`
+];
+
+export const DIRECTORS = [
+  `Peter Jackson`,
+  `Roman Polanski`,
+  `Tim Burton`,
+  `James Cameron`,
+  `Joel Coen`
+];
+
+export const WRITERS = [
+  `J.R.R. Tolkien`,
+  `Fran Walsh`,
+  `Leo Tolstoy`,
+  `William Shakespeare`,
+  `Fedor Dostoevsky`
+];
+
+export const ACTORS = [
+  `Jack Nicholson`,
+  `Marlon Brando`,
+  `Robert De Niro`,
+  `Al Pacino`,
+  `Daniel Day-Lewis`
+];
+
+export const COUNTRIES = [
+  `USA`,
+  `Canada`,
+  `Japan`,
+  `China`,
+  `UK`
+];
+
+export const YEARS = [
+  `1923`,
+  `1990`,
+  `1985`,
+  `2016`,
+  `2020`
+];
+
+export const GENRES = [
+  `fantasy`,
+  `comedy`,
+  `sci-fi`,
+  `action`,
+  `drama`
+];
+
+export const AGE_RATE = [
+  `3+`,
+  `12+`,
+  `16+`,
+  `21+`
+];

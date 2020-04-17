@@ -12,7 +12,7 @@ export const getRandomItem = (arr) => {
 };
 
 // цикл для рандомной записи в новый массив
-export const getRandomStr = (donor, len) => {
+export const getArrJoin = (donor, len) => {
   const emptyArr = [];
   for (let i = 0; i <= randomInt(1, len); i++) {
     const randomIndex = randomInt(0, donor.length - 1);
