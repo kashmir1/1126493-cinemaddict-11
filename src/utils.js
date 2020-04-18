@@ -1,5 +1,5 @@
 // Случайное число из диапазона
-import {MONTH_NAMES} from "./consts";
+import {MONTH_NAMES, MONTH_NAMES_LETTER} from "./consts";
 
 export const randomInt = (min, max) => {
   // случайное число от min до (max+1)
@@ -23,7 +23,6 @@ export const getArrJoin = (donor, len) => {
   return emptyArr;
 };
 
-
 // Время и дата
 export const writeTimeFormat = (value, len, string) => {
   return String(value).padStart(len, string);
@@ -36,7 +35,13 @@ export const formatTime = (date) => {
 };
 
 // Приведение даты к строке
-export const getDate = (dateObj) => {
+export const getDateIntFormat = (dateObj) => {
   const isDateShowing = !!dateObj;
   return isDateShowing ? `${dateObj.getFullYear()}/${writeTimeFormat(MONTH_NAMES[dateObj.getMonth()], 2, 0)}/${dateObj.getDate()} ` : ``;
 };
+
+export const getDateStrMonth = (dateObj) => {
+  const isDateShowing = !!dateObj;
+  return isDateShowing ? `${dateObj.getDate()} ${writeTimeFormat(MONTH_NAMES_LETTER[dateObj.getMonth()])} ${dateObj.getFullYear()}` : ``;
+};
+
