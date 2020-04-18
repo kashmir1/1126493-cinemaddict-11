@@ -3,12 +3,12 @@ import {getRandomItem} from "../utils";
 
 const generateComment = () => {
 
-  return [{
+  return {
     smile: `./images/emoji/` + getRandomItem(SMILES),
     commentText: getRandomItem(COMMENT_TEXTS),
     author: getRandomItem(AUTHORS),
     commentDate: new Date(),
-  }];
+  };
 };
 
 const generateComments = (count) => {

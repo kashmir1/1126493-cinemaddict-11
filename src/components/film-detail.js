@@ -1,5 +1,4 @@
 import {getDateStrMonth} from "../utils";
-import {MONTH_NAMES_LETTER} from "../consts";
 
 export const createFilmDetail = (filmsDetail) => {
 
@@ -72,7 +71,7 @@ export const createFilmDetail = (filmsDetail) => {
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                 ${genres}
+                 ${genres} //span
                 </td>
             </tr>
           </table>
@@ -93,7 +92,7 @@ export const createFilmDetail = (filmsDetail) => {
     </div>
     <div class="form-details__bottom-container">
         <section class="film-details__comments-wrap">
-          <h3 class="film-details__comments-title">Comments ${comments}<span class="film-details__comments-count">4</span></h3>
+          <h3 class="film-details__comments-title">Comments<span class="film-details__comments-count"> ${comments.length}</span></h3>
         <ul class="film-details__comments-list">
         </ul>
         <div class="film-details__new-comment">

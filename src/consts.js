@@ -89,7 +89,7 @@ export const RATE = [
   `8.1`,
   `5.2`,
   `7.9`,
-  `6,2`
+  `6.2`
 ];
 
 export const DIRECTORS = [

@@ -1,5 +1,5 @@
 import {randomInt, getArrJoin, getRandomItem} from "../utils";
-
+import {comments} from "../main";
 // Импортируем константы
 import {
   FILM_TITLES,
@@ -12,6 +12,7 @@ import {
   COUNTRIES,
   GENRES, AGE_RATE, YEARS
 } from "../consts";
+import {generateComments} from "./comments";
 
 
 const MIN_HOURS = 0;
@@ -48,8 +49,8 @@ const generateFilm = () => {
     country: getRandomItem(COUNTRIES),
     description, // ключ совпадает со значенеим
     genres: genre,
-    agesRate: getRandomItem(AGE_RATE),
-    comments: `12223`,
+    agesRate: getRandomItem(AGE_RATE), // s del
+    comments: generateComments(7),
   };
 };
 
