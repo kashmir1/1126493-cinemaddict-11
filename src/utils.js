@@ -1,4 +1,6 @@
 // Случайное число из диапазона
+import {MONTH_NAMES} from "./consts";
+
 export const randomInt = (min, max) => {
   // случайное число от min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
@@ -30,7 +32,11 @@ export const writeTimeFormat = (value, len, string) => {
 export const formatTime = (date) => {
   const hours = writeTimeFormat(date.getHours() % 12);
   const minutes = writeTimeFormat(date.getMinutes());
-
   return `${hours}:${minutes}`;
 };
 
+// Приведение даты к строке
+export const getDate = (dateObj) => {
+  const isDateShowing = !!dateObj;
+  return isDateShowing ? `${dateObj.getFullYear()}/${writeTimeFormat(MONTH_NAMES[dateObj.getMonth()], 2, 0)}/${dateObj.getDate()} ` : ``;
+};
