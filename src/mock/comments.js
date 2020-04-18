@@ -1,13 +1,9 @@
 import {SMILES, COMMENT_TEXTS, AUTHORS} from "../consts";
-import {getRandomItem, randomInt} from "../utils";
-
-const MIN_COMMENT_COUNT = 1;
-const MAX_COMMENT_COUNT = 5;
+import {getRandomItem} from "../utils";
 
 const generateComment = () => {
 
   return [{
-    commentCount: randomInt(MIN_COMMENT_COUNT, MAX_COMMENT_COUNT),
     smile: `./images/emoji/` + getRandomItem(SMILES),
     commentText: getRandomItem(COMMENT_TEXTS),
     author: getRandomItem(AUTHORS),

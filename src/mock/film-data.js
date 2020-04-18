@@ -49,14 +49,15 @@ const generateFilm = () => {
     description, // ключ совпадает со значенеим
     genres: genre,
     agesRate: getRandomItem(AGE_RATE),
+    comments: `12223`,
   };
 };
 
-const generateFilmsDetail = (count) => {
+const generateFilms = (count) => {
   return new Array(count)
     .fill(``)
     .map(generateFilm);
 };
 
-export {generateFilmsDetail};
+export {generateFilms};
 

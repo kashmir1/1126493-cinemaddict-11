@@ -6,7 +6,6 @@ const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 const MAX_COMMENTS = 5;
 const MIN_COMMENT_VALUE = 1;
 const MAX_COMMENT_VALUE = 5;
-const COMMENT_COUNT = 1;
 
 import {randomInt} from "./utils";
 
@@ -19,18 +18,16 @@ import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
 import {createFilmDetail} from "./components/film-detail";
 import {createComments} from "./components/comments";
-import {createCommentCount} from "./components/comments-count";
 
 // Моки
-import {generateFilmsDetail} from "./mock/film-detail-data";
+import {generateFilms} from "./mock/film-data";
 import {generateComments} from "./mock/comments";
 import {generateFilters} from "./mock/filter";
 
-const films = generateFilmsDetail(MOVIE_CARD_QUANTITY);
-const comments = generateComments(MAX_COMMENTS);
+const films = generateFilms(MOVIE_CARD_QUANTITY);
+const filmsDetail = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
-const filmsDetail = generateFilmsDetail(MOVIE_CARD_QUANTITY);
-
+export const comments = generateComments(MAX_COMMENTS);
 
 // Рендер
 const render = (container, template, place) => {
@@ -95,9 +92,6 @@ for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
 const siteBody = document.querySelector(`body`);
 render(siteBody, createFilmDetail(filmsDetail[FILM_DETAIL_QUANTITY]), `beforeend`);
 
-// Рендерим количество комментариев
-const commentContainer = siteBody.querySelector(`.film-details__comments-wrap`);
-render(commentContainer, createCommentCount(comments[COMMENT_COUNT]), `afterbegin`);
 
 // Рендерим комментарии
 const commentsList = siteBody.querySelector(`.film-details__comments-list`);
