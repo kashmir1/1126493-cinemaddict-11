@@ -1,6 +1,8 @@
-import {getDateStrMonth} from "../utils";
+import {getDate, getTime} from "../utils";
+import {MONTH_NAMES_LETTER} from "../consts";
 
-export const createFilmDetail = (filmsDetail) => {
+
+export const createFilmDetail = (film) => {
 
   const {
     title,
@@ -15,11 +17,12 @@ export const createFilmDetail = (filmsDetail) => {
     runtime,
     country,
     genres,
-    agesRate,
+    ageRate,
     comments,
-  } = filmsDetail;
+  } = film;
 
-  const date = getDateStrMonth(dateRelease);
+  const release = getDate(dateRelease, MONTH_NAMES_LETTER);
+  const time = getTime(runtime);
 
   return (
     `<section class="film-details">
@@ -31,7 +34,7 @@ export const createFilmDetail = (filmsDetail) => {
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="${poster}" alt="">
-          <p class="film-details__age">${agesRate}</p>
+          <p class="film-details__age">${ageRate}</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
@@ -58,11 +61,11 @@ export const createFilmDetail = (filmsDetail) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${date}</td>
+              <td class="film-details__cell">${release}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${runtime.hours} ${runtime.minutes}</td>
+              <td class="film-details__cell">${time}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
@@ -71,7 +74,7 @@ export const createFilmDetail = (filmsDetail) => {
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                 ${genres} //span
+                 <span class="film-details__genre">${genres}</span>
                 </td>
             </tr>
           </table>
@@ -125,4 +128,3 @@ export const createFilmDetail = (filmsDetail) => {
 </section>`
   );
 };
-

@@ -1,4 +1,4 @@
-import {formatTime, getDateIntFormat} from "../utils";
+import {getFormatTime, getDateIntegerFormat} from "../utils";
 
 export const createComments = (comment) => {
 
@@ -6,10 +6,10 @@ export const createComments = (comment) => {
   const isDateShowing = !!commentDate;
 
   // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
-  const date = getDateIntFormat(commentDate);
+  const date = getDateIntegerFormat(commentDate);
 
   // Выводим время с помощью фунции в utils
-  const time = isDateShowing ? formatTime(commentDate) : ``;
+  const time = isDateShowing ? getFormatTime(commentDate) : ``;
 
   return (
     ` <li class="film-details__comment">

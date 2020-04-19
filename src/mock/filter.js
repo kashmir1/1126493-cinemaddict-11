@@ -13,5 +13,4 @@ const generateFilters = () => {
   }];
 };
 
-
 export {generateFilters};

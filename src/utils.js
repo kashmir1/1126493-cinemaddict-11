@@ -1,47 +1,47 @@
-// Случайное число из диапазона
-import {MONTH_NAMES, MONTH_NAMES_LETTER} from "./consts";
-
-export const randomInt = (min, max) => {
+export const getRandomInteger = (min, max) => {
   // случайное число от min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 };
 
 // Рандом
-export const getRandomItem = (arr) => {
-  const rand = Math.floor(Math.random() * arr.length);
-  return arr[rand];
+export const getRandomArrayItem = (array) => {
+  const rand = Math.floor(Math.random() * array.length);
+  return array[rand];
 };
 
 // цикл для рандомной записи в новый массив
-export const getArrJoin = (donor, len) => {
+export const getRandomItems = (array, len) => {
   const emptyArr = [];
-  for (let i = 0; i <= randomInt(1, len); i++) {
-    const randomIndex = randomInt(0, donor.length - 1);
-    emptyArr.push(donor[randomIndex]);
+  for (let i = 0; i <= getRandomInteger(1, len); i++) {
+    const randomIndex = getRandomInteger(0, array.length - 1);
+    emptyArr.push(array[randomIndex]);
   }
   return emptyArr;
 };
 
-// Время и дата
-export const writeTimeFormat = (value, len, string) => {
+const createPadString = (value, len, string) => {
   return String(value).padStart(len, string);
 }; // Если значение < 10, добавляем 0
 
-export const formatTime = (date) => {
-  const hours = writeTimeFormat(date.getHours() % 12);
-  const minutes = writeTimeFormat(date.getMinutes());
+export const getFormatTime = (date) => {
+  const hours = createPadString(date.getHours() % 12);
+  const minutes = createPadString(date.getMinutes());
   return `${hours}:${minutes}`;
 };
 
 // Приведение даты к строке
-export const getDateIntFormat = (dateObj) => {
+export const getDateIntegerFormat = (dateObj) => {
   const isDateShowing = !!dateObj;
-  return isDateShowing ? `${dateObj.getFullYear()}/${writeTimeFormat(MONTH_NAMES[dateObj.getMonth()], 2, 0)}/${dateObj.getDate()} ` : ``;
+  return isDateShowing ? `${dateObj.getFullYear()}/${createPadString(dateObj.getMonth() + 1, 2, 0)}/${dateObj.getDate()} ` : ``;
 };
 
-export const getDateStrMonth = (dateObj) => {
-  const isDateShowing = !!dateObj;
-  return isDateShowing ? `${dateObj.getDate()} ${writeTimeFormat(MONTH_NAMES_LETTER[dateObj.getMonth()])} ${dateObj.getFullYear()}` : ``;
+export const getDate = (dateObj, monthsArray) => {
+  dateObj = new Date(getRandomInteger(1900, 2000), 0, getRandomInteger(1, 31));
+  return `${dateObj.getDate()} ${createPadString(getRandomArrayItem(monthsArray))} ${dateObj.getFullYear()}`;
 };
 
+export const getTime = (timeObj) => {
+  timeObj = new Date(0, 0, 0, getRandomInteger(0, 4), getRandomInteger(0, 60));
+  return `${timeObj.getHours() + `h`} ${timeObj.getMinutes() + `m`}`;
+};

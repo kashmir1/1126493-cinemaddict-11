@@ -1,12 +1,12 @@
 import {SMILES, COMMENT_TEXTS, AUTHORS} from "../consts";
-import {getRandomItem} from "../utils";
+import {getRandomArrayItem} from "../utils";
 
 const generateComment = () => {
 
   return {
-    smile: `./images/emoji/` + getRandomItem(SMILES),
-    commentText: getRandomItem(COMMENT_TEXTS),
-    author: getRandomItem(AUTHORS),
+    smile: `./images/emoji/` + getRandomArrayItem(SMILES),
+    commentText: getRandomArrayItem(COMMENT_TEXTS),
+    author: getRandomArrayItem(AUTHORS),
     commentDate: new Date(),
   };
 };
@@ -17,4 +17,4 @@ const generateComments = (count) => {
     .map(generateComment);
 };
 
-export {generateComment, generateComments};
+export {generateComments};
