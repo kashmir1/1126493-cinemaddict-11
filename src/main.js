@@ -86,8 +86,8 @@ const aaa = films[FILM_DETAIL_QUANTITY];
 export const siteBody = document.querySelector(`body`);
 render(siteBody, createFilmDetail(aaa), `beforeend`);
 
-// Рендерим комментарии
-const commentsList = siteBody.querySelector(`.film-details__comments-list`);
-for (let i = 0; i < aaa.comments.length; i++) {
-  render(commentsList, createComments(aaa.comments[i]), `beforeend`);
-}
+// // Рендерим комментарии
+// const commentsList = siteBody.querySelector(`.film-details__comments-list`);
+// for (let i = 0; i < aaa.comments.length; i++) {
+//   render(commentsList, createComments(aaa.comments[i]), `beforeend`);
+// }

@@ -29,7 +29,7 @@ const generateFilm = () => {
     description,
     genres,
     ageRate: getRandomArrayItem(AGE_RATE), // s del
-    comments: generateComments(7),
+    comments: generateComments(getRandomInteger(1, 5)),
   };
 };
 

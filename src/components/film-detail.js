@@ -1,6 +1,34 @@
-import {getDate, getTime} from "../utils";
+import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils";
 import {MONTH_NAMES_LETTER} from "../consts";
 
+const createCommentMarkup = (comment) => {
+  return comment.map((comment) => {
+    const {smile, commentText, author, commentDate} = comment;
+    const isDateShowing = !!commentDate;
+
+    // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
+    const date = getDateIntegerFormat(commentDate);
+
+    // Выводим время с помощью фунции в utils
+    const time = isDateShowing ? getFormatTime(commentDate) : ``;
+
+    return (
+      `<li class="film-details__comment">
+            <span class="film-details__comment-emoji">
+              <img src="${smile}" width="55" height="55" alt="emoji-smile">
+            </span>
+            <div>
+              <p class="film-details__comment-text">${commentText}</p>
+              <p class="film-details__comment-info">
+                <span class="film-details__comment-author">${author}</span>
+                <span class="film-details__comment-day">${date} ${time}</span>
+                <button class="film-details__comment-delete">Delete</button>
+              </p>
+            </div>
+          </li>`
+    );
+  }).join(`\n`);
+};
 
 export const createFilmDetail = (film) => {
 
@@ -23,7 +51,7 @@ export const createFilmDetail = (film) => {
 
   const release = getDate(dateRelease, MONTH_NAMES_LETTER);
   const time = getTime(runtime);
-
+  const commentMarkUp = createCommentMarkup(comments);
   return (
     `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -97,6 +125,8 @@ export const createFilmDetail = (film) => {
         <section class="film-details__comments-wrap">
           <h3 class="film-details__comments-title">Comments<span class="film-details__comments-count"> ${comments.length}</span></h3>
         <ul class="film-details__comments-list">
+          ${commentMarkUp}
+
         </ul>
         <div class="film-details__new-comment">
           <div for="add-emoji" class="film-details__add-emoji-label"></div>
