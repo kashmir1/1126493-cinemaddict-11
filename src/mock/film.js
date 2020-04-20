@@ -1,7 +1,7 @@
 import {getRandomInteger, getRandomItems, getRandomArrayItem} from "../utils";
 
 // Импортируем константы
-import {FILM_TITLES, FILM_DESCS, FILM_POSTERS, RATES, DIRECTORS, WRITERS, ACTORS, COUNTRIES, GENRES, AGE_RATE, YEARS} from "../consts";
+import {FILM_TITLES, FILM_DESCS, FILM_POSTERS, RATES, DIRECTORS, WRITERS, ACTORS, COUNTRIES, GENRES, AGE_RATES, YEARS} from "../consts";
 import {generateComments} from "./comments";
 
 const MAX_ARR_ELEM = 5;
@@ -35,7 +35,7 @@ const generateFilm = () => {
     country: getRandomArrayItem(COUNTRIES),
     description,
     genres: getGenre(),
-    ageRate: getRandomArrayItem(AGE_RATE), // s del
+    ageRate: getRandomArrayItem(AGE_RATES), // s del
     comments: generateComments(getRandomInteger(1, 5)),
   };
 };

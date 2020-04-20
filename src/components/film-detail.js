@@ -2,8 +2,8 @@ import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils";
 import {MONTH_NAMES_LETTER} from "../consts";
 
 const createCommentMarkup = (comment) => {
-  return comment.map((comment) => {
-    const {smile, commentText, author, commentDate} = comment;
+  return comment.map((comments) => {
+    const {smile, commentText, author, commentDate} = comments;
     const isDateShowing = !!commentDate;
 
     // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
@@ -31,7 +31,7 @@ const createCommentMarkup = (comment) => {
 };
 
 
-const createGenreMarkUp = (genres) => {
+const createGenreMarkup = (genres) => {
   return genres.map((genre) => {
     return (
       `<span class="film-details__genre">${genre}</span>`
@@ -61,8 +61,7 @@ export const createFilmDetail = (film) => {
   const release = getDate(dateRelease, MONTH_NAMES_LETTER);
   const time = getTime(runtime);
   const commentMarkup = createCommentMarkup(comments);
-  const genreMarkup = createGenreMarkUp(genres);
-
+  const genreMarkup = createGenreMarkup(genres);
 
   return (
     `<section class="film-details">

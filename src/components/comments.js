@@ -3,8 +3,8 @@ import {getFormatTime, getDateIntegerFormat} from "../utils";
 export const createComments = (comment) => {
 
   const {smile, commentText, author, commentDate} = comment;
-  const isDateShowing = !!commentDate;
 
+  const isDateShowing = !!commentDate;
   // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
   const date = getDateIntegerFormat(commentDate);
 

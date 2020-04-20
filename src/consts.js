@@ -52,4 +52,4 @@ export const ACTORS = [`Jack Nicholson`, `Marlon Brando`, `Robert De Niro`, `Al 
 export const COUNTRIES = [`USA`, `Canada`, `Japan`, `China`, `UK`];
 export const YEARS = [1923, 1990, 1985, 2016, 2020];
 export const GENRES = [`fantasy`, `comedy`, `sci-fi`, `action`, `drama`];
-export const AGE_RATE = [`3+`, `12+`, `16+`, `21+`];
+export const AGE_RATES = [`3+`, `12+`, `16+`, `21+`];
