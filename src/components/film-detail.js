@@ -30,6 +30,15 @@ const createCommentMarkup = (comment) => {
   }).join(`\n`);
 };
 
+
+const createGenreMarkUp = (genres) => {
+  return genres.map((genre) => {
+    return (
+      `<span class="film-details__genre">${genre}</span>`
+    );
+  }).join(`\n`);
+};
+
 export const createFilmDetail = (film) => {
 
   const {
@@ -51,7 +60,10 @@ export const createFilmDetail = (film) => {
 
   const release = getDate(dateRelease, MONTH_NAMES_LETTER);
   const time = getTime(runtime);
-  const commentMarkUp = createCommentMarkup(comments);
+  const commentMarkup = createCommentMarkup(comments);
+  const genreMarkup = createGenreMarkUp(genres);
+
+
   return (
     `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -102,7 +114,8 @@ export const createFilmDetail = (film) => {
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                 <span class="film-details__genre">${genres}</span>
+
+             ${genreMarkup}
                 </td>
             </tr>
           </table>
@@ -125,7 +138,7 @@ export const createFilmDetail = (film) => {
         <section class="film-details__comments-wrap">
           <h3 class="film-details__comments-title">Comments<span class="film-details__comments-count"> ${comments.length}</span></h3>
         <ul class="film-details__comments-list">
-          ${commentMarkUp}
+          ${commentMarkup}
 
         </ul>
         <div class="film-details__new-comment">

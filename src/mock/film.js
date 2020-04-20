@@ -9,8 +9,15 @@ const MAX_ARR_ELEM = 5;
 // Вызываем функцию массива описаний и сценаристов и вызываем метод join
 const description = getRandomItems(FILM_DESCS, getRandomInteger(1, MAX_ARR_ELEM)).join(` `);
 const writers = getRandomItems(WRITERS, getRandomInteger(1, MAX_ARR_ELEM)).join(`, `);
-const genres = getRandomItems(GENRES, getRandomInteger(1, MAX_ARR_ELEM)).join(` `);
 const filmName = getRandomArrayItem(FILM_TITLES);
+
+const getGenre = () => {
+  const currentGenres = GENRES.slice().filter(() => {
+    return Math.random() > 0.5;
+  });
+
+  return currentGenres.slice(0, getRandomInteger(1, currentGenres.length - 1));
+};
 
 const generateFilm = () => {
 
@@ -27,7 +34,7 @@ const generateFilm = () => {
     runtime: new Date(),
     country: getRandomArrayItem(COUNTRIES),
     description,
-    genres,
+    genres: getGenre(),
     ageRate: getRandomArrayItem(AGE_RATE), // s del
     comments: generateComments(getRandomInteger(1, 5)),
   };

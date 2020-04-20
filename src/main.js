@@ -12,7 +12,7 @@ import {createCommentList} from "./components/comment-list";
 import {createFilmCard} from "./components/film-card";
 import {createShowMoreButton} from "./components/show-more";
 import {createFilmDetail} from "./components/film-detail";
-import {createComments} from "./components/comments";
+import {createFooterStatistics} from "./components/footer-statistics";
 
 // Моки
 import {generateFilms} from "./mock/film";
@@ -20,6 +20,7 @@ import {generateFilters} from "./mock/filter";
 
 const films = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
+const film = films[FILM_DETAIL_QUANTITY];
 
 // Рендер
 const render = (container, template, place) => {
@@ -73,21 +74,16 @@ const topFilms = filmsContainer.querySelector(`.films-list--extra .films-list__c
 for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
   render(topFilms, createFilmCard(films[i]), `beforeend`);
 }
-//
+
 // Заполняем комментируемые фильмы карточками
 const commentFilms = filmsContainer.querySelector(`.films-list--extra:last-child .films-list__container`);
 for (let i = 0; i < FILM_LIST_EXTRA_QUANTITY; i++) {
   render(commentFilms, createFilmCard(films[i]), `beforeend`);
 }
 
-const aaa = films[FILM_DETAIL_QUANTITY];
-
 // Рендерим попап
-export const siteBody = document.querySelector(`body`);
-render(siteBody, createFilmDetail(aaa), `beforeend`);
+const siteBody = document.querySelector(`body`);
+render(siteBody, createFilmDetail(film), `beforeend`);
 
-// // Рендерим комментарии
-// const commentsList = siteBody.querySelector(`.film-details__comments-list`);
-// for (let i = 0; i < aaa.comments.length; i++) {
-//   render(commentsList, createComments(aaa.comments[i]), `beforeend`);
-// }
+const footer = document.querySelector(`.footer`);
+render(footer, createFooterStatistics(), `beforeend`);
