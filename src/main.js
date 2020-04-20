@@ -86,4 +86,4 @@ const siteBody = document.querySelector(`body`);
 render(siteBody, createFilmDetail(film), `beforeend`);
 
 const footer = document.querySelector(`.footer`);
-render(footer, createFooterStatistics(), `beforeend`);
+render(footer, createFooterStatistics(films.length - 1), `beforeend`);

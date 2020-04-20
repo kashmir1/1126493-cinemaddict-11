@@ -1,16 +1,12 @@
 import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils";
 import {MONTH_NAMES_LETTER} from "../consts";
 
-const createCommentMarkup = (comment) => {
-  return comment.map((comments) => {
-    const {smile, commentText, author, commentDate} = comments;
-    const isDateShowing = !!commentDate;
+const createCommentsMarkup = (comments) => {
+  return comments.map((comment) => {
+    const {smile, commentText, author, commentDate} = comment;
 
-    // Выводим дату используя метод получения года, функцию формата месяца с нулем и текущую дату
     const date = getDateIntegerFormat(commentDate);
-
-    // Выводим время с помощью фунции в utils
-    const time = isDateShowing ? getFormatTime(commentDate) : ``;
+    const time = getFormatTime(commentDate);
 
     return (
       `<li class="film-details__comment">
@@ -31,7 +27,7 @@ const createCommentMarkup = (comment) => {
 };
 
 
-const createGenreMarkup = (genres) => {
+const createGenresMarkup = (genres) => {
   return genres.map((genre) => {
     return (
       `<span class="film-details__genre">${genre}</span>`
@@ -60,8 +56,8 @@ export const createFilmDetail = (film) => {
 
   const release = getDate(dateRelease, MONTH_NAMES_LETTER);
   const time = getTime(runtime);
-  const commentMarkup = createCommentMarkup(comments);
-  const genreMarkup = createGenreMarkup(genres);
+  const commentsMarkup = createCommentsMarkup(comments);
+  const genresMarkup = createGenresMarkup(genres);
 
   return (
     `<section class="film-details">
@@ -114,7 +110,7 @@ export const createFilmDetail = (film) => {
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
 
-             ${genreMarkup}
+             ${genresMarkup}
                 </td>
             </tr>
           </table>
@@ -137,7 +133,7 @@ export const createFilmDetail = (film) => {
         <section class="film-details__comments-wrap">
           <h3 class="film-details__comments-title">Comments<span class="film-details__comments-count"> ${comments.length}</span></h3>
         <ul class="film-details__comments-list">
-          ${commentMarkup}
+          ${commentsMarkup}
 
         </ul>
         <div class="film-details__new-comment">

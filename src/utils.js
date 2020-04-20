@@ -1,6 +1,6 @@
 export const getRandomInteger = (min, max) => {
   // случайное число от min до (max+1)
-  let rand = min + Math.random() * (max + 1 - min);
+  const rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 };
 
@@ -20,14 +20,16 @@ export const getRandomItems = (array, len) => {
   return emptyArr;
 };
 
-const createPadString = (value, len, string) => {
-  return String(value).padStart(len, string);
-}; // Если значение < 10, добавляем 0
+// Если значение < 10, добавляем 0
+const createPadString = (value, len) => {
+  return String(value).padStart(len, `0`);
+};
 
 export const getFormatTime = (date) => {
-  const hours = createPadString(date.getHours() % 12);
-  const minutes = createPadString(date.getMinutes());
-  return `${hours}:${minutes}`;
+  const isDateShowing = !!date;
+  const hours = createPadString(date.getHours() % 12, 2);
+  const minutes = createPadString(date.getMinutes(), 2);
+  return isDateShowing ? `${hours}:${minutes}` : ``;
 };
 
 // Приведение даты к строке
@@ -37,11 +39,30 @@ export const getDateIntegerFormat = (dateObj) => {
 };
 
 export const getDate = (dateObj, monthsArray) => {
-  dateObj = new Date(getRandomInteger(1900, 2000), 0, getRandomInteger(1, 31));
-  return `${dateObj.getDate()} ${createPadString(getRandomArrayItem(monthsArray))} ${dateObj.getFullYear()}`;
+  const isDateShowing = !!dateObj;
+  return isDateShowing ? `${dateObj.getDate()} ${getRandomArrayItem(monthsArray)} ${dateObj.getFullYear()}` : ``;
 };
 
 export const getTime = (timeObj) => {
-  timeObj = new Date(0, 0, 0, getRandomInteger(0, 4), getRandomInteger(0, 60));
   return `${timeObj.getHours() + `h`} ${timeObj.getMinutes() + `m`}`;
+};
+
+
+// Slug
+export const createSlug = (str) => {
+  str = str.replace(/^\s+|\s+$/g, ``);
+
+  str = str.toLowerCase();
+
+  const from = `ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;`;
+  const to = `AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------`;
+  for (let i = 0, l = from.length; i < l; i++) {
+    str = str.replace(new RegExp(from.charAt(i), `g`), to.charAt(i));
+  }
+
+  str = str.replace(/[^a-z0-9 -]/g, ``)
+    .replace(/\s+/g, `-`)
+    .replace(/-+/g, `-`);
+
+  return str;
 };

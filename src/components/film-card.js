@@ -3,8 +3,6 @@ export const createFilmCard = (film) => {
   // создаем моки для карточки
   const {title, poster, description, rate, year, duration, genre, comments} = film;
 
-  // выносим данные для карточки в переменные из разметки
-
   return (
     ` <article class="film-card">
           <h3 class="film-card__title">${title}</h3>

@@ -1,15 +1,15 @@
-export const createFilterMarkup = (name, count) => {
+export const createFilterMarkup = (name, count, url) => {
 
   return (
     `
-     <a href="#${name}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>
+     <a href="#${url}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>
     `
   );
 };
 
 export const createNavigation = (filters) => {
 
-  const filtersMarkup = filters.map((it) => createFilterMarkup(it.name, it.count)).join(``);
+  const filtersMarkup = filters.map((it) => createFilterMarkup(it.name, it.count, it.url)).join(``);
 
   return (
     `<nav class="main-navigation">
