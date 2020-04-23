@@ -22,10 +22,10 @@ import FooterStatisticsComponent from "./components/footer-statistics";
 import {generateFilms} from "./mock/film";
 import {generateFilters} from "./mock/filter";
 
-const siteBody = document.querySelector(`body`);
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
 const filmList = document.querySelector(`.films-list`);
+const bodyElem = document.querySelector(`body`);
 
 const films = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
@@ -34,20 +34,10 @@ const film = films[FILM_DETAIL_QUANTITY];
 render(headerElem, new UserRankComponent().getElement(), RenderPosition.BEFOREEND);
 render(mainElem, new NavigationComponent(filters).getElement(), RenderPosition.BEFOREEND);
 
-// render(siteBody, new FilmDetailComponent(film).getElement(), RenderPosition.BEFOREEND);
 
-
-///////
-const renderFilmCards = () => {
-  render(mainElem, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
-  render(filmList, new FilmsListContainerComponent().getElement(), RenderPosition.BEFOREEND);
-
-  const filmsListContainer = filmList.querySelector(`.films-list__container`);
-  let showingFilmsCount = SHOWING_FILM_COUNT_ON_START;
-
-  films.slice(1, showingFilmsCount)
-    .forEach((films) => render(filmsListContainer, new FilmCardComponent(films), RenderPosition.BEFOREEND));
+const renderFilmDetail = (film) => {
+  const filmDetailComponent = new FilmDetailComponent(film);
+  render(bodyElem, filmDetailComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
-
-renderFilmCards();
+renderFilmDetail(film);

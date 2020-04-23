@@ -2,9 +2,7 @@ import {createElement} from "../utils";
 
 const createFilmsListContainer = () => {
   return (
-    `
-      <div class="films-list__container"></div>
-`
+    `<div class="films-list__container"></div>`
   );
 };
 
