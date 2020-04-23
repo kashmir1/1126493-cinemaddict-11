@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 export const createCommentList = () => {
   return (
     ` <section class="films-list--extra">
@@ -6,3 +8,25 @@ export const createCommentList = () => {
        </section>`
   );
 };
+
+export default class CommentList {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentList();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

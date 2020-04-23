@@ -1,4 +1,6 @@
-export const createFilmCard = (film) => {
+import {createElement} from "../utils.js";
+
+const createFilmCard = (film) => {
 
   // создаем моки для карточки
   const {title, poster, description, rate, year, duration, genre, comments} = film;
@@ -23,3 +25,26 @@ export const createFilmCard = (film) => {
         </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
