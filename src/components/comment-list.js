@@ -1,6 +1,6 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils";
 
-export const createCommentList = () => {
+const createCommentedFilmsList = () => {
   return (
     ` <section class="films-list--extra">
       <h2 class="films-list__title">Most commented</h2>
@@ -9,13 +9,14 @@ export const createCommentList = () => {
   );
 };
 
-export default class CommentList {
+// Класс фильмы из раздела дополнительно
+export default class CommentedFilmsList {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createCommentList();
+    return createCommentedFilmsList();
   }
 
   getElement() {

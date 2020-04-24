@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils";
 
 const createFilmCard = (film) => {
 
@@ -6,7 +6,7 @@ const createFilmCard = (film) => {
   const {title, poster, description, rate, year, duration, genre, comments} = film;
 
   return (
-    `<article class="film-card">
+    ` <article class="film-card">
           <h3 class="film-card__title">${title}</h3>
           <p class="film-card__rating">${rate}</p>
           <p class="film-card__info">
@@ -22,10 +22,11 @@ const createFilmCard = (film) => {
             <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
             <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
           </form>
-    </article>`
+        </article>`
   );
 };
 
+// Класс карточка фильма
 export default class FilmCard {
   constructor(film) {
     this._film = film;

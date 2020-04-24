@@ -189,4 +189,3 @@ export default class FilmDetail {
     this._element = null;
   }
 }
-

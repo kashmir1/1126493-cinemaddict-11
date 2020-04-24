@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils";
 
 const createShowMoreButton = () => {
   return (
@@ -6,6 +6,7 @@ const createShowMoreButton = () => {
   );
 };
 
+// Класс кнопка показать еще
 export default class ShowMoreButton {
   constructor() {
     this._element = null;

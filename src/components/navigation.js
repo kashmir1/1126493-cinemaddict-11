@@ -24,7 +24,8 @@ const createNavigation = (filters) => {
   );
 };
 
-export default class Navigation {
+// Класс меню
+export default class Navigations {
   constructor(filters) {
     this._filters = filters;
     this._element = null;

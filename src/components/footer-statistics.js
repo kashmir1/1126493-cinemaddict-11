@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils";
 
 const createFooterStatistics = (filmsCount) => {
 
@@ -11,13 +11,14 @@ const createFooterStatistics = (filmsCount) => {
   );
 };
 
-export default class FooterStatistics {
-  constructor() {
+export default class SiteFooterStatisctics {
+  constructor(FILMS_COUNT) {
+    this._filmsCount = FILMS_COUNT;
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics();
+    return createFooterStatistics(this._filmsCount);
   }
 
   getElement() {

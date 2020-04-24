@@ -9,6 +9,7 @@ const createUserRank = () => {
   );
 };
 
+// Класс звание пользователя
 export default class UserRank {
   constructor() {
     this._element = null;
