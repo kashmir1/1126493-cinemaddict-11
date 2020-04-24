@@ -1,7 +1,6 @@
 const MOVIE_CARD_QUANTITY = 15;
 const FILM_LIST_EXTRA_QUANTITY = 2;
-const FILM_DETAIL_QUANTITY = 0;
-const SHOWING_FILM_COUNT_ON_START = 5;
+const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 
 import UserRankComponent from "./components/rank";
@@ -55,7 +54,7 @@ const renderMovieCard = (container, filmDetail) => {
 
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
-      render(footerElement, filmDetailsComponent.getElement(), RenderPosition.AFTEREND);
+      render(footerElement, filmDetailsComponent.getElement(), RenderPosition.BEFOREEND);
     });
   });
 
@@ -66,7 +65,7 @@ const renderMovieCard = (container, filmDetail) => {
 
 const renderMovies = (filmDetailsList) => {
   // Показывает количество карточек в начале
-  let showingMovieCardCount = 5;
+  let showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
 
   // Добавление карточек в DOM
   filmDetailsList.slice(1, showingMovieCardCount).forEach((card) => {
@@ -84,7 +83,7 @@ const renderMovies = (filmDetailsList) => {
     const prevMovieCardCount = showingMovieCardCount;
 
     // Увеличение счетчика отображаемых карточек
-    showingMovieCardCount = showingMovieCardCount + 5;
+    showingMovieCardCount = showingMovieCardCount + SHOWING_FILM_COUNT_BY_BUTTON;
 
     // Добавление новых карточек
     filmDetailsList.slice(prevMovieCardCount, showingMovieCardCount).forEach((card) => {
@@ -97,6 +96,29 @@ const renderMovies = (filmDetailsList) => {
       showMoreButtonComponent.getElement().remove();
       showMoreButtonComponent.removeElement();
     }
+  });
+
+  // Добавление шаблона с дополнительными фильмами в DOM
+  render(filmsElement, new TopFilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+
+  // Добавление шаблона с дополнительными фильмами в DOM
+  render(filmsElement, new CommentedFilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+
+  // Объявление контейнеров для добавление разметки
+  const filmsExtraElement = filmsElement.querySelectorAll(`.films-list--extra`);
+  const filmsListTopRatedContainer = filmsExtraElement[0].querySelector(`.films-list__container`);
+  const filmsListMostCommentedContainer = filmsExtraElement[1].querySelector(`.films-list__container`);
+
+  // Добавление карточек с высоким рейтингом в DOM
+  filmDetailsList.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
+    // render(filmsListTopRatedContainer, new MovieCardComponent(card).getElement(), RenderPosition.BEFOREEND);
+    renderMovieCard(filmsListTopRatedContainer, card);
+  });
+
+  // Добавление карточек с большим количеством комментарив в DOM
+  filmDetailsList.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
+    // render(filmsListMostCommentedContainer, new MovieCardComponent(card).getElement(), RenderPosition.BEFOREEND);
+    renderMovieCard(filmsListMostCommentedContainer, card);
   });
 };
 

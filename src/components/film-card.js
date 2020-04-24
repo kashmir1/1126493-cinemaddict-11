@@ -6,7 +6,7 @@ const createFilmCard = (film) => {
   const {title, poster, description, rate, year, duration, genre, comments} = film;
 
   return (
-    ` <article class="film-card">
+    `<article class="film-card">
           <h3 class="film-card__title">${title}</h3>
           <p class="film-card__rating">${rate}</p>
           <p class="film-card__info">
