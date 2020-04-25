@@ -1,4 +1,4 @@
-import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils";
+import {getDate, getDateIntegerFormat, getFormatTime, getTime, createElement} from "../utils";
 import {MONTH_NAMES_LETTER} from "../consts";
 
 const createCommentsMarkup = (comments) => {
@@ -35,7 +35,7 @@ const createGenresMarkup = (genres) => {
   }).join(`\n`);
 };
 
-export const createFilmDetail = (film) => {
+const createFilmDetail = (film) => {
 
   const {
     title,
@@ -166,3 +166,26 @@ export const createFilmDetail = (film) => {
 </section>`
   );
 };
+
+export default class FilmDetail {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetail(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
