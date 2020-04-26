@@ -35,7 +35,7 @@ const generateFilm = () => {
     country: getRandomArrayItem(COUNTRIES),
     description,
     genres: getGenre(),
-    ageRate: getRandomArrayItem(AGE_RATES), // s del
+    ageRate: getRandomArrayItem(AGE_RATES),
     comments: generateComments(getRandomInteger(1, 5)),
   };
 };

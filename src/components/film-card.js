@@ -1,9 +1,19 @@
-import {createElement} from "../utils";
+import {createElement, getTime} from "../utils";
+
+const createGenreMarkup = (genres) => {
+  return genres.map((genre) => {
+    return (
+      `<span class="film-card__genre">${genre}</span>`
+    );
+  }).join(``);
+};
 
 const createFilmCard = (film) => {
 
   // создаем моки для карточки
-  const {title, poster, description, rate, year, duration, genre, comments} = film;
+  const {title, poster, description, rate, year, runtime, genres, comments} = film;
+  const time = getTime(runtime);
+  const genreMarkup = createGenreMarkup(genres);
 
   return (
     `<article class="film-card">
@@ -11,8 +21,8 @@ const createFilmCard = (film) => {
           <p class="film-card__rating">${rate}</p>
           <p class="film-card__info">
             <span class="film-card__year">${year}</span>
-            <span class="film-card__duration">${duration}</span>
-            <span class="film-card__genre">${genre}</span>
+            <span class="film-card__duration">${time}</span>
+            ${genreMarkup}
           </p>
           <img src="${poster}" alt="" class="film-card__poster">
           <p class="film-card__description">${description}</p>

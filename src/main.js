@@ -52,6 +52,8 @@ const renderMovieCard = (container, filmDetail) => {
 
   const filmElements = [filmPoster, filmTitle, filmComments];
 
+  // Функция закрытия по ESC
+
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
       render(footerElement, filmDetailsComponent.getElement(), RenderPosition.BEFOREEND);
