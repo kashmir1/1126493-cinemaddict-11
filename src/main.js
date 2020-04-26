@@ -52,13 +52,31 @@ const renderMovieCard = (container, filmDetail) => {
 
   const filmElements = [filmPoster, filmTitle, filmComments];
 
-  // Функция закрытия по ESC
-
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
       render(footerElement, filmDetailsComponent.getElement(), RenderPosition.BEFOREEND);
+      popupCloseButton.addEventListener(`click`, onPopupCloseButtonClick);
+      document.addEventListener(`keydown`, onPopupEscButtonKeydown);
     });
   });
+
+  const removeFilmDetailsComponent = () => {
+    filmDetailsComponent.getElement().remove();
+    popupCloseButton.removeEventListener(`click`, onPopupCloseButtonClick);
+    document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
+  };
+
+  const onPopupCloseButtonClick = (evt) => {
+    evt.preventDefault();
+    removeFilmDetailsComponent();
+  };
+
+  const onPopupEscButtonKeydown = (evt) => {
+    evt.preventDefault();
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      removeFilmDetailsComponent();
+    }
+  };
 
   popupCloseButton.addEventListener(`click`, () => {
     filmDetailsComponent.getElement().remove();
