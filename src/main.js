@@ -13,7 +13,7 @@ import FilmCardComponent from "./components/film-card";
 import ShowMoreButtonComponent from "./components/show-more";
 import FilmDetailComponent from "./components/film-detail";
 import FooterStatisticsComponent from "./components/footer-statistics";
-
+import NoFilmsComponent from "./components/no-films";
 
 // Моки
 import {generateFilms} from "./mock/film";
@@ -55,8 +55,28 @@ const renderMovieCard = (container, filmDetail) => {
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
       render(footerElement, filmDetailsComponent.getElement(), RenderPosition.BEFOREEND);
+      popupCloseButton.addEventListener(`click`, onPopupCloseButtonClick);
+      document.addEventListener(`keydown`, onPopupEscButtonKeydown);
     });
   });
+
+  const removeFilmDetailsComponent = () => {
+    filmDetailsComponent.getElement().remove();
+    popupCloseButton.removeEventListener(`click`, onPopupCloseButtonClick);
+    document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
+  };
+
+  const onPopupCloseButtonClick = (evt) => {
+    evt.preventDefault();
+    removeFilmDetailsComponent();
+  };
+
+  const onPopupEscButtonKeydown = (evt) => {
+    evt.preventDefault();
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      removeFilmDetailsComponent();
+    }
+  };
 
   popupCloseButton.addEventListener(`click`, () => {
     filmDetailsComponent.getElement().remove();
@@ -66,6 +86,12 @@ const renderMovieCard = (container, filmDetail) => {
 const renderMovies = (filmDetailsList) => {
   // Показывает количество карточек в начале
   let showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
+
+  const isFilmDetails = !!filmDetailsList.length;
+  if (!isFilmDetails) {
+    render(mainElem, new NoFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+    return;
+  }
 
   // Добавление карточек в DOM
   filmDetailsList.slice(1, showingMovieCardCount).forEach((card) => {
