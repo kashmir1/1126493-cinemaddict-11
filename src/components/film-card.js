@@ -1,4 +1,4 @@
-import {getTime} from "../utils";
+import {getTime} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
 const createGenreMarkup = (genres) => {

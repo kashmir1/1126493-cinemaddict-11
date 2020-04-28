@@ -1,4 +1,4 @@
-import {createSlug} from "../utils";
+import {createSlug} from "../utils/common";
 
 const generateFilters = () => {
   return [{

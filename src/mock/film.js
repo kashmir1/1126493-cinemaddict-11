@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomItems, getRandomArrayItem} from "../utils";
+import {getRandomInteger, getRandomItems, getRandomArrayItem} from "../utils/common";
 
 // Импортируем константы
 import {FILM_TITLES, FILM_DESCS, FILM_POSTERS, RATES, DIRECTORS, WRITERS, ACTORS, COUNTRIES, GENRES, AGE_RATES, YEARS} from "../consts";
