@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
 const createSortList = () => {
   return (
@@ -11,25 +11,8 @@ const createSortList = () => {
 };
 
 // Класс сортировка
-export default class SortList {
-  constructor() {
-    this._element = null;
-  }
-
+export default class SortList extends AbstractComponent {
   getTemplate() {
     return createSortList();
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }
-
