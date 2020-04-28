@@ -18,7 +18,7 @@ import NoFilmsComponent from "./components/no-films";
 // Моки
 import {generateFilms} from "./mock/film";
 import {generateFilters} from "./mock/filter";
-import {render, RenderPosition} from "./utils";
+import {render, RenderPosition} from "./utils/render";
 
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
