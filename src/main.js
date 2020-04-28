@@ -26,10 +26,10 @@ const mainElem = document.querySelector(`.main`);
 const films = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
 
-render(headerElem, new UserRankComponent().getElement(), RenderPosition.BEFOREEND);
-render(mainElem, new NavigationComponent(filters).getElement(), RenderPosition.BEFOREEND);
-render(mainElem, new SortListComponent().getElement(), RenderPosition.BEFOREEND);
-render(mainElem, new FilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+render(headerElem, new UserRankComponent, RenderPosition.BEFOREEND);
+render(mainElem, new NavigationComponent(filters), RenderPosition.BEFOREEND);
+render(mainElem, new SortListComponent, RenderPosition.BEFOREEND);
+render(mainElem, new FilmsListComponent, RenderPosition.BEFOREEND);
 
 
 // Объявление контейнеров для добавление разметки
@@ -42,7 +42,7 @@ const renderMovieCard = (container, filmDetail) => {
   const movieCardComponent = new FilmCardComponent(filmDetail);
   const filmDetailsComponent = new FilmDetailComponent(filmDetail);
 
-  render(container, movieCardComponent.getElement(), RenderPosition.BEFOREEND);
+  render(container, movieCardComponent, RenderPosition.BEFOREEND);
 
   const filmPoster = movieCardComponent.getElement().querySelector(`.film-card__poster`);
   const filmTitle = movieCardComponent.getElement().querySelector(`.film-card__title`);
@@ -54,7 +54,7 @@ const renderMovieCard = (container, filmDetail) => {
 
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
-      render(footerElement, filmDetailsComponent.getElement(), RenderPosition.BEFOREEND);
+      render(footerElement, filmDetailsComponent, RenderPosition.BEFOREEND);
       popupCloseButton.addEventListener(`click`, onPopupCloseButtonClick);
       document.addEventListener(`keydown`, onPopupEscButtonKeydown);
     });
@@ -89,7 +89,7 @@ const renderMovies = (filmDetailsList) => {
 
   const isFilmDetails = !!filmDetailsList.length;
   if (!isFilmDetails) {
-    render(mainElem, new NoFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+    render(mainElem, new NoFilmsComponent, RenderPosition.BEFOREEND);
     return;
   }
 
@@ -101,7 +101,7 @@ const renderMovies = (filmDetailsList) => {
   const showMoreButtonComponent = new ShowMoreButtonComponent();
 
   // Добавление кнопки показать еще в DOM
-  render(filmsListElement, showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
+  render(filmsListElement, showMoreButtonComponent, RenderPosition.BEFOREEND);
 
   // Обработчик события нажатия на кнопку загрузить еще
   showMoreButtonComponent.getElement().addEventListener(`click`, () => {
@@ -125,10 +125,10 @@ const renderMovies = (filmDetailsList) => {
   });
 
   // Добавление шаблона с дополнительными фильмами в DOM
-  render(filmsElement, new TopFilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+  render(filmsElement, new TopFilmsListComponent, RenderPosition.BEFOREEND);
 
   // Добавление шаблона с дополнительными фильмами в DOM
-  render(filmsElement, new CommentedFilmsListComponent().getElement(), RenderPosition.BEFOREEND);
+  render(filmsElement, new CommentedFilmsListComponent, RenderPosition.BEFOREEND);
 
   // Объявление контейнеров для добавление разметки
   const filmsExtraElement = filmsElement.querySelectorAll(`.films-list--extra`);
@@ -153,7 +153,7 @@ const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
 
 // Добавление блока статистика в DOM
-render(footerStatisticsElement, new FooterStatisticsComponent(films.length).getElement(), RenderPosition.BEFOREEND);
+render(footerStatisticsElement, new FooterStatisticsComponent(films.length), RenderPosition.BEFOREEND);
 renderMovies(films);
 
 
