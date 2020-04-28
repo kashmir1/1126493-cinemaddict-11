@@ -18,7 +18,7 @@ import NoFilmsComponent from "./components/no-films";
 // Моки
 import {generateFilms} from "./mock/film";
 import {generateFilters} from "./mock/filter";
-import {render, RenderPosition} from "./utils/render";
+import {render, RenderPosition, remove} from "./utils/render";
 
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
@@ -61,7 +61,7 @@ const renderMovieCard = (container, filmDetail) => {
   });
 
   const removeFilmDetailsComponent = () => {
-    filmDetailsComponent.getElement().remove();
+    remove(filmDetailsComponent.getElement());
     popupCloseButton.removeEventListener(`click`, onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
   };
@@ -79,7 +79,7 @@ const renderMovieCard = (container, filmDetail) => {
   };
 
   popupCloseButton.addEventListener(`click`, () => {
-    filmDetailsComponent.getElement().remove();
+    remove(filmDetailsComponent.getElement());
   });
 };
 
@@ -119,7 +119,7 @@ const renderMovies = (filmDetailsList) => {
 
     // Удаление кнопки загрузить еще по условию
     if (showingMovieCardCount >= filmDetailsList.length) {
-      showMoreButtonComponent.getElement().remove();
+      remove(showMoreButtonComponent.getElement());
       showMoreButtonComponent.removeElement();
     }
   });
