@@ -22,7 +22,8 @@ export const createElement = (template) => {
   return newElement.firstElementChild;
 };
 
-export const remove = (element) => {
-  element.remove();
+export const remove = (component) => {
+  component.getElement().remove();
+  component.removeElement();
 };
 

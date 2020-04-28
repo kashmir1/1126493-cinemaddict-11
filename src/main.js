@@ -26,10 +26,10 @@ const mainElem = document.querySelector(`.main`);
 const films = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
 
-render(headerElem, new UserRankComponent, RenderPosition.BEFOREEND);
+render(headerElem, new UserRankComponent(), RenderPosition.BEFOREEND);
 render(mainElem, new NavigationComponent(filters), RenderPosition.BEFOREEND);
-render(mainElem, new SortListComponent, RenderPosition.BEFOREEND);
-render(mainElem, new FilmsListComponent, RenderPosition.BEFOREEND);
+render(mainElem, new SortListComponent(), RenderPosition.BEFOREEND);
+render(mainElem, new FilmsListComponent(), RenderPosition.BEFOREEND);
 
 
 // Объявление контейнеров для добавление разметки
@@ -61,7 +61,7 @@ const renderMovieCard = (container, filmDetail) => {
   });
 
   const removeFilmDetailsComponent = () => {
-    remove(filmDetailsComponent.getElement());
+    remove(filmDetailsComponent);
     popupCloseButton.removeEventListener(`click`, onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
   };
@@ -77,10 +77,6 @@ const renderMovieCard = (container, filmDetail) => {
       removeFilmDetailsComponent();
     }
   };
-
-  popupCloseButton.addEventListener(`click`, () => {
-    remove(filmDetailsComponent.getElement());
-  });
 };
 
 const renderMovies = (filmDetailsList) => {
@@ -89,7 +85,7 @@ const renderMovies = (filmDetailsList) => {
 
   const isFilmDetails = !!filmDetailsList.length;
   if (!isFilmDetails) {
-    render(mainElem, new NoFilmsComponent, RenderPosition.BEFOREEND);
+    render(mainElem, new NoFilmsComponent(), RenderPosition.BEFOREEND);
     return;
   }
 
@@ -119,16 +115,16 @@ const renderMovies = (filmDetailsList) => {
 
     // Удаление кнопки загрузить еще по условию
     if (showingMovieCardCount >= filmDetailsList.length) {
-      remove(showMoreButtonComponent.getElement());
+      remove(showMoreButtonComponent);
       showMoreButtonComponent.removeElement();
     }
   });
 
   // Добавление шаблона с дополнительными фильмами в DOM
-  render(filmsElement, new TopFilmsListComponent, RenderPosition.BEFOREEND);
+  render(filmsElement, new TopFilmsListComponent(), RenderPosition.BEFOREEND);
 
   // Добавление шаблона с дополнительными фильмами в DOM
-  render(filmsElement, new CommentedFilmsListComponent, RenderPosition.BEFOREEND);
+  render(filmsElement, new CommentedFilmsListComponent(), RenderPosition.BEFOREEND);
 
   // Объявление контейнеров для добавление разметки
   const filmsExtraElement = filmsElement.querySelectorAll(`.films-list--extra`);
