@@ -29,7 +29,7 @@ const filters = generateFilters();
 render(headerElem, new UserRankComponent(), RenderPosition.BEFOREEND);
 render(mainElem, new NavigationComponent(filters), RenderPosition.BEFOREEND);
 render(mainElem, new SortListComponent(), RenderPosition.BEFOREEND);
-render(mainElem, new FilmsListComponent(), RenderPosition.BEFOREEND);
+render(mainElem, new FilmsListComponent, RenderPosition.BEFOREEND);
 
 
 // Объявление контейнеров для добавление разметки
@@ -52,17 +52,20 @@ const renderMovieCard = (container, filmDetail) => {
 
   const filmElements = [filmPoster, filmTitle, filmComments];
 
+  // Обработчик нажатия на элементы списка карточки фильма
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
       render(footerElement, filmDetailsComponent, RenderPosition.BEFOREEND);
-      popupCloseButton.addEventListener(`click`, onPopupCloseButtonClick);
+      filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
       document.addEventListener(`keydown`, onPopupEscButtonKeydown);
     });
   });
 
+
+  // Удаление компонента описание фильма и обработчиков
   const removeFilmDetailsComponent = () => {
-    remove(filmDetailsComponent);
-    popupCloseButton.removeEventListener(`click`, onPopupCloseButtonClick);
+    remove(filmDetailsComponent, true);
+    filmDetailsComponent.removePopupCloseButtonClick(onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
   };
 
@@ -100,7 +103,7 @@ const renderMovies = (filmDetailsList) => {
   render(filmsListElement, showMoreButtonComponent, RenderPosition.BEFOREEND);
 
   // Обработчик события нажатия на кнопку загрузить еще
-  showMoreButtonComponent.getElement().addEventListener(`click`, () => {
+  showMoreButtonComponent.setClickHandler(() => {
     // Получает количество карточек отображаемых изначально
     const prevMovieCardCount = showingMovieCardCount;
 
