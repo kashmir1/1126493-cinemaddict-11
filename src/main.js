@@ -23,9 +23,6 @@ render(mainElem, new NavigationComponent(filters), RenderPosition.BEFOREEND);
 render(mainElem, new SortListComponent(), RenderPosition.BEFOREEND);
 render(mainElem, new FilmsListComponent(), RenderPosition.BEFOREEND);
 
-
-
-
 // Объявление контейнеров для добавление разметки
 export const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);

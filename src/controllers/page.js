@@ -10,7 +10,7 @@ import NoFilmsComponent from "../components/no-films";
 import ShowMoreButtonComponent from "../components/show-more";
 import TopFilmsListComponent from "../components/top-list";
 import CommentedFilmsListComponent from "../components/comment-list";
-import {footerElement, mainElem} from "../main";
+import {mainElem} from "../main";
 
 
 const renderMovieCard = (container, filmDetail) => {
@@ -29,7 +29,7 @@ const renderMovieCard = (container, filmDetail) => {
   // Обработчик нажатия на элементы списка карточки фильма
   filmElements.forEach((element) => {
     element.addEventListener(`click`, () => {
-      render(footerElement, filmDetailsComponent, RenderPosition.BEFOREEND);
+      render(container, filmDetailsComponent, RenderPosition.BEFOREEND);
       filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
       document.addEventListener(`keydown`, onPopupEscButtonKeydown);
     });
@@ -55,11 +55,6 @@ const renderMovieCard = (container, filmDetail) => {
     }
   };
 };
-
-// const renderMovies = (filmDetailsList) => {
-//
-// };
-
 
 export default class PageController {
   constructor(container) {
@@ -90,7 +85,7 @@ export default class PageController {
       renderMovieCard(filmsListContainer, card);
     });
 
-    const showMoreButtonComponent = new ShowMoreButtonComponent();
+    const showMoreButtonComponent = this._ShowMoreButtonComponent;
 
     // Добавление кнопки показать еще в DOM
     render(filmsListElement, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
