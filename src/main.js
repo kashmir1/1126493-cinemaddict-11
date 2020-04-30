@@ -5,7 +5,7 @@ import NavigationComponent from "./components/navigation";
 import SortListComponent from "./components/sort";
 import FilmsListComponent from "./components/film-list";
 import FooterStatisticsComponent from "./components/footer-statistics";
-import FilmsController from "./controllers/films";
+import PageController from "./controllers/page";
 
 // Моки
 import {generateFilms} from "./mock/film";
@@ -24,19 +24,15 @@ render(mainElem, new SortListComponent(), RenderPosition.BEFOREEND);
 render(mainElem, new FilmsListComponent(), RenderPosition.BEFOREEND);
 
 
-// Объявление контейнеров для добавление разметки
-export const filmsElement = mainElem.querySelector(`.films`);
-export const filmsListElement = filmsElement.querySelector(`.films-list`);
-export const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
 
 // Объявление контейнеров для добавление разметки
 export const footerElement = document.querySelector(`.footer`);
 const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
-const filmsController = new FilmsController(filmsListContainer);
+const pageController = new PageController(mainElem);
 
 // Добавление блока статистика в DOM
 render(footerStatisticsElement, new FooterStatisticsComponent(films.length), RenderPosition.BEFOREEND);
-filmsController.render(films);
+pageController.render(films);
 
 
