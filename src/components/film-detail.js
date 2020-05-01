@@ -1,7 +1,6 @@
 import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 import {MONTH_NAMES_LETTER} from "../consts";
-import {render, RenderPosition} from "../utils/render";
 
 const createCommentsMarkup = (comments) => {
   return comments.map((comment) => {
