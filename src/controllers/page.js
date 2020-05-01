@@ -13,24 +13,15 @@ import CommentedFilmsListComponent from "../components/comment-list";
 
 const renderMovieCard = (container, filmDetail) => {
 
-  const movieCardComponent = new FilmCardComponent(filmDetail);
+  const filmCardComponent = new FilmCardComponent(filmDetail);
   const filmDetailsComponent = new FilmDetailComponent(filmDetail);
 
-  render(container, movieCardComponent, RenderPosition.BEFOREEND);
+  render(container, filmCardComponent, RenderPosition.BEFOREEND);
 
-  const filmPoster = movieCardComponent.getElement().querySelector(`.film-card__poster`);
-  const filmTitle = movieCardComponent.getElement().querySelector(`.film-card__title`);
-  const filmComments = movieCardComponent.getElement().querySelector(`.film-card__comments`);
-
-  const filmElements = [filmPoster, filmTitle, filmComments];
-
-  // Обработчик нажатия на элементы списка карточки фильма
-  filmElements.forEach((element) => {
-    element.addEventListener(`click`, () => {
-      render(container, filmDetailsComponent, RenderPosition.BEFOREEND);
-      filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
-      document.addEventListener(`keydown`, onPopupEscButtonKeydown);
-    });
+  filmCardComponent.setPopupOnenedClick(() => {
+    render(container, filmDetailsComponent, RenderPosition.BEFOREEND);
+    filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
+    document.addEventListener(`keydown`, handlePopupKeydown);
   });
 
 
@@ -38,7 +29,7 @@ const renderMovieCard = (container, filmDetail) => {
   const removeFilmDetailsComponent = () => {
     remove(filmDetailsComponent);
     filmDetailsComponent.removePopupCloseButtonClick(onPopupCloseButtonClick);
-    document.removeEventListener(`keydown`, onPopupEscButtonKeydown);
+    document.removeEventListener(`keydown`, handlePopupKeydown);
   };
 
   const onPopupCloseButtonClick = (evt) => {
@@ -46,7 +37,7 @@ const renderMovieCard = (container, filmDetail) => {
     removeFilmDetailsComponent();
   };
 
-  const onPopupEscButtonKeydown = (evt) => {
+  const handlePopupKeydown = (evt) => {
     evt.preventDefault();
     if (evt.key === `Escape` || evt.key === `Esc`) {
       removeFilmDetailsComponent();
