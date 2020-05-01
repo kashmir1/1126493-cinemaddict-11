@@ -13,7 +13,7 @@ import {generateFilters} from "./mock/filter";
 import {render, RenderPosition} from "./utils/render";
 
 const headerElem = document.querySelector(`.header`);
-export const mainElem = document.querySelector(`.main`);
+const mainElem = document.querySelector(`.main`);
 
 const films = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();

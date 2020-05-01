@@ -10,8 +10,6 @@ import NoFilmsComponent from "../components/no-films";
 import ShowMoreButtonComponent from "../components/show-more";
 import TopFilmsListComponent from "../components/top-list";
 import CommentedFilmsListComponent from "../components/comment-list";
-import {mainElem} from "../main";
-
 
 const renderMovieCard = (container, filmDetail) => {
 
@@ -76,7 +74,7 @@ export default class PageController {
     }
 
     // Объявление контейнеров для добавление разметки
-    const filmsElement = mainElem.querySelector(`.films`);
+    const filmsElement = this._container.querySelector(`.films`);
     const filmsListElement = filmsElement.querySelector(`.films-list`);
     const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
