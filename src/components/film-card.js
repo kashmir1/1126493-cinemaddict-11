@@ -49,7 +49,7 @@ export default class FilmCard extends AbstractComponent {
     return createFilmCard(this._film);
   }
 
-  setPopupOnenedClick(handler) {
+  setPopupOpenedClick(handler) {
     const filmPoster = this.getElement().querySelector(`.film-card__poster`);
     const filmTitle = this.getElement().querySelector(`.film-card__title`);
     const filmComments = this.getElement().querySelector(`.film-card__comments`);
@@ -57,5 +57,9 @@ export default class FilmCard extends AbstractComponent {
     const filmElements = [filmPoster, filmTitle, filmComments];
 
     filmElements.forEach((element) => element.addEventListener(`click`, handler));
+  }
+
+  setPopupKeydown(handler) {
+    document.addEventListener(`keydown`, handler);
   }
 }

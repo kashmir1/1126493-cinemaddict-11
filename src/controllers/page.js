@@ -18,12 +18,12 @@ const renderMovieCard = (container, filmDetail) => {
 
   render(container, filmCardComponent, RenderPosition.BEFOREEND);
 
-  filmCardComponent.setPopupOnenedClick(() => {
+  // Компонент нажатия на элементы списка карточки фильма
+  filmCardComponent.setPopupOpenedClick(() => {
     render(container, filmDetailsComponent, RenderPosition.BEFOREEND);
     filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
-    document.addEventListener(`keydown`, handlePopupKeydown);
+    filmCardComponent.setPopupKeydown(handlePopupKeydown);
   });
-
 
   // Удаление компонента описание фильма и обработчиков
   const removeFilmDetailsComponent = () => {
