@@ -117,9 +117,9 @@ export default class PageController {
     render(filmsElement, this._CommentedFilmsListComponent, RenderPosition.BEFOREEND);
 
     // Объявление контейнеров для добавление разметки
-    const filmsExtraElement = filmsElement.querySelectorAll(`.films-list--extra`);
-    const filmsListTopRatedContainer = filmsExtraElement[0].querySelector(`.films-list__container`);
-    const filmsListMostCommentedContainer = filmsExtraElement[1].querySelector(`.films-list__container`);
+    const filmsExtraElement = filmsElement.querySelectorAll(`.films-list--extra .films-list__container`);
+    const filmsListTopRatedContainer = filmsExtraElement[0];
+    const filmsListMostCommentedContainer = filmsExtraElement[1];
 
     // Добавление карточек с высоким рейтингом в DOM
     films.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
