@@ -1,4 +1,5 @@
-import {createElement, getTime} from "../utils";
+import {getTime} from "../utils/common";
+import AbstractComponent from "./abstract-component";
 
 const createGenreMarkup = (genres) => {
   return genres.map((genre) => {
@@ -37,25 +38,28 @@ const createFilmCard = (film) => {
 };
 
 // Класс карточка фильма
-export default class FilmCard {
+export default class FilmCard extends AbstractComponent {
   constructor(film) {
+    super();
+
     this._film = film;
-    this._element = null;
   }
 
   getTemplate() {
     return createFilmCard(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
+  setPopupOpenedClick(handler) {
+    const filmPoster = this.getElement().querySelector(`.film-card__poster`);
+    const filmTitle = this.getElement().querySelector(`.film-card__title`);
+    const filmComments = this.getElement().querySelector(`.film-card__comments`);
 
-    return this._element;
+    const filmElements = [filmPoster, filmTitle, filmComments];
+
+    filmElements.forEach((element) => element.addEventListener(`click`, handler));
   }
 
-  removeElement() {
-    this._element = null;
+  setPopupKeydown(handler) {
+    document.addEventListener(`keydown`, handler);
   }
 }

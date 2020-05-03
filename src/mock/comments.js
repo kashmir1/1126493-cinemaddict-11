@@ -1,5 +1,5 @@
 import {SMILES, COMMENT_TEXTS, AUTHORS} from "../consts";
-import {getRandomArrayItem} from "../utils";
+import {getRandomArrayItem} from "../utils/common";
 
 const generateComment = () => {
 

@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
 const createFooterStatistics = (filmsCount) => {
 
@@ -11,25 +11,14 @@ const createFooterStatistics = (filmsCount) => {
   );
 };
 
-export default class SiteFooterStatisctics {
-  constructor(FILMS_COUNT) {
-    this._filmsCount = FILMS_COUNT;
-    this._element = null;
+export default class FooterStatistics extends AbstractComponent {
+  constructor(filmsCount) {
+    super();
+
+    this._filmsCount = filmsCount;
   }
 
   getTemplate() {
     return createFooterStatistics(this._filmsCount);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
