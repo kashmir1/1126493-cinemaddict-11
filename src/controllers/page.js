@@ -2,6 +2,7 @@ const FILM_LIST_EXTRA_QUANTITY = 2;
 const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 
+import FilmListComponent from "../components/film-list";
 import FilmCardComponent from "../components/film-card";
 import FilmDetailComponent from "../components/film-detail";
 import {remove, render, RenderPosition} from "../utils/render";
@@ -49,14 +50,17 @@ export default class PageController {
   constructor(container) {
     this._container = container;
 
-    this._noFilmsComponent = new NoFilmsComponent();
     this._sortListComponent = new SortListComponent();
+    this._filmListComponent = new FilmListComponent();
+    this._noFilmsComponent = new NoFilmsComponent();
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
     this._TopFilmsListComponent = new TopFilmsListComponent();
     this._CommentedFilmsListComponent = new CommentedFilmsListComponent();
   }
 
   render(films) {
+    render(this._container, this._sortListComponent, RenderPosition.BEFOREEND);
+    render(this._container, this._filmListComponent, RenderPosition.BEFOREEND);
     let showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
 
     const isFilmDetails = !!films.length;
@@ -126,6 +130,13 @@ export default class PageController {
     });
 
     this._sortListComponent.setSortTypeChangeHandler(() => {
+      showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
+
+      filmsListContainer.innerHTML = ``;
+      films.slice(1, showingMovieCardCount).forEach((card) => {
+        renderMovieCard(filmsListContainer, card);
+      });
+      renderShowMoreButton();
     });
   }
 }

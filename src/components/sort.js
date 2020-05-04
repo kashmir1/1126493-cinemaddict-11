@@ -21,7 +21,7 @@ export default class SortList extends AbstractComponent {
   constructor() {
     super();
 
-    this._currentSortType = SortType.DEFAULT;
+    this._currenSortType = SortType.DEFAULT;
   }
 
   getTemplate() {
@@ -29,7 +29,7 @@ export default class SortList extends AbstractComponent {
   }
 
   getSortType() {
-    return this._currentSortType;
+    return this._currenSortType;
   }
 
   setSortTypeChangeHandler(handler) {
@@ -44,14 +44,14 @@ export default class SortList extends AbstractComponent {
       const sortType = evt.target.dataset.sortType;
 
       // Если текущий тип сортировки равен той, что пришла в обработчике клика, то ничего не происходит
-      if (this._currentSortType === sortType) {
+      if (this._currenSortType === sortType) {
         return;
       }
 
       // Если условие выше не выполнено, то записываем его в свойства класса _currentSortType и передаем в handler
-      this._currentSortType = sortType;
+      this._currenSortType = sortType;
 
-      handler(this._currentSortType);
+      handler(this._currenSortType);
     });
 
   }
