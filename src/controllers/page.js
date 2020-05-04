@@ -1,3 +1,5 @@
+import SortList from "../components/sort";
+
 const FILM_LIST_EXTRA_QUANTITY = 2;
 const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
@@ -50,6 +52,7 @@ export default class PageController {
     this._container = container;
 
     this._noFilmsComponent = new NoFilmsComponent();
+    this._sortListComponent = new SortList();
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
     this._TopFilmsListComponent = new TopFilmsListComponent();
     this._CommentedFilmsListComponent = new CommentedFilmsListComponent();
@@ -118,6 +121,10 @@ export default class PageController {
     // Добавление карточек с большим количеством комментарив в DOM
     films.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
       renderMovieCard(filmsListMostCommentedContainer, card);
+    });
+
+    this._sortListComponent.setSortTypeChangeHandler(() => {
+
     });
   }
 }
