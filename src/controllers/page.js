@@ -124,7 +124,14 @@ export default class PageController {
     });
 
     this._sortListComponent.setSortTypeChangeHandler(() => {
+      showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
 
+      // Добавление карточек в DOM
+      films.slice(1, showingMovieCardCount).forEach((card) => {
+        renderMovieCard(filmsListContainer, card);
+      });
+
+      render(filmsListElement, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
     });
   }
 }
