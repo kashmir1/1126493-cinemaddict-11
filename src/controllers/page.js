@@ -46,6 +46,13 @@ const renderMovieCard = (container, filmDetail) => {
   };
 };
 
+// const renderFilms = (filmsListElement, films) {
+//   films.forEach((card) => {
+//     renderMovieCard(filmsListContainer, card);
+//   });
+// }
+
+// Логика сортировки
 const getSortedFilms = (films, sortType, from, to) => {
   let sortedFilms = [];
   const showingFilms = films.slice();
@@ -63,6 +70,12 @@ const getSortedFilms = (films, sortType, from, to) => {
   }
 
   return sortedFilms.slice(from, to);
+};
+
+const renderFilms = (filmsListContainer, films) => {
+  films.forEach((card) => {
+    renderMovieCard(filmsListContainer, card);
+  });
 };
 
 export default class PageController {
@@ -94,9 +107,7 @@ export default class PageController {
     const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    films.slice(1, showingMovieCardCount).forEach((card) => {
-      renderMovieCard(filmsListContainer, card);
-    });
+    renderFilms(filmsListContainer, films.slice(1, showingMovieCardCount));
 
     const showMoreButtonComponent = this._ShowMoreButtonComponent;
 
@@ -139,14 +150,9 @@ export default class PageController {
     const filmsListMostCommentedContainer = filmsExtraElement[1];
 
     // Добавление карточек с высоким рейтингом в DOM
-    films.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
-      renderMovieCard(filmsListTopRatedContainer, card);
-    });
-
+    renderFilms(filmsListTopRatedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
     // Добавление карточек с большим количеством комментарив в DOM
-    films.slice(0, FILM_LIST_EXTRA_QUANTITY).forEach((card) => {
-      renderMovieCard(filmsListMostCommentedContainer, card);
-    });
+    renderFilms(filmsListMostCommentedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
 
     // Добавление сортировки
     this._sortListComponent.setSortTypeChangeHandler((sortType) => {
@@ -155,9 +161,8 @@ export default class PageController {
       const sortedFilms = getSortedFilms(films, sortType, 1, showingMovieCardCount);
 
       filmsListContainer.innerHTML = ``;
-      sortedFilms.slice(0, showingMovieCardCount).forEach((card) => {
-        renderMovieCard(filmsListContainer, card);
-      });
+      renderFilms(filmsListContainer, sortedFilms);
+
       renderShowMoreButton();
     });
   }
