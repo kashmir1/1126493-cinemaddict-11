@@ -1,9 +1,6 @@
-import SortList from "../components/sort";
-
 const FILM_LIST_EXTRA_QUANTITY = 2;
 const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
-
 
 import FilmCardComponent from "../components/film-card";
 import FilmDetailComponent from "../components/film-detail";
@@ -12,6 +9,7 @@ import NoFilmsComponent from "../components/no-films";
 import ShowMoreButtonComponent from "../components/show-more";
 import TopFilmsListComponent from "../components/top-list";
 import CommentedFilmsListComponent from "../components/comment-list";
+import SortListComponent from "../components/sort";
 
 const renderMovieCard = (container, filmDetail) => {
 
@@ -52,7 +50,7 @@ export default class PageController {
     this._container = container;
 
     this._noFilmsComponent = new NoFilmsComponent();
-    this._sortListComponent = new SortList();
+    this._sortListComponent = new SortListComponent();
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
     this._TopFilmsListComponent = new TopFilmsListComponent();
     this._CommentedFilmsListComponent = new CommentedFilmsListComponent();
@@ -79,28 +77,32 @@ export default class PageController {
 
     const showMoreButtonComponent = this._ShowMoreButtonComponent;
 
-    // Добавление кнопки показать еще в DOM
-    render(filmsListElement, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
+    const renderShowMoreButton = () => {
+      // Добавление кнопки показать еще в DOM
+      render(filmsListElement, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
 
-    // Обработчик события нажатия на кнопку загрузить еще
-    this._ShowMoreButtonComponent.setClickHandler(() => {
-      // Получает количество карточек отображаемых изначально
-      const prevMovieCardCount = showingMovieCardCount;
+      // Обработчик события нажатия на кнопку загрузить еще
+      this._ShowMoreButtonComponent.setClickHandler(() => {
+        // Получает количество карточек отображаемых изначально
+        const prevMovieCardCount = showingMovieCardCount;
 
-      // Увеличение счетчика отображаемых карточек
-      showingMovieCardCount = showingMovieCardCount + SHOWING_FILM_COUNT_BY_BUTTON;
+        // Увеличение счетчика отображаемых карточек
+        showingMovieCardCount = showingMovieCardCount + SHOWING_FILM_COUNT_BY_BUTTON;
 
-      // Добавление новых карточек
-      films.slice(prevMovieCardCount, showingMovieCardCount).forEach((card) => {
-        renderMovieCard(filmsListContainer, card);
+        // Добавление новых карточек
+        films.slice(prevMovieCardCount, showingMovieCardCount).forEach((card) => {
+          renderMovieCard(filmsListContainer, card);
+        });
+
+        // Удаление кнопки загрузить еще по условию
+        if (showingMovieCardCount >= films.length) {
+          remove(this._ShowMoreButtonComponent);
+          showMoreButtonComponent.removeElement();
+        }
       });
+    };
 
-      // Удаление кнопки загрузить еще по условию
-      if (showingMovieCardCount >= films.length) {
-        remove(this._ShowMoreButtonComponent);
-        showMoreButtonComponent.removeElement();
-      }
-    });
+    renderShowMoreButton();
 
     // Добавление шаблона с дополнительными фильмами в DOM
     render(filmsElement, this._TopFilmsListComponent, RenderPosition.BEFOREEND);
@@ -124,14 +126,6 @@ export default class PageController {
     });
 
     this._sortListComponent.setSortTypeChangeHandler(() => {
-      showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
-
-      // Добавление карточек в DOM
-      films.slice(1, showingMovieCardCount).forEach((card) => {
-        renderMovieCard(filmsListContainer, card);
-      });
-
-      render(filmsListElement, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
     });
   }
 }
