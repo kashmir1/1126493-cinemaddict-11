@@ -46,12 +46,6 @@ const renderMovieCard = (container, filmDetail) => {
   };
 };
 
-// const renderFilms = (filmsListElement, films) {
-//   films.forEach((card) => {
-//     renderMovieCard(filmsListContainer, card);
-//   });
-// }
-
 // Логика сортировки
 const getSortedFilms = (films, sortType, from, to) => {
   let sortedFilms = [];
