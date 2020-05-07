@@ -3,8 +3,9 @@ const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 
 import FilmListComponent from "../components/film-list";
-import FilmCardComponent from "../components/film-card";
-import FilmDetailComponent from "../components/film-detail";
+// import FilmCardComponent from "../components/film-card";
+// import FilmDetailComponent from "../components/film-detail";
+
 import {remove, render, RenderPosition} from "../utils/render";
 import NoFilmsComponent from "../components/no-films";
 import ShowMoreButtonComponent from "../components/show-more";
