@@ -11,9 +11,9 @@ export default class MovieController {
     this._filmDetailsComponent = null;
   }
 
-  render(film) {
-    this._filmCardComponent = new FilmCardComponent(film);
-    this._filmDetailsComponent = new FilmDetailComponent(film);
+  render(movie) {
+    this._filmCardComponent = new FilmCardComponent(movie);
+    this._filmDetailsComponent = new FilmDetailComponent(movie);
 
     render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
 

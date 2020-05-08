@@ -15,7 +15,7 @@ import {render, RenderPosition} from "./utils/render";
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
 
-const films = generateFilms(MOVIE_CARD_QUANTITY);
+const movies = generateFilms(MOVIE_CARD_QUANTITY);
 const filters = generateFilters();
 
 render(headerElem, new UserRankComponent(), RenderPosition.BEFOREEND);
@@ -29,7 +29,7 @@ const footerStatisticsElement = footerElement.querySelector(`.footer__statistics
 const pageController = new PageController(mainElem);
 
 // Добавление блока статистика в DOM
-render(footerStatisticsElement, new FooterStatisticsComponent(films.length), RenderPosition.BEFOREEND);
-pageController.render(films);
+render(footerStatisticsElement, new FooterStatisticsComponent(movies.length), RenderPosition.BEFOREEND);
+pageController.render(movies);
 
 
