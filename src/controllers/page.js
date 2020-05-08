@@ -3,8 +3,6 @@ const SHOWING_FILM_COUNT_ON_START = 6;
 const SHOWING_FILM_COUNT_BY_BUTTON = 5;
 
 import FilmListComponent from "../components/film-list";
-import FilmCardComponent from "../components/film-card";
-import FilmDetailComponent from "../components/film-detail";
 import MovieController from "./movie";
 import {remove, render, RenderPosition} from "../utils/render";
 import NoFilmsComponent from "../components/no-films";
@@ -13,39 +11,6 @@ import TopFilmsListComponent from "../components/top-list";
 import CommentedFilmsListComponent from "../components/comment-list";
 import SortListComponent, {SortType} from "../components/sort";
 
-const renderMovieCard = (container, filmDetail) => {
-
-  const filmCardComponent = new FilmCardComponent(filmDetail);
-  const filmDetailsComponent = new FilmDetailComponent(filmDetail);
-
-  render(container, filmCardComponent, RenderPosition.BEFOREEND);
-
-  // Компонент нажатия на элементы списка карточки фильма
-  filmCardComponent.setPopupOpenedClick(() => {
-    render(container, filmDetailsComponent, RenderPosition.BEFOREEND);
-    filmDetailsComponent.setPopupCloseButtonClick(onPopupCloseButtonClick);
-    filmCardComponent.setPopupKeydown(handlePopupKeydown);
-  });
-
-  // Удаление компонента описание фильма и обработчиков
-  const removeFilmDetailsComponent = () => {
-    remove(filmDetailsComponent);
-    filmDetailsComponent.removePopupCloseButtonClick(onPopupCloseButtonClick);
-    document.removeEventListener(`keydown`, handlePopupKeydown);
-  };
-
-  const onPopupCloseButtonClick = (evt) => {
-    evt.preventDefault();
-    removeFilmDetailsComponent();
-  };
-
-  const handlePopupKeydown = (evt) => {
-    evt.preventDefault();
-    if (evt.key === `Escape` || evt.key === `Esc`) {
-      removeFilmDetailsComponent();
-    }
-  };
-};
 
 // Логика сортировки
 const getSortedFilms = (films, sortType, from, to) => {
@@ -68,8 +33,10 @@ const getSortedFilms = (films, sortType, from, to) => {
 };
 
 const renderMovies = (filmsListContainer, films) => {
-  films.forEach((card) => {
-    renderMovieCard(filmsListContainer, card);
+  return films.map((film) => {
+    const movieController = new MovieController(filmsListContainer);
+    movieController.render(film);
+    return movieController;
   });
 };
 
@@ -77,6 +44,7 @@ export default class PageController {
   constructor(container) {
     this._container = container;
     this._films = [];
+    this._showedMovieControllers = [];
 
     this._sortListComponent = new SortListComponent();
     this._filmListComponent = new FilmListComponent();
@@ -107,8 +75,8 @@ export default class PageController {
     const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    renderMovies(filmsListContainer, films.slice(1, this._showingMovieCardCount));
-
+    const newMovies = renderMovies(filmsListContainer, this._films.slice(1, this._showingMovieCardCount));
+    this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
     this._renderShowMoreButton();
 
@@ -127,8 +95,6 @@ export default class PageController {
     renderMovies(filmsListTopRatedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
     // Добавление карточек с большим количеством комментарив в DOM
     renderMovies(filmsListMostCommentedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
-
-
   }
 
   _renderShowMoreButton() {
@@ -148,9 +114,10 @@ export default class PageController {
       this._showingMovieCardCount = this._showingMovieCardCount + SHOWING_FILM_COUNT_BY_BUTTON;
 
       // Добавление новых карточек
-      this._films.slice(prevMovieCardCount, this._showingMovieCardCount).forEach((card) => {
-        renderMovieCard(filmsListContainer, card);
-      });
+      const sortedMovies = getSortedFilms(this._films, this._sortListComponent.getSortType(), prevMovieCardCount, this._showingMovieCardCount);
+      const newMovies = renderMovies(filmsListContainer, sortedMovies);
+
+      this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
       // Удаление кнопки загрузить еще по условию
       if (this._showingMovieCardCount >= this._films.length) {
@@ -168,10 +135,11 @@ export default class PageController {
 
     this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
 
-    const sortedFilms = getSortedFilms(this._films, sortType, 1, this._showingMovieCardCount);
+    const sortedMovies = getSortedFilms(this._films, sortType, 1, this._showingMovieCardCount);
 
     filmsListContainer.innerHTML = ``;
-    renderMovies(filmsListContainer, sortedFilms);
+    const newMovies = renderMovies(filmsListContainer, sortedMovies);
+    this._showedTaskControllers = newMovies;
 
     this._renderShowMoreButton();
   }

@@ -7,7 +7,7 @@ const createShowMoreButton = () => {
 };
 
 // Класс кнопка показать еще
-export default class  ShowMoreButton extends AbstractComponent {
+export default class ShowMoreButton extends AbstractComponent {
   getTemplate() {
     return createShowMoreButton();
   }

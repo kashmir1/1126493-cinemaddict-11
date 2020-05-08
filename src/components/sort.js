@@ -13,7 +13,7 @@ const createSortList = () => {
     <li><a href="#" data-sort-type="${SortType.DATE_DOWN}" class="sort__button">Sort by date</a></li>
     <li><a href="#" data-sort-type="${SortType.RATE_DOWN}" class="sort__button">Sort by rating</a></li>
   </ul>`
-  );z
+  );
 };
 
 // Класс сортировка
