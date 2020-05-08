@@ -126,17 +126,7 @@ export default class PageController {
     // Добавление карточек с большим количеством комментарив в DOM
     renderMovies(filmsListMostCommentedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
 
-    // Добавление сортировки
-    this._sortListComponent.setSortTypeChangeHandler((sortType) => {
-      this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
 
-      const sortedFilms = getSortedFilms(films, sortType, 1, this._showingMovieCardCount);
-
-      filmsListContainer.innerHTML = ``;
-      renderMovies(filmsListContainer, sortedFilms);
-
-      this._renderShowMoreButton();
-    });
   }
 
   _renderShowMoreButton() {
@@ -166,5 +156,19 @@ export default class PageController {
         this._ShowMoreButtonComponent.removeElement();
       }
     });
+  }
+
+  // Добавление сортировки
+  _onSortTypeChange(sortType) {
+    const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
+
+    this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
+
+    const sortedFilms = getSortedFilms(this._films, sortType, 1, this._showingMovieCardCount);
+
+    filmsListContainer.innerHTML = ``;
+    renderMovies(filmsListContainer, sortedFilms);
+
+    this._renderShowMoreButton();
   }
 }
