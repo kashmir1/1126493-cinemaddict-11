@@ -85,6 +85,8 @@ export default class PageController {
     this._TopFilmsListComponent = new TopFilmsListComponent();
     this._CommentedFilmsListComponent = new CommentedFilmsListComponent();
     this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._sortListComponent.setSortTypeChangeHandler(this._onSortTypeChange);
   }
 
 
@@ -160,6 +162,8 @@ export default class PageController {
 
   // Добавление сортировки
   _onSortTypeChange(sortType) {
+    const filmsElement = this._container.querySelector(`.films`);
+    const filmsListElement = filmsElement.querySelector(`.films-list`);
     const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
     this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
