@@ -42,5 +42,14 @@ export default class MovieController {
         removeFilmDetailsComponent();
       }
     };
+
+    this._filmCardComponent.setOnAddToWatchlistButtonClick(() => {
+    });
+
+    this._filmCardComponent.setOnAlreadyWatchedButtonClick(() => {
+    });
+
+    this._filmCardComponent.setOnFavoriteButtonClick(() => {
+    });
   }
 }

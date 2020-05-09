@@ -62,4 +62,19 @@ export default class FilmCard extends AbstractComponent {
   setPopupKeydown(handler) {
     document.addEventListener(`keydown`, handler);
   }
+
+  setOnAddToWatchlistButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnAlreadyWatchedButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, handler);
+  }
+
+  setOnFavoriteButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, handler);
+  }
 }
