@@ -4,8 +4,9 @@ import FilmDetailComponent from "../components/film-detail";
 import {render, remove, RenderPosition} from "../utils/render";
 
 export default class MovieController {
-  constructor(container) {
+  constructor(container, onDataChange) {
     this._container = container;
+    this._onDataChange = onDataChange;
 
     this._filmCardComponent = null;
     this._filmDetailsComponent = null;
@@ -43,13 +44,23 @@ export default class MovieController {
       }
     };
 
+    // Подписка на событие
     this._filmCardComponent.setOnAddToWatchlistButtonClick(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isWatchList: !movie.isWatchList,
+      }));
     });
 
     this._filmCardComponent.setOnAlreadyWatchedButtonClick(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isAlreadyWatched: !movie.isAlreadyWatched,
+      }));
     });
 
     this._filmCardComponent.setOnFavoriteButtonClick(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isFavorite: !movie.isFavorite,
+      }));
     });
   }
 }

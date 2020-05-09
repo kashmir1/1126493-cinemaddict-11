@@ -63,6 +63,8 @@ export default class FilmCard extends AbstractComponent {
     document.addEventListener(`keydown`, handler);
   }
 
+
+  // Добавляем обработчики на кнопки
   setOnAddToWatchlistButtonClick(handler) {
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
       .addEventListener(`click`, handler);
