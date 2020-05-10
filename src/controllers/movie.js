@@ -24,8 +24,7 @@ export default class MovieController {
     // Компонент нажатия на элементы списка карточки фильма
     this._filmCardComponent.setPopupOpenedClick(() => {
       render(this._container, this._filmDetailsComponent, RenderPosition.BEFOREEND);
-      this._filmDetailsComponent.setPopupCloseButtonClick(this._onPopupCloseButtonClick);
-      this._filmCardComponent.setPopupKeydown(this._handlePopupKeydown);
+      this._subscribeOnPopupEvents(movie);
     });
 
     // Подписка на событие
@@ -64,5 +63,28 @@ export default class MovieController {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       this._removeFilmDetailsComponent();
     }
+  }
+
+  _subscribeOnPopupEvents(movie) {
+    this._filmDetailsComponent.setPopupCloseButtonClick(this._removeFilmDetailsComponent);
+    this._filmCardComponent.setPopupKeydown(this._handlePopupKeydown);
+
+    this._filmDetailsComponent.setOnAddToWatchlistClick(() => {
+      this._onDataChange(movie, Object.assign({}, movie, {
+        isWatchList: !movie.isWatchList,
+      }));
+    });
+
+    this._filmDetailsComponent.setOnAlreadyWatchedClick(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isAlreadyWatched: !movie.isAlreadyWatched,
+      }));
+    });
+
+    this._filmDetailsComponent.setOnAddToFavoritesClick(() => {
+      this._onDataChange(this, movie, Object.assign({}, movie, {
+        isFavorite: !movie.isFavorite,
+      }));
+    });
   }
 }
