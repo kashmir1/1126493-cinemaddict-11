@@ -20,7 +20,28 @@ export default class MovieController {
     this._filmDetailsComponent = new FilmDetailComponent(movie);
 
     render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
+    this._subscribeOnCardEvents(movie);
+  }
 
+  _removeFilmDetailsComponent() {
+    remove(this._filmDetailsComponent);
+    this._filmDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
+    document.removeEventListener(`keydown`, this._handlePopupKeydown);
+  }
+
+  _onPopupCloseButtonClick(evt) {
+    evt.preventDefault();
+    this._removeFilmDetailsComponent();
+  }
+
+  _handlePopupKeydown(evt) {
+    evt.preventDefault();
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      this._removeFilmDetailsComponent();
+    }
+  }
+
+  _subscribeOnCardEvents(movie) {
     // Компонент нажатия на элементы списка карточки фильма
     this._filmCardComponent.setPopupOpenedClick(() => {
       render(this._container, this._filmDetailsComponent, RenderPosition.BEFOREEND);
@@ -47,44 +68,38 @@ export default class MovieController {
     });
   }
 
-  _removeFilmDetailsComponent() {
-    remove(this._filmDetailsComponent);
-    this._filmDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
-    document.removeEventListener(`keydown`, this._handlePopupKeydown);
-  }
-
-  _onPopupCloseButtonClick(evt) {
-    evt.preventDefault();
-    this._removeFilmDetailsComponent();
-  }
-
-  _handlePopupKeydown(evt) {
-    evt.preventDefault();
-    if (evt.key === `Escape` || evt.key === `Esc`) {
-      this._removeFilmDetailsComponent();
-    }
-  }
-
   _subscribeOnPopupEvents(movie) {
     this._filmDetailsComponent.setPopupCloseButtonClick(this._removeFilmDetailsComponent);
     this._filmCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._filmDetailsComponent.setOnAddToWatchlistClick(() => {
-      this._onDataChange(movie, Object.assign({}, movie, {
-        isWatchList: !movie.isWatchList,
-      }));
+      this._setOnAddToWatchlistClick(movie);
     });
 
     this._filmDetailsComponent.setOnAlreadyWatchedClick(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isAlreadyWatched: !movie.isAlreadyWatched,
-      }));
+      this._onAlreadyWatchedChange(movie);
     });
 
     this._filmDetailsComponent.setOnAddToFavoritesClick(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isFavorite: !movie.isFavorite,
-      }));
+      this._setOnAddToFavoritesClick(movie);
     });
+  }
+
+  _setOnAddToWatchlistClick(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      isWatchList: !movie.isWatchList,
+    }));
+  }
+
+  _onAlreadyWatchedChange(movie) {
+    this._onDataChange(this, movie, Object.assign({}, movie, {
+      isAlreadyWatched: !movie.isAlreadyWatched,
+    }));
+  }
+
+  _setOnAddToFavoritesClick(movie) {
+    this._onDataChange(this, movie, Object.assign({}, movie, {
+      isFavorite: !movie.isFavorite,
+    }));
   }
 }
