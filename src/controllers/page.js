@@ -32,9 +32,9 @@ const getSortedFilms = (films, sortType, from, to) => {
   return sortedFilms.slice(from, to);
 };
 
-const renderMovies = (filmsListContainer, films, onDataChange) => {
+const renderMovies = (filmsListContainer, films, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const movieController = new MovieController(filmsListContainer, onDataChange);
+    const movieController = new MovieController(filmsListContainer, onDataChange, onViewChange);
     movieController.render(film);
     return movieController;
   });
@@ -45,6 +45,7 @@ export default class PageController {
     this._container = container;
     this._films = [];
     this._showedMovieControllers = [];
+    this._extraMovieControllers = [];
 
     this._sortListComponent = new SortListComponent();
     this._filmListComponent = new FilmListComponent();
@@ -53,6 +54,7 @@ export default class PageController {
     this._TopFilmsListComponent = new TopFilmsListComponent();
     this._CommentedFilmsListComponent = new CommentedFilmsListComponent();
     this._showingMovieCardCount = SHOWING_FILM_COUNT_ON_START;
+    this._onViewChange = this._onViewChange.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._sortListComponent.setSortTypeChangeHandler(this._onSortTypeChange);
 
@@ -77,7 +79,7 @@ export default class PageController {
     const filmsListContainer = filmsListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    const newMovies = renderMovies(filmsListContainer, this._films.slice(1, this._showingMovieCardCount), this._onDataChange);
+    const newMovies = renderMovies(filmsListContainer, this._films.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
     this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
     this._renderShowMoreButton();
@@ -94,9 +96,11 @@ export default class PageController {
     const filmsListMostCommentedContainer = filmsExtraElement[1];
 
     // Добавление карточек с высоким рейтингом в DOM
-    renderMovies(filmsListTopRatedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
+    const topMovie = renderMovies(filmsListTopRatedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY), this._onDataChange, this._onViewChange);
+    this._showedMovieControllers = this._showedMovieControllers.concat(topMovie);
     // Добавление карточек с большим количеством комментарив в DOM
-    renderMovies(filmsListMostCommentedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY));
+    const commentedMovie = renderMovies(filmsListMostCommentedContainer, films.slice(0, FILM_LIST_EXTRA_QUANTITY), this._onViewChange, this._onViewChange);
+    this._showedMovieControllers = this._showedMovieControllers.concat(commentedMovie);
   }
 
   _renderShowMoreButton() {
@@ -117,7 +121,7 @@ export default class PageController {
 
       // Добавление новых карточек
       const sortedMovies = getSortedFilms(this._films, this._sortListComponent.getSortType(), prevMovieCardCount, this._showingMovieCardCount);
-      const newMovies = renderMovies(filmsListContainer, sortedMovies, this._onDataChange);
+      const newMovies = renderMovies(filmsListContainer, sortedMovies, this._onDataChange, this._onViewChange);
 
       this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
@@ -128,6 +132,11 @@ export default class PageController {
       }
     });
   }
+
+  _onViewChange() {
+    this._showedMovieControllers.forEach((it) => it.setDefaultView());
+  }
+
 
   // Добавление сортировки
   _onSortTypeChange(sortType) {
@@ -140,8 +149,8 @@ export default class PageController {
     const sortedMovies = getSortedFilms(this._films, sortType, 1, this._showingMovieCardCount);
 
     filmsListContainer.innerHTML = ``;
-    const newMovies = renderMovies(filmsListContainer, sortedMovies, this._onDataChange());
-    this._showedTaskControllers = newMovies;
+    const newMovies = renderMovies(filmsListContainer, sortedMovies, this._onDataChange, this._onViewChange);
+    this._showedMovieControllers = newMovies;
 
     this._renderShowMoreButton();
   }

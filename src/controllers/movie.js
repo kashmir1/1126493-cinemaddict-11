@@ -2,10 +2,19 @@ import FilmCardComponent from "../components/film-card";
 import FilmDetailComponent from "../components/film-detail";
 import {render, remove, RenderPosition} from "../utils/render";
 
+const Mode = {
+  DEFAULT: `default`,
+  DETAILS: `details`,
+};
+
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
+    this._mode = Mode.DEFAULT;
+
     this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
+
 
     this._filmCardComponent = null;
     this._filmDetailsComponent = null;
@@ -23,10 +32,17 @@ export default class MovieController {
     this._subscribeOnCardEvents(movie);
   }
 
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._removeFilmDetailsComponent();
+    }
+  }
+
   _removeFilmDetailsComponent() {
     remove(this._filmDetailsComponent);
     this._filmDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    this._mode = Mode.DEFAULT;
   }
 
   _onPopupCloseButtonClick(evt) {
@@ -44,8 +60,11 @@ export default class MovieController {
   _subscribeOnCardEvents(movie) {
     // Компонент нажатия на элементы списка карточки фильма
     this._filmCardComponent.setPopupOpenedClick(() => {
+      this._onViewChange();
       render(this._container, this._filmDetailsComponent, RenderPosition.BEFOREEND);
       this._subscribeOnPopupEvents(movie);
+      document.addEventListener(`keydown`, this._handlePopupKeydown); // под вопросом
+      this._mode = Mode.DETAILS;
     });
 
     // Подписка на событие

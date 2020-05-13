@@ -183,16 +183,12 @@ export default class FilmDetail extends AbstractSmartComponent {
     super();
 
     this._film = film;
-    this.commentEmoji = null;
+    this._commentEmoji = null;
     this._setPopupCloseButtonClick = null;
     this._setOnAddToWatchlistClick = null;
     this._setOnAlreadyWatchedClick = null;
     this._setOnAddToFavoritesClick = null;
     this._subscribeOnEvents();
-  }
-
-  getTemplate() {
-    return createFilmDetail(this._film, this.commentEmoji);
   }
 
   recoveryListeners() {
@@ -201,6 +197,14 @@ export default class FilmDetail extends AbstractSmartComponent {
     this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClick);
     this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClick);
     this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
+  getTemplate() {
+    return createFilmDetail(this._film, this._commentEmoji);
   }
 
   setPopupCloseButtonClick(handler) {
@@ -228,7 +232,7 @@ export default class FilmDetail extends AbstractSmartComponent {
 
   _subscribeOnEvents() {
     this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, (evt) => {
-      this.commentEmoji = evt.target.value;
+      this._commentEmoji = evt.target.value;
       this.rerender();
     });
   }
