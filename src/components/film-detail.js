@@ -1,6 +1,7 @@
 import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils/common";
-import AbstractComponent from "./abstract-component";
+import AbstractSmartComponent from "./abstract-smart-component";
 import {MONTH_NAMES_LETTER} from "../consts";
+
 
 const createCommentsMarkup = (comments) => {
   return comments.map((comment) => {
@@ -36,7 +37,8 @@ const createGenresMarkup = (genres) => {
   }).join(`\n`);
 };
 
-const createFilmDetail = (film) => {
+
+const createFilmDetail = (film, commentEmoji) => {
 
   const {
     title,
@@ -59,6 +61,8 @@ const createFilmDetail = (film) => {
   const time = getTime(runtime);
   const commentsMarkup = createCommentsMarkup(comments);
   const genresMarkup = createGenresMarkup(genres);
+
+  const emojiMarkup = commentEmoji ? `<img src="./images/emoji/${commentEmoji}.png" alt="${commentEmoji}" width="55" height="55">` : ` `;
 
   return (
     `<section class="film-details">
@@ -138,27 +142,33 @@ const createFilmDetail = (film) => {
 
         </ul>
         <div class="film-details__new-comment">
-          <div for="add-emoji" class="film-details__add-emoji-label"></div>
+           <div for="add-emoji" class="film-details__add-emoji-label">
+              <input type="hidden" name="add-emoji" value="${commentEmoji || ``}">
+              ${emojiMarkup}
+            </div>
           <label class="film-details__comment-label">
-            <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
           </label>
           <div class="film-details__emoji-list">
             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-            <label class="film-details__emoji-label" for="emoji-smile">
-              <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-            <label class="film-details__emoji-label" for="emoji-sleeping">
-              <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-            <label class="film-details__emoji-label" for="emoji-puke">
-              <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-            <label class="film-details__emoji-label" for="emoji-angry">
-              <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-            </label>
+                <label class="film-details__emoji-label" for="emoji-smile">
+                  <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+                </label>
+
+                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
+                <label class="film-details__emoji-label" for="emoji-sleeping">
+                  <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+                </label>
+
+                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
+                <label class="film-details__emoji-label" for="emoji-puke">
+                  <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+                </label>
+
+                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
+                <label class="film-details__emoji-label" for="emoji-angry">
+                  <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+                </label>
           </div>
         </div>
       </section>
@@ -168,15 +178,29 @@ const createFilmDetail = (film) => {
   );
 };
 
-export default class FilmDetail extends AbstractComponent {
+export default class FilmDetail extends AbstractSmartComponent {
   constructor(film) {
     super();
 
     this._film = film;
+    this.commentEmoji = null;
+    this._setPopupCloseButtonClick = null;
+    this._setOnAddToWatchlistClick = null;
+    this._setOnAlreadyWatchedClick = null;
+    this._setOnAddToFavoritesClick = null;
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
-    return createFilmDetail(this._film);
+    return createFilmDetail(this._film, this.commentEmoji);
+  }
+
+  recoveryListeners() {
+    this.setPopupCloseButtonClick(this._setPopupCloseButtonClick);
+    this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClick);
+    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClick);
+    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClick);
+    this._subscribeOnEvents();
   }
 
   setPopupCloseButtonClick(handler) {
@@ -200,5 +224,12 @@ export default class FilmDetail extends AbstractComponent {
   setOnAddToFavoritesClick(handler) {
     this.getElement().querySelector(`#favorite`)
       .addEventListener(`click`, handler);
+  }
+
+  _subscribeOnEvents() {
+    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, (evt) => {
+      this.commentEmoji = evt.target.value;
+      this.rerender();
+    });
   }
 }
