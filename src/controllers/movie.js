@@ -108,12 +108,14 @@ export default class MovieController {
     });
 
     this._movieDetailsComponent.setOnAlreadyWatchedClick(() => {
-      this._onAlreadyWatchedChange(movie);
+      this._setOnAlreadyWatchedChange(movie);
     });
 
     this._movieDetailsComponent.setOnAddToFavoritesClick(() => {
       this._setOnAddToFavoritesClick(movie);
     });
+
+    this._movieDetailsComponent._commentEmoji();
   }
 
   _setOnAddToWatchlistClick(movie) {
@@ -122,7 +124,7 @@ export default class MovieController {
     }));
   }
 
-  _onAlreadyWatchedChange(movie) {
+  _setOnAlreadyWatchedChange(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
       isAlreadyWatched: !movie.isAlreadyWatched,
     }));

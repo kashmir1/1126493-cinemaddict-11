@@ -184,18 +184,18 @@ export default class MovieDetail extends AbstractSmartComponent {
 
     this._movie = movie;
     this._commentEmoji = null;
-    this._setPopupCloseButtonClick = null;
-    this._setOnAddToWatchlistClick = null;
-    this._setOnAlreadyWatchedClick = null;
-    this._setOnAddToFavoritesClick = null;
+    this._setPopupCloseButtonClickHandler = null;
+    this._setOnAddToWatchlistClickHandler = null;
+    this._setOnAlreadyWatchedClickHandler = null;
+    this._setOnAddToFavoritesClickHandler = null;
     this._subscribeOnEvents();
   }
 
   recoveryListeners() {
-    this.setPopupCloseButtonClick(this._setPopupCloseButtonClick);
-    this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClick);
-    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClick);
-    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClick);
+    this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClickHandler);
+    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClickHandler);
+    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClickHandler);
+    this.setPopupCloseButtonClick(this._setPopupCloseButtonClickHandler);
     this._subscribeOnEvents();
   }
 
@@ -209,6 +209,8 @@ export default class MovieDetail extends AbstractSmartComponent {
 
   setPopupCloseButtonClick(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+
+    this._setPopupCloseButtonClickHandler = handler;
   }
 
   removePopupCloseButtonClick(handler) {
@@ -218,22 +220,33 @@ export default class MovieDetail extends AbstractSmartComponent {
   setOnAddToWatchlistClick(handler) {
     this.getElement().querySelector(`#watchlist`)
       .addEventListener(`click`, handler);
+
+    this._setOnAddToWatchlistClickHandler = handler;
   }
 
   setOnAlreadyWatchedClick(handler) {
     this.getElement().querySelector(`#watched`)
       .addEventListener(`click`, handler);
+
+    this._setOnAlreadyWatchedClickHandler = handler;
   }
 
   setOnAddToFavoritesClick(handler) {
     this.getElement().querySelector(`#favorite`)
       .addEventListener(`click`, handler);
+
+    this._setOnAddToFavoritesClickHandler = handler;
   }
 
   _subscribeOnEvents() {
-    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, (evt) => {
-      this._commentEmoji = evt.target.value;
-      this.rerender();
-    });
+    this.getElement().querySelector(`.film-details__inner`)
+      .addEventListener(`change`, (evt) => {
+        if (evt.target.name !== `comment-emoji`) {
+          return;
+        }
+
+        this._commentEmoji = evt.target.value;
+        this.rerender();
+      });
   }
 }
