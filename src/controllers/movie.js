@@ -1,6 +1,6 @@
 import MovieCardComponent from "../components/movie-card";
 import MovieDetailComponent from "../components/movie-detail";
-import {render, remove, RenderPosition} from "../utils/render";
+import {render, remove, replace, RenderPosition} from "../utils/render";
 
 const Mode = {
   DEFAULT: `default`,
@@ -25,11 +25,23 @@ export default class MovieController {
   }
 
   render(movie) {
+
+    /* Сохраняют состояния компонентов */
+    const oldMovieCardComponent = this._movieCardComponent;
+    const oldMovieDetailsComponent = this._movieDetailsComponent;
+
     this._movieCardComponent = new MovieCardComponent(movie);
     this._movieDetailsComponent = new MovieDetailComponent(movie);
 
-    render(this._container, this._movieCardComponent, RenderPosition.BEFOREEND);
     this._subscribeOnCardEvents(movie);
+
+    if (oldMovieCardComponent && oldMovieDetailsComponent) {
+      replace(oldMovieCardComponent, this._movieCardComponent);
+      replace(oldMovieDetailsComponent, this._movieDetailsComponent);
+      this._subscribeOnPopupEvents(movie);
+    } else {
+      render(this._container, this._movieCardComponent, RenderPosition.BEFOREEND);
+    }
   }
 
   setDefaultView() {

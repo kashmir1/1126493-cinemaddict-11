@@ -44,8 +44,8 @@ export default class PageController {
   constructor(container) {
     this._container = container;
     this._movies = [];
+    this._sortedMovies = [];
     this._showedMovieControllers = [];
-    this._extraMovieControllers = [];
 
     this._sortListComponent = new SortListComponent();
     this._movieListComponent = new MovieListComponent();
@@ -54,16 +54,17 @@ export default class PageController {
     this._TopMoviesListComponent = new TopMoviesListComponent();
     this._CommentedMoviesListComponent = new CommentedMoviesListComponent();
     this._showingMovieCardCount = SHOWING_MOVIE_COUNT_ON_START;
-    this._onViewChange = this._onViewChange.bind(this);
-    this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._sortListComponent.setSortTypeChangeHandler(this._onSortTypeChange);
 
+    this._onSortTypeChange = this._onSortTypeChange.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
+    this._onViewChange = this._onViewChange.bind(this);
   }
 
 
   render(movies) {
     this._movies = movies;
+    this._sortedMovies = movies;
     render(this._container, this._sortListComponent, RenderPosition.BEFOREEND);
     render(this._container, this._movieListComponent, RenderPosition.BEFOREEND);
 
@@ -79,7 +80,7 @@ export default class PageController {
     const moviesListContainer = moviesListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    const newMovies = renderMovies(moviesListContainer, this._movies.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
+    const newMovies = renderMovies(moviesListContainer, this._sortedMovies.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
     this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
     this._renderShowMoreButton();
