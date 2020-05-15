@@ -9,10 +9,10 @@ const createGenreMarkup = (genres) => {
   }).join(``);
 };
 
-const createFilmCard = (film) => {
+const createMovieCard = (movie) => {
 
   // создаем моки для карточки
-  const {title, poster, description, rate, year, runtime, genres, comments} = film;
+  const {title, poster, description, rate, year, runtime, genres, comments} = movie;
   const time = getTime(runtime);
   const genreMarkup = createGenreMarkup(genres);
 
@@ -38,25 +38,25 @@ const createFilmCard = (film) => {
 };
 
 // Класс карточка фильма
-export default class FilmCard extends AbstractComponent {
-  constructor(film) {
+export default class MovieCard extends AbstractComponent {
+  constructor(movie) {
     super();
 
-    this._film = film;
+    this._movie = movie;
   }
 
   getTemplate() {
-    return createFilmCard(this._film);
+    return createMovieCard(this._movie);
   }
 
   setPopupOpenedClick(handler) {
-    const filmPoster = this.getElement().querySelector(`.film-card__poster`);
-    const filmTitle = this.getElement().querySelector(`.film-card__title`);
-    const filmComments = this.getElement().querySelector(`.film-card__comments`);
+    const moviePoster = this.getElement().querySelector(`.film-card__poster`);
+    const movieTitle = this.getElement().querySelector(`.film-card__title`);
+    const movieComments = this.getElement().querySelector(`.film-card__comments`);
 
-    const filmElements = [filmPoster, filmTitle, filmComments];
+    const movieElements = [moviePoster, movieTitle, movieComments];
 
-    filmElements.forEach((element) => element.addEventListener(`click`, handler));
+    movieElements.forEach((element) => element.addEventListener(`click`, handler));
   }
 
   setPopupKeydown(handler) {

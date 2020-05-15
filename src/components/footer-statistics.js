@@ -1,8 +1,8 @@
 import AbstractComponent from "./abstract-component";
 
-const createFooterStatistics = (filmsCount) => {
+const createFooterStatistics = (moviesCount) => {
 
-  const statisticsTitle = filmsCount !== 0 ? `${filmsCount} movies inside` : `0 movies inside`;
+  const statisticsTitle = moviesCount !== 0 ? `${moviesCount} movies inside` : `0 movies inside`;
 
   return (
     `<section class="footer__statistics">
@@ -12,13 +12,13 @@ const createFooterStatistics = (filmsCount) => {
 };
 
 export default class FooterStatistics extends AbstractComponent {
-  constructor(filmsCount) {
+  constructor(moviesCount) {
     super();
 
-    this._filmsCount = filmsCount;
+    this._moviesCount = moviesCount;
   }
 
   getTemplate() {
-    return createFooterStatistics(this._filmsCount);
+    return createFooterStatistics(this._moviesCount);
   }
 }

@@ -38,7 +38,7 @@ const createGenresMarkup = (genres) => {
 };
 
 
-const createFilmDetail = (film, commentEmoji) => {
+const createMovieDetail = (movie, commentEmoji) => {
 
   const {
     title,
@@ -55,7 +55,7 @@ const createFilmDetail = (film, commentEmoji) => {
     genres,
     ageRate,
     comments,
-  } = film;
+  } = movie;
 
   const release = getDate(dateRelease, MONTH_NAMES_LETTER);
   const time = getTime(runtime);
@@ -178,11 +178,11 @@ const createFilmDetail = (film, commentEmoji) => {
   );
 };
 
-export default class FilmDetail extends AbstractSmartComponent {
-  constructor(film) {
+export default class MovieDetail extends AbstractSmartComponent {
+  constructor(movie) {
     super();
 
-    this._film = film;
+    this._movie = movie;
     this._commentEmoji = null;
     this._setPopupCloseButtonClick = null;
     this._setOnAddToWatchlistClick = null;
@@ -204,7 +204,7 @@ export default class FilmDetail extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    return createFilmDetail(this._film, this._commentEmoji);
+    return createMovieDetail(this._movie, this._commentEmoji);
   }
 
   setPopupCloseButtonClick(handler) {
