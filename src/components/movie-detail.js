@@ -1,14 +1,11 @@
-import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils/common";
+import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractSmartComponent from "./abstract-smart-component";
-import {MONTH_NAMES_LETTER} from "../consts";
-
 
 const createCommentsMarkup = (comments) => {
   return comments.map((comment) => {
     const {smile, commentText, author, commentDate} = comment;
 
-    const date = getDateIntegerFormat(commentDate);
-    const time = getFormatTime(commentDate);
+    const dateTime = getFormatDateTime(commentDate);
 
     return (
       `<li class="film-details__comment">
@@ -19,7 +16,7 @@ const createCommentsMarkup = (comments) => {
               <p class="film-details__comment-text">${commentText}</p>
               <p class="film-details__comment-info">
                 <span class="film-details__comment-author">${author}</span>
-                <span class="film-details__comment-day">${date} ${time}</span>
+                <span class="film-details__comment-day">${dateTime}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
@@ -38,7 +35,7 @@ const createGenresMarkup = (genres) => {
 };
 
 
-const createFilmDetail = (film, commentEmoji) => {
+const createMovieDetail = (movie, commentEmoji) => {
 
   const {
     title,
@@ -55,10 +52,10 @@ const createFilmDetail = (film, commentEmoji) => {
     genres,
     ageRate,
     comments,
-  } = film;
+  } = movie;
 
-  const release = getDate(dateRelease, MONTH_NAMES_LETTER);
-  const time = getTime(runtime);
+  const release = getDate(dateRelease);
+  const runTime = formatRuntime(runtime);
   const commentsMarkup = createCommentsMarkup(comments);
   const genresMarkup = createGenresMarkup(genres);
 
@@ -105,7 +102,7 @@ const createFilmDetail = (film, commentEmoji) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${time}</td>
+              <td class="film-details__cell">${runTime}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
@@ -178,24 +175,24 @@ const createFilmDetail = (film, commentEmoji) => {
   );
 };
 
-export default class FilmDetail extends AbstractSmartComponent {
-  constructor(film) {
+export default class MovieDetail extends AbstractSmartComponent {
+  constructor(movie) {
     super();
 
-    this._film = film;
+    this._movie = movie;
     this._commentEmoji = null;
-    this._setPopupCloseButtonClick = null;
-    this._setOnAddToWatchlistClick = null;
-    this._setOnAlreadyWatchedClick = null;
-    this._setOnAddToFavoritesClick = null;
+    this._setPopupCloseButtonClickHandler = null;
+    this._setOnAddToWatchlistClickHandler = null;
+    this._setOnAlreadyWatchedClickHandler = null;
+    this._setOnAddToFavoritesClickHandler = null;
     this._subscribeOnEvents();
   }
 
   recoveryListeners() {
-    this.setPopupCloseButtonClick(this._setPopupCloseButtonClick);
-    this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClick);
-    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClick);
-    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClick);
+    this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClickHandler);
+    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClickHandler);
+    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClickHandler);
+    this.setPopupCloseButtonClick(this._setPopupCloseButtonClickHandler);
     this._subscribeOnEvents();
   }
 
@@ -204,11 +201,13 @@ export default class FilmDetail extends AbstractSmartComponent {
   }
 
   getTemplate() {
-    return createFilmDetail(this._film, this._commentEmoji);
+    return createMovieDetail(this._movie, this._commentEmoji);
   }
 
   setPopupCloseButtonClick(handler) {
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+
+    this._setPopupCloseButtonClickHandler = handler;
   }
 
   removePopupCloseButtonClick(handler) {
@@ -216,24 +215,33 @@ export default class FilmDetail extends AbstractSmartComponent {
   }
 
   setOnAddToWatchlistClick(handler) {
-    this.getElement().querySelector(`#watchlist`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, handler);
+
+    this._setOnAddToWatchlistClickHandler = handler;
   }
 
+
   setOnAlreadyWatchedClick(handler) {
-    this.getElement().querySelector(`#watched`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, handler);
+
+    this._setOnAlreadyWatchedClickHandler = handler;
   }
 
   setOnAddToFavoritesClick(handler) {
-    this.getElement().querySelector(`#favorite`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click`, handler);
+
+    this._setOnAddToFavoritesClickHandler = handler;
   }
 
   _subscribeOnEvents() {
-    this.getElement().querySelector(`.film-details__emoji-list`).addEventListener(`change`, (evt) => {
-      this._commentEmoji = evt.target.value;
-      this.rerender();
-    });
+    this.getElement().querySelector(`.film-details__inner`)
+      .addEventListener(`change`, (evt) => {
+        if (evt.target.name !== `comment-emoji`) {
+          return;
+        }
+
+        this._commentEmoji = evt.target.value;
+        this.rerender();
+      });
   }
 }

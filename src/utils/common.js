@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getRandomInteger = (min, max) => {
   // случайное число от min до (max+1)
   const rand = min + Math.random() * (max + 1 - min);
@@ -20,33 +22,24 @@ export const getRandomItems = (array, len) => {
   return emptyArr;
 };
 
-// Если значение < 10, добавляем 0
-const createPadString = (value, len) => {
-  return String(value).padStart(len, `0`);
+export const getFormatDateTime = (date) => {
+  return moment(date).format(`YYYY/MM/DD HH:mm`);
 };
 
-export const getFormatTime = (date) => {
-  const isDateShowing = !!date;
-  const hours = createPadString(date.getHours() % 12, 2);
-  const minutes = createPadString(date.getMinutes(), 2);
-  return isDateShowing ? `${hours}:${minutes}` : ``;
+export const getDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
 };
 
-// Приведение даты к строке
-export const getDateIntegerFormat = (dateObj) => {
-  const isDateShowing = !!dateObj;
-  return isDateShowing ? `${dateObj.getFullYear()}/${createPadString(dateObj.getMonth() + 1, 2, 0)}/${dateObj.getDate()} ` : ``;
+export const getYear = (date) => {
+  return moment(date).year();
 };
 
-export const getDate = (dateObj, monthsArray) => {
-  const isDateShowing = !!dateObj;
-  return isDateShowing ? `${dateObj.getDate()} ${getRandomArrayItem(monthsArray)} ${dateObj.getFullYear()}` : ``;
-};
+export const formatRuntime = (runtime) => {
+  const hours = moment.duration(runtime, `minutes`).hours();
+  const minutes = moment.duration(runtime, `minutes`).minutes();
 
-export const getTime = (timeObj) => {
-  return `${timeObj.getHours() + `h`} ${timeObj.getMinutes() + `m`}`;
+  return hours ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
-
 
 // Slug
 export const createSlug = (str) => {

@@ -1,4 +1,4 @@
-import {getTime} from "../utils/common";
+import {formatRuntime, getYear} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
 const createGenreMarkup = (genres) => {
@@ -9,20 +9,21 @@ const createGenreMarkup = (genres) => {
   }).join(``);
 };
 
-const createFilmCard = (film) => {
+const createMovieCard = (movie) => {
 
   // создаем моки для карточки
-  const {title, poster, description, rate, year, runtime, genres, comments} = film;
-  const time = getTime(runtime);
+  const {title, poster, description, rate, year, runtime, genres, comments} = movie;
+  const runTime = formatRuntime(runtime);
   const genreMarkup = createGenreMarkup(genres);
+  const movieYear = getYear(year);
 
   return (
     `<article class="film-card">
           <h3 class="film-card__title">${title}</h3>
           <p class="film-card__rating">${rate}</p>
           <p class="film-card__info">
-            <span class="film-card__year">${year}</span>
-            <span class="film-card__duration">${time}</span>
+            <span class="film-card__year">${movieYear}</span>
+            <span class="film-card__duration">${runTime}</span>
             ${genreMarkup}
           </p>
           <img src="${poster}" alt="" class="film-card__poster">
@@ -38,25 +39,25 @@ const createFilmCard = (film) => {
 };
 
 // Класс карточка фильма
-export default class FilmCard extends AbstractComponent {
-  constructor(film) {
+export default class MovieCard extends AbstractComponent {
+  constructor(movie) {
     super();
 
-    this._film = film;
+    this._movie = movie;
   }
 
   getTemplate() {
-    return createFilmCard(this._film);
+    return createMovieCard(this._movie);
   }
 
   setPopupOpenedClick(handler) {
-    const filmPoster = this.getElement().querySelector(`.film-card__poster`);
-    const filmTitle = this.getElement().querySelector(`.film-card__title`);
-    const filmComments = this.getElement().querySelector(`.film-card__comments`);
+    const moviePoster = this.getElement().querySelector(`.film-card__poster`);
+    const movieTitle = this.getElement().querySelector(`.film-card__title`);
+    const movieComments = this.getElement().querySelector(`.film-card__comments`);
 
-    const filmElements = [filmPoster, filmTitle, filmComments];
+    const movieElements = [moviePoster, movieTitle, movieComments];
 
-    filmElements.forEach((element) => element.addEventListener(`click`, handler));
+    movieElements.forEach((element) => element.addEventListener(`click`, handler));
   }
 
   setPopupKeydown(handler) {
