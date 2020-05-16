@@ -1,14 +1,11 @@
-import {getDate, getDateIntegerFormat, getFormatTime, getTime} from "../utils/common";
+import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractSmartComponent from "./abstract-smart-component";
-import {MONTH_NAMES_LETTER} from "../consts";
-
 
 const createCommentsMarkup = (comments) => {
   return comments.map((comment) => {
     const {smile, commentText, author, commentDate} = comment;
 
-    const date = getDateIntegerFormat(commentDate);
-    const time = getFormatTime(commentDate);
+    const dateTime = getFormatDateTime(commentDate);
 
     return (
       `<li class="film-details__comment">
@@ -19,7 +16,7 @@ const createCommentsMarkup = (comments) => {
               <p class="film-details__comment-text">${commentText}</p>
               <p class="film-details__comment-info">
                 <span class="film-details__comment-author">${author}</span>
-                <span class="film-details__comment-day">${date} ${time}</span>
+                <span class="film-details__comment-day">${dateTime}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
@@ -57,8 +54,8 @@ const createMovieDetail = (movie, commentEmoji) => {
     comments,
   } = movie;
 
-  const release = getDate(dateRelease, MONTH_NAMES_LETTER);
-  const time = getTime(runtime);
+  const release = getDate(dateRelease);
+  const runTime = formatRuntime(runtime);
   const commentsMarkup = createCommentsMarkup(comments);
   const genresMarkup = createGenresMarkup(genres);
 
@@ -105,7 +102,7 @@ const createMovieDetail = (movie, commentEmoji) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${time}</td>
+              <td class="film-details__cell">${runTime}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>

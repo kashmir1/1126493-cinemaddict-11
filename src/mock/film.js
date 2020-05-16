@@ -1,7 +1,7 @@
 import {getRandomInteger, getRandomItems, getRandomArrayItem} from "../utils/common";
 
 // Импортируем константы
-import {MOVIE_TITLES, MOVIE_DESCS, MOVIE_POSTERS, RATES, DIRECTORS, WRITERS, ACTORS, COUNTRIES, GENRES, AGE_RATES, YEARS} from "../consts";
+import {MOVIE_TITLES, MOVIE_DESCS, MOVIE_POSTERS, RATES, DIRECTORS, WRITERS, ACTORS, COUNTRIES, GENRES, AGE_RATES} from "../consts";
 import {generateComments} from "./comments";
 
 const MAX_ARR_ELEM = 5;
@@ -26,12 +26,12 @@ const generateMovie = () => {
     poster: `./images/posters/` + getRandomArrayItem(MOVIE_POSTERS),
     originalName: movieName,
     rate: getRandomArrayItem(RATES),
-    year: getRandomArrayItem(YEARS),
+    year: new Date(),
     director: getRandomArrayItem(DIRECTORS),
     writers,
     actors: getRandomArrayItem(ACTORS),
-    dateRelease: new Date(getRandomInteger(1900, 2000), 0, getRandomInteger(1, 31)),
-    runtime: new Date(0, 0, 0, getRandomInteger(0, 4), getRandomInteger(0, 60)),
+    dateRelease: new Date(),
+    runtime: new Date(),
     country: getRandomArrayItem(COUNTRIES),
     description,
     genres: getGenre(),
