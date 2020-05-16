@@ -28,4 +28,6 @@ const pageController = new PageController(mainElem);
 render(footerStatisticsElement, new FooterStatisticsComponent(movies.length), RenderPosition.BEFOREEND);
 pageController.render(movies);
 
+// коммент
+
 
