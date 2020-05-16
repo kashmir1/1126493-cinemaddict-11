@@ -115,7 +115,7 @@ export default class MovieController {
       this._setOnAddToFavoritesClick(movie);
     });
 
-    this._movieDetailsComponent._commentEmoji();
+    this._movieDetailsComponent._subscribeOnEvents();
   }
 
   _setOnAddToWatchlistClick(movie) {

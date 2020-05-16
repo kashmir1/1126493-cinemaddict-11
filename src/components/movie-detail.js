@@ -218,22 +218,20 @@ export default class MovieDetail extends AbstractSmartComponent {
   }
 
   setOnAddToWatchlistClick(handler) {
-    this.getElement().querySelector(`#watchlist`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, handler);
 
     this._setOnAddToWatchlistClickHandler = handler;
   }
 
+
   setOnAlreadyWatchedClick(handler) {
-    this.getElement().querySelector(`#watched`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watched`).addEventListener(`click`, handler);
 
     this._setOnAlreadyWatchedClickHandler = handler;
   }
 
   setOnAddToFavoritesClick(handler) {
-    this.getElement().querySelector(`#favorite`)
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`#favorite`).addEventListener(`click`, handler);
 
     this._setOnAddToFavoritesClickHandler = handler;
   }
