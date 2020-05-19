@@ -54,9 +54,10 @@ export default class PageController {
     this._TopMoviesListComponent = new TopMoviesListComponent();
     this._CommentedMoviesListComponent = new CommentedMoviesListComponent();
     this._showingMovieCardCount = SHOWING_MOVIE_COUNT_ON_START;
-    this._sortListComponent.setSortTypeChangeHandler(this._onSortTypeChange);
-
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._sortListComponent.setOnSortTypeChange(this._onSortTypeChange);
+
+
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
   }
