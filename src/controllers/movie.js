@@ -80,19 +80,19 @@ export default class MovieController {
     });
 
     // Подписка на событие
-    this._movieCardComponent.setOnAddToWatchlistButtonClick(() => {
+    this._movieCardComponent.setAddWatchListClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         watchlist: !movie.watchlist,
       }));
     });
 
-    this._movieCardComponent.setOnAlreadyWatchedButtonClick(() => {
+    this._movieCardComponent.setAddWatchedClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         alreadyWatched: !movie.alreadyWatched,
       }));
     });
 
-    this._movieCardComponent.setOnFavoriteButtonClick(() => {
+    this._movieCardComponent.setAddFavoriteClickHandler(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
         favorite: !movie.favorite,
       }));
@@ -104,33 +104,33 @@ export default class MovieController {
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._movieDetailsComponent.setAddWatchListChangeHandler(() => {
-      this._onWatchlistChange(movie);
+      this._addWatchListHandler(movie);
     });
 
     this._movieDetailsComponent.setAddWatchedChangeHandler(() => {
-      this._onAlreadyWatchedChange(movie);
+      this._addWatchedHandler(movie);
     });
 
     this._movieDetailsComponent.setAddFavoriteChangeHandler(() => {
-      this._onFavoritesChange(movie);
+      this._addFavoriteHandler(movie);
     });
 
     this._movieDetailsComponent._subscribeOnEvents();
   }
 
-  _onWatchlistChange(movie) {
-    this._onDataChange(movie, Object.assign({}, movie, {
+  _addWatchListHandler(movie) {
+    this._onDataChange(this, movie, Object.assign({}, movie, {
       watchlist: !movie.watchlist,
     }));
   }
 
-  _onAlreadyWatchedChange(movie) {
+  _addWatchedHandler(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
       alreadyWatched: !movie.alreadyWatched,
     }));
   }
 
-  _onFavoritesChange(movie) {
+  _addFavoriteHandler(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
       favorite: !movie.favorite,
     }));
