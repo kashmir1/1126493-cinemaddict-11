@@ -189,17 +189,17 @@ export default class MovieDetail extends AbstractSmartComponent {
     this._movie = movie;
     this._commentEmoji = null;
     this._setPopupCloseButtonClickHandler = null;
-    this._setOnAddToWatchlistClickHandler = null;
-    this._setOnAlreadyWatchedClickHandler = null;
-    this._setOnAddToFavoritesClickHandler = null;
+    this._setAddToWatchlistClickHandler = null;
+    this._alreadyWatchedClickHandler = null;
+    this._addToFavoritesClickHandler = null;
     this._subscribeOnEvents();
   }
 
   recoveryListeners() {
     this.setOnAddToWatchlistClick(this._setOnAddToWatchlistClickHandler);
-    this.setOnAlreadyWatchedClick(this._setOnAlreadyWatchedClickHandler);
-    this.setOnAddToFavoritesClick(this._setOnAddToFavoritesClickHandler);
-    this.setPopupCloseButtonClick(this._setPopupCloseButtonClickHandler);
+    this.setOnAddToWatchlistClick(this._setAddToWatchlistClickHandler);
+    this.setOnAlreadyWatchedClick(this._alreadyWatchedClickHandler);
+    this.setOnAddToFavoritesClick(this._addToFavoritesClickHandler);
     this._subscribeOnEvents();
   }
 
@@ -222,22 +222,26 @@ export default class MovieDetail extends AbstractSmartComponent {
   }
 
   setOnAddToWatchlistClick(handler) {
-    this.getElement().querySelector(`#watchlist`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watchlist`)
+      .addEventListener(`click`, handler);
 
-    this._setOnAddToWatchlistClickHandler = handler;
+    this._setAddToWatchlistClickHandler = handler;
   }
 
 
   setOnAlreadyWatchedClick(handler) {
-    this.getElement().querySelector(`#watched`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`#watched`)
+      .addEventListener(`click`, handler);
 
-    this._setOnAlreadyWatchedClickHandler = handler;
+    this._alreadyWatchedClickHandler = handler;
   }
 
-  setOnAddToFavoritesClick(handler) {
-    this.getElement().querySelector(`#favorite`).addEventListener(`click`, handler);
 
-    this._setOnAddToFavoritesClickHandler = handler;
+  setOnAddToFavoritesClick(handler) {
+    this.getElement().querySelector(`#favorite`)
+      .addEventListener(`click`, handler);
+
+    this._addToFavoritesClickHandler = handler;
   }
 
   _subscribeOnEvents() {

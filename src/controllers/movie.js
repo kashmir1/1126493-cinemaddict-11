@@ -104,33 +104,33 @@ export default class MovieController {
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._movieDetailsComponent.setOnAddToWatchlistClick(() => {
-      this._setOnAddToWatchlistClick(movie);
+      this._onWatchlistChange(movie);
     });
 
     this._movieDetailsComponent.setOnAlreadyWatchedClick(() => {
-      this._setOnAlreadyWatchedChange(movie);
+      this._onAlreadyWatchedChange(movie);
     });
 
     this._movieDetailsComponent.setOnAddToFavoritesClick(() => {
-      this._setOnAddToFavoritesClick(movie);
+      this._onFavoritesChange(movie);
     });
 
     this._movieDetailsComponent._subscribeOnEvents();
   }
 
-  _setOnAddToWatchlistClick(movie) {
+  _onWatchlistChange(movie) {
     this._onDataChange(movie, Object.assign({}, movie, {
-      isWatchList: !movie.isWatchList,
+      watchlist: !movie.watchlist,
     }));
   }
 
-  _setOnAlreadyWatchedChange(movie) {
+  _onAlreadyWatchedChange(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
       isAlreadyWatched: !movie.isAlreadyWatched,
     }));
   }
 
-  _setOnAddToFavoritesClick(movie) {
+  _onFavoritesChange(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
       isFavorite: !movie.isFavorite,
     }));
