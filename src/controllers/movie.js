@@ -82,19 +82,19 @@ export default class MovieController {
     // Подписка на событие
     this._movieCardComponent.setOnAddToWatchlistButtonClick(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
-        isWatchList: !movie.isWatchList,
+        watchlist: !movie.watchlist,
       }));
     });
 
     this._movieCardComponent.setOnAlreadyWatchedButtonClick(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
-        isAlreadyWatched: !movie.isAlreadyWatched,
+        alreadyWatched: !movie.alreadyWatched,
       }));
     });
 
     this._movieCardComponent.setOnFavoriteButtonClick(() => {
       this._onDataChange(this, movie, Object.assign({}, movie, {
-        isFavorite: !movie.isFavorite,
+        favorite: !movie.favorite,
       }));
     });
   }
@@ -103,15 +103,15 @@ export default class MovieController {
     this._movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
-    this._movieDetailsComponent.setOnAddToWatchlistClick(() => {
+    this._movieDetailsComponent.setAddWatchListChangeHandler(() => {
       this._onWatchlistChange(movie);
     });
 
-    this._movieDetailsComponent.setOnAlreadyWatchedClick(() => {
+    this._movieDetailsComponent.setAddWatchedChangeHandler(() => {
       this._onAlreadyWatchedChange(movie);
     });
 
-    this._movieDetailsComponent.setOnAddToFavoritesClick(() => {
+    this._movieDetailsComponent.setAddFavoriteChangeHandler(() => {
       this._onFavoritesChange(movie);
     });
 
@@ -126,13 +126,13 @@ export default class MovieController {
 
   _onAlreadyWatchedChange(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
-      isAlreadyWatched: !movie.isAlreadyWatched,
+      alreadyWatched: !movie.alreadyWatched,
     }));
   }
 
   _onFavoritesChange(movie) {
     this._onDataChange(this, movie, Object.assign({}, movie, {
-      isFavorite: !movie.isFavorite,
+      favorite: !movie.favorite,
     }));
   }
 }
