@@ -63,7 +63,7 @@ export default class MovieController {
   }
 
   _handlePopupKeydown(evt) {
-    evt.preventDefault();
+    // evt.preventDefault();
     if (evt.key === `Escape` || evt.key === `Esc`) {
       this._removeMovieDetailsComponent();
     }
