@@ -52,3 +52,10 @@ export const ACTORS = [`Jack Nicholson`, `Marlon Brando`, `Robert De Niro`, `Al 
 export const COUNTRIES = [`USA`, `Canada`, `Japan`, `China`, `UK`];
 export const GENRES = [`fantasy`, `comedy`, `sci-fi`, `action`, `drama`];
 export const AGE_RATES = [`3+`, `12+`, `16+`, `21+`];
+
+export const FilterType = {
+  ALL: `All movies`,
+  WATCHLIST: `Watchlist `,
+  HISTORY: `History `,
+  FAVORITES: `Favorites `
+};
