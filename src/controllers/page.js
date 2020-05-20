@@ -41,7 +41,7 @@ const renderMovies = (moviesListContainer, movies, onDataChange, onViewChange) =
 };
 
 export default class PageController {
-  constructor(container) {
+  constructor(container, moviesModel) {
     this._container = container;
     this._movies = [];
     this._sortedMovies = [];

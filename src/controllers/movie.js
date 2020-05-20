@@ -73,7 +73,7 @@ export default class MovieController {
     // Компонент нажатия на элементы списка карточки фильма
     this._movieCardComponent.setPopupOpenedClick(() => {
       this._onViewChange();
-      render(this._container, this._movieDetailsComponent, RenderPosition.BEFOREEND);
+      render(document.body, this._movieDetailsComponent, RenderPosition.BEFOREEND);
       this._subscribeOnPopupEvents(movie);
       document.addEventListener(`keydown`, this._handlePopupKeydown); // под вопросом
       this._mode = Mode.DETAILS;
