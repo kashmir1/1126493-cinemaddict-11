@@ -43,7 +43,7 @@ const renderMovies = (moviesListContainer, movies, onDataChange, onViewChange) =
 export default class PageController {
   constructor(container, moviesModel) {
     this._container = container;
-    this._movies = [];
+    this._moviesModel = moviesModel;
     this._sortedMovies = [];
     this._showedMovieControllers = [];
 
@@ -63,9 +63,8 @@ export default class PageController {
   }
 
 
-  render(movies) {
-    this._movies = movies;
-    this._sortedMovies = movies;
+  render() {
+    const movies = this._moviesModel.getMovies();
     render(this._container, this._sortListComponent, RenderPosition.BEFOREEND);
     render(this._container, this._movieListComponent, RenderPosition.BEFOREEND);
 
@@ -81,7 +80,7 @@ export default class PageController {
     const moviesListContainer = moviesListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    const newMovies = renderMovies(moviesListContainer, this._sortedMovies.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
+    const newMovies = renderMovies(moviesListContainer, movies.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
     this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
     this._renderShowMoreButton();
@@ -122,13 +121,13 @@ export default class PageController {
       this._showingMovieCardCount = this._showingMovieCardCount + SHOWING_MOVIE_COUNT_BY_BUTTON;
 
       // Добавление новых карточек
-      const sortedMovies = getSortedMovies(this._movies, this._sortListComponent.getSortType(), prevMovieCardCount, this._showingMovieCardCount);
+      const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), this._sortListComponent.getSortType(), prevMovieCardCount, this._showingMovieCardCount);
       const newMovies = renderMovies(moviesListContainer, sortedMovies, this._onDataChange, this._onViewChange);
 
       this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
       // Удаление кнопки загрузить еще по условию
-      if (this._showingMovieCardCount >= this._movies.length) {
+      if (this._showingMovieCardCount >= this._moviesModel.getMovies().length) {
         remove(this._ShowMoreButtonComponent);
         this._ShowMoreButtonComponent.removeElement();
       }
@@ -148,7 +147,7 @@ export default class PageController {
 
     this._showingMovieCardCount = SHOWING_MOVIE_COUNT_ON_START;
 
-    const sortedMovies = getSortedMovies(this._movies, sortType, 1, this._showingMovieCardCount);
+    const sortedMovies = getSortedMovies(this._moviesModel.getMovies(), sortType, 1, this._showingMovieCardCount);
 
     moviesListContainer.innerHTML = ``;
     const newMovies = renderMovies(moviesListContainer, sortedMovies, this._onDataChange, this._onViewChange);
@@ -158,13 +157,13 @@ export default class PageController {
   }
 
   _onDataChange(movieController, oldData, newData) {
-    const index = this._movies.findIndex((movie) => movie === oldData);
+    const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
 
-    if (index === -1) {
-      return;
+    if (isSuccess) {
+      movieController.render(newData);
     }
 
-    this._movies = [...this._movies.slice(0, index), newData, ...this._movies.slice(index + 1)];
-    movieController.render(this._movies[index]);
+    // this._movies = [...this._movies.slice(0, isSuccess), newData, ...this._movies.slice(isSuccess + 1)];
+    // movieController.render(this._movies[isSuccess]);
   }
 }
