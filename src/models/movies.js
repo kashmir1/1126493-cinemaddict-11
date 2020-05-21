@@ -1,13 +1,22 @@
+import {FilterType} from "../consts";
+import {getMoviesByFilter} from "../utils/filter";
+
 export default class Movies {
   constructor() {
     this._movies = [];
+    this._activeFilterType = FilterType.ALL;
 
     // хранилище хендлеров которые реагируют на изменение данных
     this._dataChangeHandlers = [];
+    this._filterChangeHandlers = [];
   }
 
   // метод получения фильмов
   getMovies() {
+    return getMoviesByFilter(this._movies, this._activeFilterType);
+  }
+
+  getMoviesAll() {
     return this._movies;
   }
 
@@ -15,6 +24,11 @@ export default class Movies {
   setMovies(movies) {
     this._movies = Array.from(movies);
     // this._callHandlers(this._dataChangeHandlers);
+  }
+
+  setFilter(filterType) {
+    this._activeFilterType = filterType;
+    this._callHandlers(this._filterChangeHandlers);
   }
 
   // метод обновления одного фильма
@@ -36,7 +50,7 @@ export default class Movies {
     this._dataChangeHandlers.push(handler);
   }
 
-  callHandlers(handlers) {
+  _callHandlers(handlers) {
     handlers.forEach((handler) => handler());
   }
 }
