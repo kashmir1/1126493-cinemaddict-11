@@ -60,6 +60,8 @@ export default class PageController {
 
     this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
+    this._onFilterChange = this._onFilterChange.bind(this);
+    this._moviesModel.setFilterChangeHandler(this._onFilterChange);
   }
 
 
@@ -104,6 +106,11 @@ export default class PageController {
     this._showedMovieControllers = this._showedMovieControllers.concat(commentedMovie);
   }
 
+  _removeMovies() {
+    this._showedMovieControllers.forEach((movieController) => movieController.destroy());
+    this._showedMovieControllers = [];
+  }
+
   _renderShowMoreButton() {
     const moviesElement = this._container.querySelector(`.films`);
     const moviesListElement = moviesElement.querySelector(`.films-list`);
@@ -132,6 +139,12 @@ export default class PageController {
         this._ShowMoreButtonComponent.removeElement();
       }
     });
+  }
+
+  _updateMovies(count) {
+    this._removeMovies();
+    this._removeMovies(this._moviesModel.getMovies().slice(0, count));
+    this._renderShowMoreButton();
   }
 
   _onViewChange() {
@@ -165,5 +178,9 @@ export default class PageController {
 
     // this._movies = [...this._movies.slice(0, isSuccess), newData, ...this._movies.slice(isSuccess + 1)];
     // movieController.render(this._movies[isSuccess]);
+  }
+
+  _onFilterChange() {
+    this._updateMovies(SHOWING_MOVIE_COUNT_ON_START);
   }
 }

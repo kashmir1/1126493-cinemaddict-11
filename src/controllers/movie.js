@@ -50,6 +50,12 @@ export default class MovieController {
     }
   }
 
+  destroy() {
+    remove(this._movieCardComponent);
+    remove(this._movieDetailsComponent);
+    document.removeEventListener(`keydown`, this._handlePopupKeydown);
+  }
+
   _removeMovieDetailsComponent() {
     remove(this._movieDetailsComponent);
     this._movieDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
