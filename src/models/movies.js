@@ -9,7 +9,7 @@ export default class Movies {
     this._filterChangeHandlers = [];
   }
 
-  getMoviesAll() {
+  getAllMovies() {
     return this._movies;
   }
 

@@ -1,41 +1,39 @@
-import FilterComponent from '../components/filter.js';
-import {FilterType} from "../consts.js";
+import SiteMenuComponent from './../components/site-menu.js';
+import {getMoviesByFilter} from './../utils/filter.js';
 import {render, replace, RenderPosition} from './../utils/render.js';
-import {getMoviesByFilter} from "../utils/filter";
+import {FilterType} from "../consts";
 
-export default class FilterController {
+export default class Filter {
   constructor(container, moviesModel) {
     this._container = container;
     this._moviesModel = moviesModel;
 
     this._activeFilterType = FilterType.ALL;
-    this._filterComponent = null;
+    this._siteMenuComponent = null;
 
-    // this._onDataChange = this._onDataChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
-
-    // this._moviesModel.setDataChangeHandler(this._onDataChange);
   }
 
   render() {
     const container = this._container;
-    const allMovies = this._moviesModel.getMoviesAll();
-    const filters = Object.values(FilterType).map((filterType) => {
-      return {
-        name: filterType,
-        count: getMoviesByFilter(allMovies, filterType).length,
-        checked: filterType === this._activeFilterType,
-      };
-    });
-    const oldComponent = this._filterComponent;
+    const allMovies = this._moviesModel.getAllMovies();
+    const filters = Object.values(FilterType)
+      .map((filterType) => {
+        return {
+          name: filterType,
+          count: getMoviesByFilter(allMovies, filterType).length,
+          checked: filterType === this._activeFilterType
+        };
+      });
+    const oldComponent = this._siteMenuComponent;
 
-    this._filterComponent = new FilterComponent(filters);
-    this._filterComponent.setFilterChangeHandler(this._onFilterChange);
+    this._siteMenuComponent = new SiteMenuComponent(filters);
+    this._siteMenuComponent.setFilterChangeHandler(this._onFilterChange);
 
     if (oldComponent) {
-      replace(oldComponent, this._filterComponent);
+      replace(oldComponent, this._siteMenuComponent);
     } else {
-      render(container, this._filterComponent, RenderPosition.BEFOREEND);
+      render(container, this._siteMenuComponent, RenderPosition.BEFOREEND);
     }
   }
 
@@ -43,8 +41,4 @@ export default class FilterController {
     this._moviesModel.setFilter(filterType);
     this._activeFilterType = filterType;
   }
-
-  // _onDataChange() {
-  //   this.render();
-  // }
 }

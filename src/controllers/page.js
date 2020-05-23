@@ -1,5 +1,5 @@
 const MOVIE_LIST_EXTRA_QUANTITY = 2;
-const SHOWING_MOVIE_COUNT_ON_START = 6;
+const SHOWING_MOVIE_COUNT_ON_START = 5;
 const SHOWING_MOVIE_COUNT_BY_BUTTON = 5;
 
 import MovieListComponent from "../components/movies-list";
@@ -44,7 +44,6 @@ export default class PageController {
   constructor(container, moviesModel) {
     this._container = container;
     this._moviesModel = moviesModel;
-    this._sortedMovies = [];
     this._showedMovieControllers = [];
 
     this._sortListComponent = new SortListComponent();
@@ -82,7 +81,7 @@ export default class PageController {
     const moviesListContainer = moviesListElement.querySelector(`.films-list__container`);
 
     // Добавление карточек в DOM
-    const newMovies = renderMovies(moviesListContainer, movies.slice(1, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
+    const newMovies = renderMovies(moviesListContainer, movies.slice(0, this._showingMovieCardCount), this._onDataChange, this._onViewChange);
     this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
 
     this._renderShowMoreButton();
@@ -107,9 +106,10 @@ export default class PageController {
   }
 
   _renderMovies(movies) {
-    const movieListElement = this._movieListComponent.getElement();
 
-    const newMovies = renderMovies(movieListElement, movies, this._onDataChange, this._onViewChange);
+    const movieListElement = this._movieListComponent.getElement().querySelector(`.films-list__container`);
+
+    const newMovies = renderMovies(movieListElement, movies.slice(0, SHOWING_MOVIE_COUNT_ON_START), this._onDataChange, this._onViewChange);
     this._showedMovieControllers = this._showedMovieControllers.concat(newMovies);
     this._showingMovieCardCount = this._showedMovieControllers.length;
   }

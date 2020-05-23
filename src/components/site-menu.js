@@ -1,6 +1,7 @@
-import AbstractComponent from "./abstract-component";
+import AbstractComponent from './abstract-component.js';
 
 const MAIN_FILTER = `All movies`;
+
 const getFilterName = (element) => element.innerText.replace(/[0-9]/g, ``);
 
 const createFiltersMarkup = (filters) => {
@@ -18,23 +19,20 @@ const createFiltersMarkup = (filters) => {
     }, ``);
 };
 
-const createNavigation = (filters) => {
-
+const createSiteMenuTemplate = (filters) => {
   const filtersMarkup = createFiltersMarkup(filters);
 
   return (
     `<nav class="main-navigation">
       <div class="main-navigation__items">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
         ${filtersMarkup}
       </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`
+      <a href="#stats" class="main-navigation__additional">Stats</a>
+    </nav>`
   );
 };
 
-// Класс меню
-export default class Filter extends AbstractComponent {
+export default class SiteMenu extends AbstractComponent {
   constructor(filters) {
     super();
 
@@ -42,7 +40,7 @@ export default class Filter extends AbstractComponent {
   }
 
   getTemplate() {
-    return createNavigation(this._filters);
+    return createSiteMenuTemplate(this._filters);
   }
 
   setFilterChangeHandler(handler) {
