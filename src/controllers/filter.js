@@ -1,4 +1,4 @@
-import FilterComponent from './../components/navigation.js';
+import FilterComponent from '../components/filter.js';
 import {FilterType} from "../consts.js";
 import {render, replace, RenderPosition} from './../utils/render.js';
 import {getMoviesByFilter} from "../utils/filter";
@@ -11,10 +11,10 @@ export default class FilterController {
     this._activeFilterType = FilterType.ALL;
     this._filterComponent = null;
 
-    this._onDataChange = this._onDataChange.bind(this);
+    // this._onDataChange = this._onDataChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
 
-    this._moviesModel.setDataChangeHandler(this._onDataChange);
+    // this._moviesModel.setDataChangeHandler(this._onDataChange);
   }
 
   render() {
@@ -33,7 +33,7 @@ export default class FilterController {
     this._filterComponent.setFilterChangeHandler(this._onFilterChange);
 
     if (oldComponent) {
-      replace(this._filterComponent, oldComponent);
+      replace(oldComponent, this._filterComponent);
     } else {
       render(container, this._filterComponent, RenderPosition.BEFOREEND);
     }
@@ -44,7 +44,7 @@ export default class FilterController {
     this._activeFilterType = filterType;
   }
 
-  _onDataChange() {
-    this.render();
-  }
+  // _onDataChange() {
+  //   this.render();
+  // }
 }

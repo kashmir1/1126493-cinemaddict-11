@@ -3,20 +3,24 @@ import AbstractComponent from "./abstract-component";
 const MAIN_FILTER = `All movies`;
 const getFilterName = (element) => element.innerText.replace(/[0-9]/g, ``);
 
-const createFilterMarkup = (name, count, url, checked) => {
-  const isMainFilter = name === MAIN_FILTER;
-  return (
-    `
-     <a href="#${url}" class="main-navigation__item ${checked ? `main-navigation__item--active` : ``}">
-     ${name} ${isMainFilter ? `` : `<span class="main-navigation__item-count">${count}</span>`}
-     </a>
-    `
-  );
+const createFiltersMarkup = (filters) => {
+  return filters
+    .reduce((acc, {name, count, checked}, i) => {
+      const newline = i === 0 ? `` : `\n`;
+      const link = name.toLowerCase().split(` `)[0];
+      const isMainFilter = name === MAIN_FILTER;
+      const template = (
+        `<a href="#${link}" class="main-navigation__item ${checked ? `main-navigation__item--active` : ``}">
+          ${name}${isMainFilter ? `` : `<span class="main-navigation__item-count">${count}</span>`}
+        </a>`
+      );
+      return `${acc}${newline}${template}`;
+    }, ``);
 };
 
 const createNavigation = (filters) => {
 
-  const filtersMarkup = filters.map((it) => createFilterMarkup(it.name, it.count, it.url)).join(``);
+  const filtersMarkup = createFiltersMarkup(filters);
 
   return (
     `<nav class="main-navigation">
@@ -30,7 +34,7 @@ const createNavigation = (filters) => {
 };
 
 // Класс меню
-export default class Navigation extends AbstractComponent {
+export default class Filter extends AbstractComponent {
   constructor(filters) {
     super();
 
