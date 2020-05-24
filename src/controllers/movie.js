@@ -9,6 +9,7 @@ const Mode = {
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
+    this.id = null;
     this._container = container;
     this._mode = Mode.DEFAULT;
 
@@ -25,8 +26,8 @@ export default class MovieController {
   }
 
   render(movie) {
+    this.id = movie.id;
 
-    /* Сохраняют состояния компонентов */
     const oldMovieCardComponent = this._movieCardComponent;
     const oldMovieDetailsComponent = this._movieDetailsComponent;
 
@@ -58,7 +59,6 @@ export default class MovieController {
 
   _removeMovieDetailsComponent() {
     remove(this._movieDetailsComponent);
-    this._movieDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
     this._mode = Mode.DEFAULT;
   }
@@ -69,39 +69,33 @@ export default class MovieController {
   }
 
   _handlePopupKeydown(evt) {
-    // evt.preventDefault();
-    if (evt.key === `Escape` || evt.key === `Esc`) {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
       this._removeMovieDetailsComponent();
     }
   }
 
   _subscribeOnCardEvents(movie) {
-    // Компонент нажатия на элементы списка карточки фильма
-    this._movieCardComponent.setPopupOpenedClick(() => {
+    /* Добавляет обработчик клика, вызывающий показ попапа с подробной информацией о фильме */
+    this._movieCardComponent.setOnDetailsOpenersClick(() => {
       this._onViewChange();
       render(document.body, this._movieDetailsComponent, RenderPosition.BEFOREEND);
       this._subscribeOnPopupEvents(movie);
-      document.addEventListener(`keydown`, this._handlePopupKeydown); // под вопросом
+      document.addEventListener(`keydown`, this._handlePopupKeydown);
       this._mode = Mode.DETAILS;
     });
 
-    // Подписка на событие
-    this._movieCardComponent.setAddWatchListClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        watchlist: !movie.watchlist,
-      }));
+    this._movieCardComponent.setOnAddToWatchlistButtonClick(() => {
+      this._onWatchlistChange(movie);
     });
 
-    this._movieCardComponent.setAddWatchedClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        alreadyWatched: !movie.alreadyWatched,
-      }));
+    this._movieCardComponent.setOnAlreadyWatchedButtonClick(() => {
+      this._onAlreadyWatchedChange(movie);
     });
 
-    this._movieCardComponent.setAddFavoriteClickHandler(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        favorite: !movie.favorite,
-      }));
+    this._movieCardComponent.setOnFavoriteButtonClick(() => {
+      this._onFavoritesChange(movie);
     });
   }
 
@@ -109,36 +103,36 @@ export default class MovieController {
     this._movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
-    this._movieDetailsComponent.setAddWatchListChangeHandler(() => {
-      this._addWatchListHandler(movie);
+    this._movieDetailsComponent.setOnAddToWatchlistClick(() => {
+      this._onWatchlistChange(movie);
     });
 
-    this._movieDetailsComponent.setAddWatchedChangeHandler(() => {
-      this._addWatchedHandler(movie);
+    this._movieDetailsComponent.setOnAlreadyWatchedClick(() => {
+      this._onAlreadyWatchedChange(movie);
     });
 
-    this._movieDetailsComponent.setAddFavoriteChangeHandler(() => {
-      this._addFavoriteHandler(movie);
+    this._movieDetailsComponent.setOnAddToFavoritesClick(() => {
+      this._onFavoritesChange(movie);
     });
 
     this._movieDetailsComponent._subscribeOnEvents();
   }
 
-  _addWatchListHandler(movie) {
-    this._onDataChange(this, movie, Object.assign({}, movie, {
-      watchlist: !movie.watchlist,
+  _onWatchlistChange(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      watchlist: !movie.watchlist
     }));
   }
 
-  _addWatchedHandler(movie) {
-    this._onDataChange(this, movie, Object.assign({}, movie, {
-      alreadyWatched: !movie.alreadyWatched,
+  _onAlreadyWatchedChange(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      alreadyWatched: !movie.alreadyWatched
     }));
   }
 
-  _addFavoriteHandler(movie) {
-    this._onDataChange(this, movie, Object.assign({}, movie, {
-      favorite: !movie.favorite,
+  _onFavoritesChange(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      favorite: !movie.favorite
     }));
   }
 }

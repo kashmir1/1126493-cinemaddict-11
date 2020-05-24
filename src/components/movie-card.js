@@ -54,14 +54,15 @@ export default class MovieCard extends AbstractComponent {
     return createMovieCard(this._movie);
   }
 
-  setPopupOpenedClick(handler) {
-    const moviePoster = this.getElement().querySelector(`.film-card__poster`);
-    const movieTitle = this.getElement().querySelector(`.film-card__title`);
-    const movieComments = this.getElement().querySelector(`.film-card__comments`);
+  setOnDetailsOpenersClick(handler) {
+    const moviePosterElement = this.getElement().querySelector(`.film-card__poster`);
+    const movieTitleElement = this.getElement().querySelector(`.film-card__title`);
+    const movieCommentsCountElement = this.getElement().querySelector(`.film-card__comments`);
+    /* Сохраняет все элементы, клик на которые вызывает показ попапа с подробной информацией о фильме, в массив */
+    const detailsOpeners = [moviePosterElement, movieTitleElement, movieCommentsCountElement];
 
-    const movieElements = [moviePoster, movieTitle, movieComments];
-
-    movieElements.forEach((element) => element.addEventListener(`click`, handler));
+    /* Добавляет обработчик клика, вызывающий показ попапа с подробной информацией о фильме */
+    detailsOpeners.forEach((detailsOpener) => detailsOpener.addEventListener(`click`, handler));
   }
 
   setPopupKeydown(handler) {
@@ -69,15 +70,18 @@ export default class MovieCard extends AbstractComponent {
   }
 
   // Добавляем обработчики на кнопки
-  setAddWatchListClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, handler);
+  setOnAddToWatchlistButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, handler);
   }
 
-  setAddWatchedClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, handler);
+  setOnAlreadyWatchedButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, handler);
   }
 
-  setAddFavoriteClickHandler(handler) {
-    this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, handler);
+  setOnFavoriteButtonClick(handler) {
+    this.getElement().querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, handler);
   }
 }
