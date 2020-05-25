@@ -20,7 +20,7 @@ export const MOVIE_DESCS = [
   `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`
 ];
 
-export const SMILES = [`angry.png`, `puke.png`, `sleeping.png`, `smile.png`];
+export const SMILES = [`angry`, `puke`, `sleeping`, `smile`];
 export const COMMENT_TEXTS = [
   `Interesting setting and a good cast`,
   `My favorite movie`,
@@ -52,3 +52,10 @@ export const ACTORS = [`Jack Nicholson`, `Marlon Brando`, `Robert De Niro`, `Al 
 export const COUNTRIES = [`USA`, `Canada`, `Japan`, `China`, `UK`];
 export const GENRES = [`fantasy`, `comedy`, `sci-fi`, `action`, `drama`];
 export const AGE_RATES = [`3+`, `12+`, `16+`, `21+`];
+
+export const FilterType = {
+  ALL: `All movies`,
+  WATCHLIST: `Watchlist `,
+  HISTORY: `History `,
+  FAVORITES: `Favorites `
+};

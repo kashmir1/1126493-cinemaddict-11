@@ -22,6 +22,7 @@ const getGenre = () => {
 const generateMovie = () => {
 
   return {
+    id: String(new Date() + Math.random()),
     title: movieName,
     poster: `./images/posters/` + getRandomArrayItem(MOVIE_POSTERS),
     originalName: movieName,
@@ -37,6 +38,9 @@ const generateMovie = () => {
     genres: getGenre(),
     ageRate: getRandomArrayItem(AGE_RATES),
     comments: generateComments(getRandomInteger(1, 5)),
+    favorite: Math.random() > 0.5,
+    watchlist: Math.random() > 0.5,
+    alreadyWatched: Math.random() > 0.5,
   };
 };
 

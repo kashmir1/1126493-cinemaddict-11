@@ -12,10 +12,14 @@ const createGenreMarkup = (genres) => {
 const createMovieCard = (movie) => {
 
   // создаем моки для карточки
-  const {title, poster, description, rate, year, runtime, genres, comments} = movie;
+  const {title, poster, description, rate, year, runtime, genres, comments, watchlist, favorite, alreadyWatched} = movie;
   const runTime = formatRuntime(runtime);
   const genreMarkup = createGenreMarkup(genres);
   const movieYear = getYear(year);
+
+  const alreadyWatchListClass = watchlist ? `film-card__controls-item--active` : ``;
+  const favoriteClass = favorite ? `film-card__controls-item--active` : ``;
+  const alreadyWatchedClass = alreadyWatched ? `film-card__controls-item--active` : ``;
 
   return (
     `<article class="film-card">
@@ -30,9 +34,9 @@ const createMovieCard = (movie) => {
           <p class="film-card__description">${description}</p>
           <a class="film-card__comments">${comments.length} comments</a>
           <form class="film-card__controls">
-            <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-            <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-            <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+            <button type="button" class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${alreadyWatchListClass}">Add to watchlist</button>
+            <button type="button" class="film-card__controls-item button film-card__controls-item--mark-as-watched ${alreadyWatchedClass}">Mark as watched</button>
+            <button type="button" class="film-card__controls-item button film-card__controls-item--favorite ${favoriteClass}">Mark as favorite</button>
           </form>
         </article>`
   );
@@ -50,20 +54,20 @@ export default class MovieCard extends AbstractComponent {
     return createMovieCard(this._movie);
   }
 
-  setPopupOpenedClick(handler) {
-    const moviePoster = this.getElement().querySelector(`.film-card__poster`);
-    const movieTitle = this.getElement().querySelector(`.film-card__title`);
-    const movieComments = this.getElement().querySelector(`.film-card__comments`);
+  setOnDetailsOpenersClick(handler) {
+    const moviePosterElement = this.getElement().querySelector(`.film-card__poster`);
+    const movieTitleElement = this.getElement().querySelector(`.film-card__title`);
+    const movieCommentsCountElement = this.getElement().querySelector(`.film-card__comments`);
+    /* Сохраняет все элементы, клик на которые вызывает показ попапа с подробной информацией о фильме, в массив */
+    const detailsOpeners = [moviePosterElement, movieTitleElement, movieCommentsCountElement];
 
-    const movieElements = [moviePoster, movieTitle, movieComments];
-
-    movieElements.forEach((element) => element.addEventListener(`click`, handler));
+    /* Добавляет обработчик клика, вызывающий показ попапа с подробной информацией о фильме */
+    detailsOpeners.forEach((detailsOpener) => detailsOpener.addEventListener(`click`, handler));
   }
 
   setPopupKeydown(handler) {
     document.addEventListener(`keydown`, handler);
   }
-
 
   // Добавляем обработчики на кнопки
   setOnAddToWatchlistButtonClick(handler) {

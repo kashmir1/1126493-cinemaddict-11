@@ -32,27 +32,26 @@ export default class SortList extends AbstractComponent {
     return this._currenSortType;
   }
 
-  setSortTypeChangeHandler(handler) {
+  setOnSortTypeChange(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
 
-      // Проверяем что тег - это тег А, если нет, прерываем выполненеи функции
       if (evt.target.tagName !== `A`) {
         return;
       }
 
       const sortType = evt.target.dataset.sortType;
 
-      // Если текущий тип сортировки равен той, что пришла в обработчике клика, то ничего не происходит
-      if (this._currenSortType === sortType) {
+      if (this._currentSortType === sortType) {
         return;
       }
 
-      // Если условие выше не выполнено, то записываем его в свойства класса _currentSortType и передаем в handler
-      this._currenSortType = sortType;
+      this._currentSortType = sortType;
 
-      handler(this._currenSortType);
+      this.getElement().querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
+      evt.target.classList.add(`sort__button--active`);
+
+      handler(this._currentSortType);
     });
-
   }
 }

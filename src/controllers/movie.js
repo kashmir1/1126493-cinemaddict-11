@@ -9,6 +9,7 @@ const Mode = {
 
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
+    this.id = null;
     this._container = container;
     this._mode = Mode.DEFAULT;
 
@@ -22,11 +23,12 @@ export default class MovieController {
     this._removeMovieDetailsComponent = this._removeMovieDetailsComponent.bind(this);
     this._onPopupCloseButtonClick = this._onPopupCloseButtonClick.bind(this);
     this._handlePopupKeydown = this._handlePopupKeydown.bind(this);
+    this._onAddNewComment = this._onAddNewComment.bind(this);
   }
 
   render(movie) {
+    this.id = movie.id;
 
-    /* Сохраняют состояния компонентов */
     const oldMovieCardComponent = this._movieCardComponent;
     const oldMovieDetailsComponent = this._movieDetailsComponent;
 
@@ -50,10 +52,17 @@ export default class MovieController {
     }
   }
 
+  destroy() {
+    remove(this._movieCardComponent);
+    remove(this._movieDetailsComponent);
+    document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    document.removeEventListener(`keydown`, this._onAddNewComment);
+  }
+
   _removeMovieDetailsComponent() {
     remove(this._movieDetailsComponent);
-    this._movieDetailsComponent.removePopupCloseButtonClick(this._onPopupCloseButtonClick);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    document.removeEventListener(`keydown`, this._onAddNewComment);
     this._mode = Mode.DEFAULT;
   }
 
@@ -63,39 +72,34 @@ export default class MovieController {
   }
 
   _handlePopupKeydown(evt) {
-    evt.preventDefault();
-    if (evt.key === `Escape` || evt.key === `Esc`) {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
       this._removeMovieDetailsComponent();
     }
   }
 
   _subscribeOnCardEvents(movie) {
-    // Компонент нажатия на элементы списка карточки фильма
-    this._movieCardComponent.setPopupOpenedClick(() => {
+    /* Добавляет обработчик клика, вызывающий показ попапа с подробной информацией о фильме */
+    this._movieCardComponent.setOnDetailsOpenersClick(() => {
       this._onViewChange();
-      render(this._container, this._movieDetailsComponent, RenderPosition.BEFOREEND);
+      render(document.body, this._movieDetailsComponent, RenderPosition.BEFOREEND);
       this._subscribeOnPopupEvents(movie);
-      document.addEventListener(`keydown`, this._handlePopupKeydown); // под вопросом
+      document.addEventListener(`keydown`, this._handlePopupKeydown);
+      document.addEventListener(`keydown`, this._onAddNewComment);
       this._mode = Mode.DETAILS;
     });
 
-    // Подписка на событие
     this._movieCardComponent.setOnAddToWatchlistButtonClick(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isWatchList: !movie.isWatchList,
-      }));
+      this._onWatchlistChange(movie);
     });
 
     this._movieCardComponent.setOnAlreadyWatchedButtonClick(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isAlreadyWatched: !movie.isAlreadyWatched,
-      }));
+      this._onAlreadyWatchedChange(movie);
     });
 
     this._movieCardComponent.setOnFavoriteButtonClick(() => {
-      this._onDataChange(this, movie, Object.assign({}, movie, {
-        isFavorite: !movie.isFavorite,
-      }));
+      this._onFavoritesChange(movie);
     });
   }
 
@@ -104,35 +108,54 @@ export default class MovieController {
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._movieDetailsComponent.setOnAddToWatchlistClick(() => {
-      this._setOnAddToWatchlistClick(movie);
+      this._onWatchlistChange(movie);
     });
 
     this._movieDetailsComponent.setOnAlreadyWatchedClick(() => {
-      this._setOnAlreadyWatchedChange(movie);
+      this._onAlreadyWatchedChange(movie);
     });
 
     this._movieDetailsComponent.setOnAddToFavoritesClick(() => {
-      this._setOnAddToFavoritesClick(movie);
+      this._onFavoritesChange(movie);
+    });
+
+    this._movieDetailsComponent.setOnCommentDeleteClick((commentId) => {
+      this._onDataChange({movie, commentId}, null);
     });
 
     this._movieDetailsComponent._subscribeOnEvents();
   }
 
-  _setOnAddToWatchlistClick(movie) {
+  _onWatchlistChange(movie) {
     this._onDataChange(movie, Object.assign({}, movie, {
-      isWatchList: !movie.isWatchList,
+      watchlist: !movie.watchlist
     }));
   }
 
-  _setOnAlreadyWatchedChange(movie) {
-    this._onDataChange(this, movie, Object.assign({}, movie, {
-      isAlreadyWatched: !movie.isAlreadyWatched,
+  _onAlreadyWatchedChange(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      alreadyWatched: !movie.alreadyWatched
     }));
   }
 
-  _setOnAddToFavoritesClick(movie) {
-    this._onDataChange(this, movie, Object.assign({}, movie, {
-      isFavorite: !movie.isFavorite,
+  _onFavoritesChange(movie) {
+    this._onDataChange(movie, Object.assign({}, movie, {
+      favorite: !movie.favorite
     }));
+  }
+
+  _onAddNewComment(evt) {
+    const isCombination = evt.key === `Enter` && (evt.ctrlKey || evt.metaKey);
+
+    if (isCombination) {
+      const data = this._movieDetailsComponent.getData();
+
+      /* Если не заполнен текст комментария либо не выбрана эмоция, метод завершает работу */
+      if (!data) {
+        return;
+      }
+
+      this._onDataChange(null, data);
+    }
   }
 }

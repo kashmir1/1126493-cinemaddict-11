@@ -4,10 +4,11 @@ import {getRandomArrayItem} from "../utils/common";
 const generateComment = () => {
 
   return {
-    smile: `./images/emoji/` + getRandomArrayItem(SMILES),
-    commentText: getRandomArrayItem(COMMENT_TEXTS),
+    id: String(new Date() + Math.random()),
+    emotion: getRandomArrayItem(SMILES),
+    comment: getRandomArrayItem(COMMENT_TEXTS),
     author: getRandomArrayItem(AUTHORS),
-    commentDate: new Date(),
+    date: new Date(),
   };
 };
 
