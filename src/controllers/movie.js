@@ -23,6 +23,7 @@ export default class MovieController {
     this._removeMovieDetailsComponent = this._removeMovieDetailsComponent.bind(this);
     this._onPopupCloseButtonClick = this._onPopupCloseButtonClick.bind(this);
     this._handlePopupKeydown = this._handlePopupKeydown.bind(this);
+    this._onAddNewComment = this._onAddNewComment.bind(this);
   }
 
   render(movie) {
@@ -55,11 +56,13 @@ export default class MovieController {
     remove(this._movieCardComponent);
     remove(this._movieDetailsComponent);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    document.removeEventListener(`keydown`, this._onAddNewComment);
   }
 
   _removeMovieDetailsComponent() {
     remove(this._movieDetailsComponent);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    document.removeEventListener(`keydown`, this._onAddNewComment);
     this._mode = Mode.DEFAULT;
   }
 
@@ -83,6 +86,7 @@ export default class MovieController {
       render(document.body, this._movieDetailsComponent, RenderPosition.BEFOREEND);
       this._subscribeOnPopupEvents(movie);
       document.addEventListener(`keydown`, this._handlePopupKeydown);
+      document.addEventListener(`keydown`, this._onAddNewComment);
       this._mode = Mode.DETAILS;
     });
 
@@ -138,5 +142,20 @@ export default class MovieController {
     this._onDataChange(movie, Object.assign({}, movie, {
       favorite: !movie.favorite
     }));
+  }
+
+  _onAddNewComment(evt) {
+    const isCombination = evt.key === `Enter` && (evt.ctrlKey || evt.metaKey);
+
+    if (isCombination) {
+      const data = this._movieDetailsComponent.getData();
+
+      /* Если не заполнен текст комментария либо не выбрана эмоция, метод завершает работу */
+      if (!data) {
+        return;
+      }
+
+      this._onDataChange(null, data);
+    }
   }
 }
