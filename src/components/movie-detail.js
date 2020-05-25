@@ -1,6 +1,8 @@
 import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractSmartComponent from "./abstract-smart-component";
 import {SMILES} from "../consts";
+import {encode} from 'he';
+
 
 const createCommentsMarkup = (comments) => {
   return comments
@@ -183,7 +185,7 @@ const createMovieDetail = (movie, commentEmoji) => {
 const parseFormData = (formData) => {
   return {
     id: String(new Date() + Math.random()),
-    comment: formData.get(`comment`),
+    comment: encode(formData.get(`comment`)),
     date: Date.now(),
     emotion: formData.get(`comment-emoji`),
     author: `User`
