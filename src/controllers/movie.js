@@ -115,6 +115,10 @@ export default class MovieController {
       this._onFavoritesChange(movie);
     });
 
+    this._movieDetailsComponent.setOnCommentDeleteClick((commentId) => {
+      this._onDataChange({movie, commentId}, null);
+    });
+
     this._movieDetailsComponent._subscribeOnEvents();
   }
 

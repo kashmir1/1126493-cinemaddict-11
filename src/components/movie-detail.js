@@ -2,27 +2,26 @@ import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractSmartComponent from "./abstract-smart-component";
 
 const createCommentsMarkup = (comments) => {
-  return comments.map((comment) => {
-    const {smile, commentText, author, commentDate} = comment;
-
-    const dateTime = getFormatDateTime(commentDate);
-
-    return (
-      `<li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="${smile}" width="55" height="55" alt="emoji-smile">
-            </span>
-            <div>
-              <p class="film-details__comment-text">${commentText}</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">${author}</span>
-                <span class="film-details__comment-day">${dateTime}</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>`
-    );
-  }).join(`\n`);
+  return comments
+    .reduce((acc, {id, author, commentText, commentDate, smile}, i) => {
+      const newline = i === 0 ? `` : `\n`;
+      const template = (
+        `<li data-id="${id}" class="film-details__comment">
+          <span class="film-details__comment-emoji">
+            <img src="${smile}.png" width="55" height="55" alt="emoji-${smile}">
+          </span>
+          <div>
+            <p class="film-details__comment-text">${commentText}</p>
+            <p class="film-details__comment-info">
+              <span class="film-details__comment-author">${author}</span>
+              <span class="film-details__comment-day">${getFormatDateTime(commentDate, `comment`)}</span>
+              <button class="film-details__comment-delete">Delete</button>
+            </p>
+          </div>
+        </li>`
+      );
+      return `${acc}${newline}${template}`;
+    }, ``);
 };
 
 
@@ -194,6 +193,7 @@ export default class MovieDetail extends AbstractSmartComponent {
     this._setAddToWatchlistClickHandler = null;
     this._alreadyWatchedClickHandler = null;
     this._addToFavoritesClickHandler = null;
+    this._commentDeleteClickHandler = null;
     this._subscribeOnEvents();
   }
 
@@ -202,6 +202,7 @@ export default class MovieDetail extends AbstractSmartComponent {
     this.setOnAddToWatchlistClick(this._setAddToWatchlistClickHandler);
     this.setOnAlreadyWatchedClick(this._alreadyWatchedClickHandler);
     this.setOnAddToFavoritesClick(this._addToFavoritesClickHandler);
+    this.setOnCommentDeleteClick(this._commentDeleteClickHandler);
     this._subscribeOnEvents();
   }
 
@@ -244,6 +245,21 @@ export default class MovieDetail extends AbstractSmartComponent {
       .addEventListener(`click`, handler);
 
     this._addToFavoritesClickHandler = handler;
+  }
+
+  setOnCommentDeleteClick(handler) {
+    this.getElement().querySelectorAll(`.film-details__comment-delete`)
+      .forEach((button) => button.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+
+        const commentElement = button.closest(`.film-details__comment`);
+        const commentId = commentElement.dataset.id;
+
+        commentElement.remove();
+        handler(commentId);
+      }));
+
+    this._commentDeleteClickHandler = handler;
   }
 
   _subscribeOnEvents() {
