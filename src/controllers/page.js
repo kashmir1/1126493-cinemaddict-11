@@ -66,6 +66,15 @@ export default class PageController {
     this._moviesModel.setFilterChangeHandler(this._onFilterChange);
   }
 
+  hide() {
+    this._movieListComponent.hide();
+    this._sortingComponent.hide();
+  }
+
+  show() {
+    this._movieListComponent.show();
+    this._sortingComponent.show();
+  }
 
   render() {
     const movies = this._moviesModel.getMovies();
@@ -104,15 +113,6 @@ export default class PageController {
     this._sortedMovies = getSortedMovies(this._moviesModel.getMovies(), this._sortType);
     this._renderMovies(this._sortedMovies.slice(0, SHOWING_MOVIE_COUNT_ON_START));
     this._renderShowMoreButton();
-  }
-
-  _updateMovie(movie) {
-    this._sortedMovies = this._sortedMovies.map((it) => {
-      if (it.id === movie.id) {
-        return movie;
-      }
-      return it;
-    });
   }
 
   _renderShowMoreButton() {
@@ -172,7 +172,7 @@ export default class PageController {
       const isSuccess = this._moviesModel.removeComment(commentId, movie);
 
       if (isSuccess) {
-        this._updateMovie(newData);
+
         /* Находит все карточки, которые необходимо обновить */
         this._showedMovieControllers.concat(this._extraMovieControllers)
           .filter(({id}) => id === movie.id)
@@ -197,6 +197,7 @@ export default class PageController {
       const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
 
       if (isSuccess) {
+        this._updateMovies();
         /* Находит все карточки, которые необходимо обновить */
         this._showedMovieControllers.concat(this._extraMovieControllers)
           .filter(({id}) => id === oldData.id)
