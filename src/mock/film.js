@@ -19,6 +19,21 @@ const getGenre = () => {
   return currentGenres.slice(0, getRandomInteger(1, currentGenres.length - 1));
 };
 
+const getRandomDate = () => {
+  const date = new Date();
+
+  /* Чтобы в моках все фильмы не были от одной даты, создадим смещение даты выпуска фильма */
+  const year = 2020;
+  const month = 3;
+  const day = getRandomInteger(0, 30);
+
+  date.setFullYear(year, month, day);
+
+  return date;
+};
+
+const isWatched = Math.random() > 0.7;
+
 const generateMovie = () => {
 
   return {
@@ -41,6 +56,7 @@ const generateMovie = () => {
     favorite: Math.random() > 0.5,
     watchlist: Math.random() > 0.5,
     alreadyWatched: Math.random() > 0.5,
+    watchingDate: getRandomDate,
   };
 };
 
