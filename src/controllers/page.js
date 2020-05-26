@@ -67,12 +67,12 @@ export default class PageController {
   }
 
   hide() {
-    this._container.hide();
+    this._movieListComponent.hide();
     this._sortingComponent.hide();
   }
 
   show() {
-    this._container.show();
+    this._movieListComponent.show();
     this._sortingComponent.show();
   }
 

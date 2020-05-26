@@ -5,6 +5,8 @@ import FooterStatisticsComponent from "./components/footer-statistics";
 import PageController from "./controllers/page";
 import MoviesModel from './models/movies.js';
 import FilterController from "./controllers/filter";
+import StatisticsComponent from './components/statistics.js';
+
 
 // Моки
 import {generateMovies} from "./mock/film";
@@ -15,11 +17,15 @@ const mainElem = document.querySelector(`.main`);
 
 const movies = generateMovies(MOVIE_CARD_QUANTITY);
 const moviesModel = new MoviesModel();
-const watchedMoviesCount = movies.filter(({alreadyWatched}) => alreadyWatched).length;
+const watchedMovies = movies.filter(({alreadyWatched}) => alreadyWatched);
+
 moviesModel.setMovies(movies);
 
-render(headerElem, new UserRankComponent(watchedMoviesCount), RenderPosition.BEFOREEND);
-const filterController = new FilterController(mainElem, moviesModel);
+render(headerElem, new UserRankComponent(watchedMovies.length), RenderPosition.BEFOREEND);
+const filterController = new FilterController(mainElem, moviesModel, () => {
+  statisticsComponent.hide();
+  pageController.show();
+});
 filterController.render();
 
 // Объявление контейнеров для добавление разметки
@@ -31,4 +37,11 @@ const pageController = new PageController(mainElem, moviesModel);
 render(footerStatisticsElement, new FooterStatisticsComponent(movies.length), RenderPosition.BEFOREEND);
 pageController.render(movies);
 
+const statisticsComponent = new StatisticsComponent(watchedMovies);
+render(mainElem, statisticsComponent, RenderPosition.BEFOREEND);
+statisticsComponent.hide();
 
+filterController.setOnStatsClick(() => {
+  pageController.hide();
+  statisticsComponent.show(moviesModel.getAllMovies().filter(({alreadyWatched}) => alreadyWatched));
+});

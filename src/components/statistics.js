@@ -54,7 +54,7 @@ const formatTotalRuntime = (movies) => {
   const totalRuntime = movies.reduce((acc, movie) => acc + movie.runtime, 0);
 
   return {
-    hoursDuration: moment.duration(totalRuntime, `minutes`).asHours(),
+    hoursDuration: Math.floor(moment.duration(totalRuntime, `minutes`).asHours()),
     minutesDuration: moment.duration(totalRuntime, `minutes`).minutes()
   };
 };
@@ -187,7 +187,7 @@ const createStatisticsTemplate = (movies, filter) => {
   );
 };
 
-export default class Statictics extends AbstractSmartComponent {
+export default class Statistics extends AbstractSmartComponent {
   constructor(movies) {
     super();
 
@@ -212,6 +212,13 @@ export default class Statictics extends AbstractSmartComponent {
     super.rerender();
 
     this._renderChart();
+  }
+
+  show(updatedMovies) {
+    super.show();
+    this._movies = updatedMovies;
+    this._filter = `all-time`;
+    this.rerender();
   }
 
   _renderChart() {
