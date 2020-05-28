@@ -3,6 +3,8 @@ import MovieDetailComponent from "../components/movie-detail";
 import MovieModel from './../models/movie.js';
 import {render, remove, replace, RenderPosition} from "../utils/render";
 
+const SHAKE_ANIMATION_TIMEOUT = 600;
+
 const Mode = {
   DEFAULT: `default`,
   DETAILS: `details`,
@@ -58,6 +60,16 @@ export default class MovieController {
     remove(this._movieDetailsComponent);
     document.removeEventListener(`keydown`, this._handlePopupKeydown);
     document.removeEventListener(`keydown`, this._onAddNewComment);
+  }
+
+  shake() {
+    this._movieCardComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    this._movieDetailsComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._movieCardComponent.getElement().style.animation = ``;
+      this._movieDetailsComponent.getElement().style.animation = ``;
+    }, SHAKE_ANIMATION_TIMEOUT);
   }
 
   _removeMovieDetailsComponent() {
@@ -123,10 +135,9 @@ export default class MovieController {
       this._onFavoritesChange(movie);
     });
 
-    this._movieDetailsComponent.setOnCommentDeleteClick((commentId) => {
-      this._onDataChange({movie, commentId}, null);
+    this._movieDetailsComponent.setOnCommentDeleteClick((commentId, button) => {
+      this._onDataChange({movie, commentId, button}, null);
     });
-
     this._movieDetailsComponent._subscribeOnEvents();
   }
 
@@ -145,29 +156,35 @@ export default class MovieController {
   }
 
   _onFavoritesChange(movie) {
-    this._onDataChange(movie, Object.assign({}, movie, {
-      userDetails: {
-        watchlist: movie.userDetails.watchlist,
-        alreadyWatched: movie.userDetails.alreadyWatched,
-        watchingDate: movie.userDetails.watchingDate,
-        favorite: !movie.userDetails.favorite
-      }
-    }));
+    const newMovie = MovieModel.clone(movie);
+    newMovie.userDetails.favorite = !movie.userDetails.favorite;
+
+    this._onDataChange(movie, newMovie);
   }
+
 
   _onAddNewComment(evt) {
     const isCombination = evt.key === `Enter` && (evt.ctrlKey || evt.metaKey);
 
     if (isCombination) {
-      const {comment, movieId} = this._movieDetailsComponent.getData();
-
+      const {formElements, comment, movieId} = this._movieDetailsComponent.getData();
 
       /* Если не заполнен текст комментария либо не выбрана эмоция, метод завершает работу */
       if (Object.values(comment).some((prop) => !prop)) {
         return;
       }
 
-      this._onDataChange(null, {comment, movieId});
+      formElements.forEach((element) => {
+        element.disabled = true;
+
+        if (element.tagName === `TEXTAREA`) {
+          element.style.boxShadow = null;
+        }
+      });
+
+      /* Удаляем обработчик отправки формы, чтобы пользователь не мог отправить новый комментарий, пока не обработан старый */
+      document.removeEventListener(`keydown`, this._onAddNewComment);
+      this._onDataChange(null, {comment, movieId, onAddNewComment: this._onAddNewComment});
     }
   }
 }
