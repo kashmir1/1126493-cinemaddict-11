@@ -1,14 +1,13 @@
-const MOVIE_CARD_QUANTITY = 15;
-
 import UserRankComponent from "./components/rank";
 import FooterStatisticsComponent from "./components/footer-statistics";
 import PageController from "./controllers/page";
 import MoviesModel from './models/movies.js';
 import FilterController from "./controllers/filter";
 import StatisticsComponent from './components/statistics.js';
+import MovieListPreloaderComponent from "./components/movie-list-preloader";
 import API from './api.js';
 
-import {render, RenderPosition} from "./utils/render";
+import {render, remove, RenderPosition} from "./utils/render";
 const AUTHORIZATION = `Basic 21337`;
 const END_POINT = `https://11.ecmascript.pages.academy/cinemaddict`;
 
@@ -18,6 +17,8 @@ const moviesModel = new MoviesModel();
 const headerElem = document.querySelector(`.header`);
 const mainElem = document.querySelector(`.main`);
 
+const movieListPreloaderComponent = new MovieListPreloaderComponent();
+render(mainElem, movieListPreloaderComponent, RenderPosition.BEFOREEND);
 
 api.getMovies()
   .then((movies) => {
@@ -34,10 +35,11 @@ api.getMovies()
     const footerElement = document.querySelector(`.footer`);
     const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
     const pageController = new PageController(mainElem, moviesModel, api);
-
+    remove(movieListPreloaderComponent);
 
     render(footerStatisticsElement, new FooterStatisticsComponent(movies.length), RenderPosition.BEFOREEND);
     pageController.render(movies);
+
 
     const statisticsComponent = new StatisticsComponent(watchedMovies);
     render(mainElem, statisticsComponent, RenderPosition.BEFOREEND);
