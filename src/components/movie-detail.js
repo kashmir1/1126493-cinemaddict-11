@@ -3,7 +3,7 @@ import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractComponent from './abstract-component.js';
 import {SMILES} from "../consts";
 import {encode} from 'he';
-
+// проверка
 
 const createCommentsMarkup = (comments) => {
   return comments
