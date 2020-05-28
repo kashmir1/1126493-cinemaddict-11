@@ -8,9 +8,9 @@ const PERIODS = [`All time`, `Today`, `Week`, `Month`, `Year`];
 const BAR_HEIGHT = 50;
 
 const getGenres = (movies) => {
-  return movies.reduce((acc, {genres}) => {
+  return movies.reduce((acc, {filmInfo: {genre}}) => {
     /* Пробегает по всем жанрам, к которым относится фильм. Если жанра нет в аккумуляторе, добавляет его */
-    [...genres].forEach((it) => {
+    [...genre].forEach((it) => {
       if (!acc.includes(it)) {
         acc.push(it);
       }
@@ -20,7 +20,7 @@ const getGenres = (movies) => {
 };
 
 /* Подсчитывает количество фильмов с переданным жанром */
-const getGenreValue = (genre, movies) => movies.filter(({genres: movieGenres}) => [...movieGenres].includes(genre)).length;
+const getGenreValue = (genre, movies) => movies.filter(({filmInfo: {genre: movieGenres}}) => [...movieGenres].includes(genre)).length;
 
 const getMoviesByDateRange = (movies, period) => {
   let dateFrom;
@@ -44,14 +44,14 @@ const getMoviesByDateRange = (movies, period) => {
   }
 
   return movies.filter((movie) => {
-    const watchingDate = movie.watchingDate;
+    const watchingDate = new Date(movie.userDetails.watchingDate);
 
     return dateFrom ? watchingDate >= dateFrom && watchingDate <= new Date() : movie;
   });
 };
 
 const formatTotalRuntime = (movies) => {
-  const totalRuntime = movies.reduce((acc, movie) => acc + movie.runtime, 0);
+  const totalRuntime = movies.reduce((acc, movie) => acc + movie.filmInfo.runtime, 0);
 
   return {
     hoursDuration: Math.floor(moment.duration(totalRuntime, `minutes`).asHours()),

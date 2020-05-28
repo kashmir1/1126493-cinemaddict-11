@@ -17,10 +17,10 @@ const getSortedMovies = (movies, sortType) => {
 
   switch (sortType) {
     case SortType.DATE:
-      sortedMovies = [...movies].sort((a, b) => b.year - a.year);
+      sortedMovies = [...movies].sort((a, b) => b.filmInfo.release.date - a.filmInfo.release.date);
       break;
     case SortType.RATE_DOWN:
-      sortedMovies = [...movies].sort((a, b) => b.rate - a.rate);
+      sortedMovies = [...movies].sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
       break;
     default:
       sortedMovies = [...movies];
@@ -127,11 +127,20 @@ export default class PageController {
     this._showMoreButtonComponent.setClickHandler(this._onShowMoreButtonClick);
   }
 
+  _updateMovie(movie) {
+    this._sortedMovies = this._sortedMovies.map((it) => {
+      if (it.id === movie.id) {
+        return movie;
+      }
+      return it;
+    });
+  }
+
   _renderTopRatedMovies() {
     const moviesElement = this._container.querySelector(`.films`);
     const topRatedMovies = this._moviesModel.getAllMovies()
-      .filter((movie) => movie.rate)
-      .sort((a, b) => b.rate - a.rate)
+      .filter((movie) => movie.filmInfo.totalRating)
+      .sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating)
       .slice(0, MOVIE_LIST_EXTRA_QUANTITY);
 
     if (topRatedMovies.length) {
@@ -172,7 +181,6 @@ export default class PageController {
       const isSuccess = this._moviesModel.removeComment(commentId, movie);
 
       if (isSuccess) {
-
         /* Находит все карточки, которые необходимо обновить */
         this._showedMovieControllers.concat(this._extraMovieControllers)
           .filter(({id}) => id === movie.id)

@@ -36,25 +36,30 @@ const generateMovie = () => {
 
   return {
     id: String(new Date() + Math.random()),
-    title: movieName,
-    poster: `./images/posters/` + getRandomArrayItem(MOVIE_POSTERS),
-    originalName: movieName,
-    rate: getRandomArrayItem(RATES),
-    year: new Date(),
-    director: getRandomArrayItem(DIRECTORS),
-    writers,
-    actors: getRandomArrayItem(ACTORS),
-    dateRelease: new Date(),
-    runtime: getRandomInteger(45, 275),
-    country: getRandomArrayItem(COUNTRIES),
-    description,
-    genres: getGenre(),
-    ageRate: getRandomArrayItem(AGE_RATES),
     comments: generateComments(getRandomInteger(1, 5)),
-    favorite: Math.random() > 0.5,
-    watchlist: Math.random() > 0.5,
-    alreadyWatched: Math.random() > 0.5,
-    watchingDate: getRandomDate(),
+    filmInfo: {
+      title: movieName,
+      alternativeTitle: movieName,
+      totalRating: getRandomArrayItem(RATES),
+      poster: `./images/posters/` + getRandomArrayItem(MOVIE_POSTERS),
+      ageRating: getRandomArrayItem(AGE_RATES),
+      director: getRandomArrayItem(DIRECTORS),
+      writers,
+      actors: getRandomArrayItem(ACTORS),
+      release: {
+        date: getRandomDate(),
+        releaseCountry: getRandomArrayItem(COUNTRIES),
+      },
+      runtime: getRandomInteger(45, 275),
+      genre: getGenre(),
+      description,
+    },
+    userDetails: {
+      favorite: Math.random() > 0.5,
+      watchlist: Math.random() > 0.5,
+      alreadyWatched: Math.random() > 0.5,
+      watchingDate: getRandomDate(),
+    }
   };
 };
 
