@@ -30,11 +30,11 @@ const createCommentsMarkup = (comments) => {
 
 
 const createGenresMarkup = (genres) => {
-  return genres.map((genre) => {
-    return (
-      `<span class="film-details__genre">${genre}</span>`
-    );
-  }).join(`\n`);
+  return [...genres]
+    .reduce((acc, genre, i) => {
+      const newline = i === 0 ? `` : `\n`;
+      return `${acc}${newline}<span class="film-details__genre">${genre}</span>`;
+    }, ``);
 };
 
 const createSelectedEmojiMarkup = (emoji) => `<img src="images/emoji/${emoji}.png" width="55" height="55" alt="emoji-${emoji}">`;
@@ -81,7 +81,7 @@ const createMovieDetail = (movie) => {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="${poster}" alt="">
+              <img class="film-details__poster-img" src="./${poster}" alt="">
           <p class="film-details__age">${ageRating}</p>
         </div>
         <div class="film-details__info">

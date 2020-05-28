@@ -1,14 +1,6 @@
 import {formatRuntime, getYear} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
-const createGenreMarkup = (genres) => {
-  return genres.map((genre) => {
-    return (
-      `<span class="film-card__genre">${genre}</span>`
-    );
-  }).join(``);
-};
-
 const createMovieCard = (movie) => {
 
   // создаем моки для карточки
@@ -16,7 +8,7 @@ const createMovieCard = (movie) => {
   const {title, totalRating, poster, release: {date}, runtime, genre, description} = movie.filmInfo;
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;
   const runTime = formatRuntime(runtime);
-  const genreMarkup = createGenreMarkup(genre);
+  const genreList = [...genre].join(`, `);
   const movieYear = getYear(date);
 
   const alreadyWatchListClass = watchlist ? `film-card__controls-item--active` : ``;
@@ -30,9 +22,9 @@ const createMovieCard = (movie) => {
           <p class="film-card__info">
             <span class="film-card__year">${movieYear}</span>
             <span class="film-card__duration">${runTime}</span>
-            ${genreMarkup}
+           <span class="film-card__genre">${genreList}</span>
           </p>
-          <img src="${poster}" alt="" class="film-card__poster">
+            <img src="./${poster}" alt="" class="film-card__poster">
           <p class="film-card__description">${description}</p>
           <a class="film-card__comments">${comments.length} comments</a>
           <form class="film-card__controls">
