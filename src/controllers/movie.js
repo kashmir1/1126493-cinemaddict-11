@@ -145,24 +145,29 @@ export default class MovieController {
   }
 
   _onFavoritesChange(movie) {
-    const newMovie = MovieModel.clone(movie);
-    newMovie.userDetails.favorite = !movie.userDetails.favorite;
-
-    this._onDataChange(movie, newMovie);
+    this._onDataChange(movie, Object.assign({}, movie, {
+      userDetails: {
+        watchlist: movie.userDetails.watchlist,
+        alreadyWatched: movie.userDetails.alreadyWatched,
+        watchingDate: movie.userDetails.watchingDate,
+        favorite: !movie.userDetails.favorite
+      }
+    }));
   }
 
   _onAddNewComment(evt) {
     const isCombination = evt.key === `Enter` && (evt.ctrlKey || evt.metaKey);
 
     if (isCombination) {
-      const data = this._movieDetailsComponent.getData();
+      const {comment, movieId} = this._movieDetailsComponent.getData();
+
 
       /* Если не заполнен текст комментария либо не выбрана эмоция, метод завершает работу */
-      if (!data) {
+      if (Object.values(comment).some((prop) => !prop)) {
         return;
       }
 
-      this._onDataChange(null, data);
+      this._onDataChange(null, {comment, movieId});
     }
   }
 }
