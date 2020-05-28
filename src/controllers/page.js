@@ -40,9 +40,10 @@ const renderMovies = (movieListElement, movies, onDataChange, onViewChange) => {
 };
 
 export default class PageController {
-  constructor(container, moviesModel) {
+  constructor(container, moviesModel, api) {
     this._container = container;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._showedMovieControllers = [];
     /* Сохраняет контроллеры фильмов из дополнительных блоков отдельно, чтобы при сортировки и сбросе _showedMovieControllers они не удалялись */
@@ -115,6 +116,15 @@ export default class PageController {
     this._renderShowMoreButton();
   }
 
+  _updateMovie(movie) {
+    this._sortedMovies = this._sortedMovies.map((it) => {
+      if (it.id === movie.id) {
+        return movie;
+      }
+      return it;
+    });
+  }
+
   _renderShowMoreButton() {
     remove(this._showMoreButtonComponent);
 
@@ -125,15 +135,6 @@ export default class PageController {
     const movieListElement = moviesElement.querySelector(`.films-list`);
     render(movieListElement, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
     this._showMoreButtonComponent.setClickHandler(this._onShowMoreButtonClick);
-  }
-
-  _updateMovie(movie) {
-    this._sortedMovies = this._sortedMovies.map((it) => {
-      if (it.id === movie.id) {
-        return movie;
-      }
-      return it;
-    });
   }
 
   _renderTopRatedMovies() {
@@ -202,15 +203,18 @@ export default class PageController {
         this._renderMostCommentedMovies();
       }
     } else {
-      const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
+      this._api.updateMovie(oldData.id, newData)
+        .then((movieModel) => {
+          const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
 
-      if (isSuccess) {
-        this._updateMovies();
-        /* Находит все карточки, которые необходимо обновить */
-        this._showedMovieControllers.concat(this._extraMovieControllers)
-          .filter(({id}) => id === oldData.id)
-          .forEach((movieController) => movieController.render(newData));
-      }
+          if (isSuccess) {
+            this._updateMovie(movieModel);
+            /* Находит все карточки, которые необходимо обновить */
+            this._showedMovieControllers.concat(this._extraMovieControllers)
+              .filter(({id}) => id === oldData.id)
+              .forEach((movieController) => movieController.render(movieModel));
+          }
+        });
     }
   }
 

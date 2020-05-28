@@ -10,7 +10,9 @@ import API from './api.js';
 
 import {render, RenderPosition} from "./utils/render";
 const AUTHORIZATION = `Basic 21337`;
-const api = new API(AUTHORIZATION);
+const END_POINT = `https://11.ecmascript.pages.academy/cinemaddict`;
+
+const api = new API(END_POINT, AUTHORIZATION);
 const moviesModel = new MoviesModel();
 
 const headerElem = document.querySelector(`.header`);
@@ -31,7 +33,7 @@ api.getMovies()
 
     const footerElement = document.querySelector(`.footer`);
     const footerStatisticsElement = footerElement.querySelector(`.footer__statistics`);
-    const pageController = new PageController(mainElem, moviesModel);
+    const pageController = new PageController(mainElem, moviesModel, api);
 
 
     render(footerStatisticsElement, new FooterStatisticsComponent(movies.length), RenderPosition.BEFOREEND);

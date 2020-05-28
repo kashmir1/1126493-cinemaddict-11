@@ -81,7 +81,7 @@ const createMovieDetail = (movie) => {
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
               <img class="film-details__poster-img" src="./${poster}" alt="">
-          <p class="film-details__age">${ageRating}</p>
+          <p class="film-details__age">${ageRating}+</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
