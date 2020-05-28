@@ -56,26 +56,14 @@ const createReactionsMarkup = (emojis) => {
 const createMovieDetail = (movie) => {
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;
   const {
-    title,
-    poster,
-    originalName,
-    rate,
-    description,
-    director,
-    writers,
-    actors,
-    dateRelease,
-    runtime,
-    country,
-    genres,
-    ageRate,
     comments
   } = movie;
 
-  const release = getDate(dateRelease);
+  const {title, totalRating, alternativeTitle, poster, ageRating, director, writers, actors, release: {date, releaseCountry}, runtime, genre, description} = movie.filmInfo;
+  const release = getDate(date);
   const runTime = formatRuntime(runtime);
   const commentsMarkup = createCommentsMarkup(comments);
-  const genresMarkup = createGenresMarkup(genres);
+  const genresMarkup = createGenresMarkup(genre);
 
   const isWatchlist = watchlist ? `checked` : ``;
   const isFavorite = favorite ? `checked` : ``;
@@ -94,16 +82,16 @@ const createMovieDetail = (movie) => {
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="${poster}" alt="">
-          <p class="film-details__age">${ageRate}</p>
+          <p class="film-details__age">${ageRating}</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
               <h3 class="film-details__title">${title}</h3>
-              <p class="film-details__title-original">Original: ${originalName}</p>
+              <p class="film-details__title-original">Original: ${alternativeTitle}</p>
             </div>
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${rate}</p>
+              <p class="film-details__total-rating">${totalRating}</p>
             </div>
           </div>
           <table class="film-details__table">
@@ -129,7 +117,7 @@ const createMovieDetail = (movie) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">${country}</td>
+              <td class="film-details__cell">${releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
