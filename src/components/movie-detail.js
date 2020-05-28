@@ -55,9 +55,7 @@ const createReactionsMarkup = (emojis) => {
 
 const createMovieDetail = (movie) => {
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;
-  const {
-    comments
-  } = movie;
+  const {comments} = movie;
 
   const {title, totalRating, alternativeTitle, poster, ageRating, director, writers, actors, release: {date, releaseCountry}, runtime, genre, description} = movie.filmInfo;
   const release = getDate(date);
@@ -70,7 +68,8 @@ const createMovieDetail = (movie) => {
   const isAlreadyWatched = alreadyWatched ? `checked` : ``;
 
   const reactionsMarkup = createReactionsMarkup(SMILES);
-
+  const formattedWriters = [...writers].join(`, `);
+  const formattedActors = [...actors].join(`, `);
 
   return (
     `<section class="film-details">
@@ -101,11 +100,11 @@ const createMovieDetail = (movie) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${writers}</td>
+              <td class="film-details__cell">${formattedWriters}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${actors}</td>
+              <td class="film-details__cell">${formattedActors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
