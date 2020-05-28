@@ -12,7 +12,8 @@ const createGenreMarkup = (genres) => {
 const createMovieCard = (movie) => {
 
   // создаем моки для карточки
-  const {title, poster, description, rate, year, runtime, genres, comments, watchlist, favorite, alreadyWatched} = movie;
+  const {title, poster, description, rate, year, runtime, genres, comments} = movie;
+  const {watchlist, favorite, alreadyWatched} = movie.userDetails;
   const runTime = formatRuntime(runtime);
   const genreMarkup = createGenreMarkup(genres);
   const movieYear = getYear(year);

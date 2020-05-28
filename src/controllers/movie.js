@@ -128,19 +128,37 @@ export default class MovieController {
 
   _onWatchlistChange(movie) {
     this._onDataChange(movie, Object.assign({}, movie, {
-      watchlist: !movie.watchlist
+      userDetails: {
+        watchlist: !movie.userDetails.watchlist,
+        alreadyWatched: movie.userDetails.alreadyWatched,
+        watchingDate: movie.userDetails.watchingDate,
+        favorite: movie.userDetails.favorite
+      }
     }));
   }
 
   _onAlreadyWatchedChange(movie) {
+    const alreadyWatched = !movie.userDetails.alreadyWatched;
+    const watchingDate = alreadyWatched ? Date.now() : null;
+
     this._onDataChange(movie, Object.assign({}, movie, {
-      alreadyWatched: !movie.alreadyWatched
+      userDetails: {
+        watchlist: movie.userDetails.watchlist,
+        alreadyWatched,
+        watchingDate,
+        favorite: movie.userDetails.favorite
+      }
     }));
   }
 
   _onFavoritesChange(movie) {
     this._onDataChange(movie, Object.assign({}, movie, {
-      favorite: !movie.favorite
+      userDetails: {
+        watchlist: movie.userDetails.watchlist,
+        alreadyWatched: movie.userDetails.alreadyWatched,
+        watchingDate: movie.userDetails.watchingDate,
+        favorite: !movie.userDetails.favorite
+      }
     }));
   }
 

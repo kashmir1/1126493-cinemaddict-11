@@ -17,7 +17,7 @@ const mainElem = document.querySelector(`.main`);
 
 const movies = generateMovies(MOVIE_CARD_QUANTITY);
 const moviesModel = new MoviesModel();
-const watchedMovies = movies.filter(({alreadyWatched}) => alreadyWatched);
+const watchedMovies = movies.filter(({userDetails: {alreadyWatched}}) => alreadyWatched);
 
 moviesModel.setMovies(movies);
 
@@ -43,5 +43,5 @@ statisticsComponent.hide();
 
 filterController.setOnStatsClick(() => {
   pageController.hide();
-  statisticsComponent.show(moviesModel.getAllMovies().filter(({alreadyWatched}) => alreadyWatched));
+  statisticsComponent.show(moviesModel.getAllMovies().filter(({userDetails: {alreadyWatched}}) => alreadyWatched));
 });

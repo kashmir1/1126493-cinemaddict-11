@@ -54,7 +54,7 @@ const createReactionsMarkup = (emojis) => {
 };
 
 const createMovieDetail = (movie) => {
-
+  const {watchlist, favorite, alreadyWatched} = movie.userDetails;
   const {
     title,
     poster,
@@ -69,10 +69,7 @@ const createMovieDetail = (movie) => {
     country,
     genres,
     ageRate,
-    comments,
-    watchlist,
-    favorite,
-    alreadyWatched
+    comments
   } = movie;
 
   const release = getDate(dateRelease);
