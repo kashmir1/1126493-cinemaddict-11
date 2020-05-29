@@ -1,6 +1,6 @@
 import SiteMenuComponent from './../components/site-menu.js';
 import {getMoviesByFilter} from './../utils/filter.js';
-import {render, replace, RenderPosition} from './../utils/render.js';
+import {render, replace} from './../utils/render.js';
 import {FilterType} from "../consts";
 
 export default class Filter {
@@ -42,7 +42,7 @@ export default class Filter {
     if (oldComponent) {
       replace(oldComponent, this._siteMenuComponent);
     } else {
-      render(container, this._siteMenuComponent, RenderPosition.BEFOREEND);
+      render(container, this._siteMenuComponent);
     }
   }
 

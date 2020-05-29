@@ -1,15 +1,30 @@
 import {formatRuntime, getYear} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
-const createMovieCard = (movie) => {
+const DESCRIPTION_MAX_LENGTH = 140;
+const DESCRIPTION_END_CHECK = /[\s.,]$/;
 
-  // создаем моки для карточки
+
+const formatDescription = (desc) => {
+  let formattedDesc = desc;
+  if (DESCRIPTION_END_CHECK.test(formattedDesc)) {
+    formattedDesc = formatDescription(formattedDesc.replace(DESCRIPTION_END_CHECK, ``));
+  }
+
+  return formattedDesc;
+};
+
+const createMovieCard = (movie) => {
   const {comments} = movie;
   const {title, totalRating, poster, release: {date}, runtime, genre, description} = movie.filmInfo;
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;
   const runTime = formatRuntime(runtime);
   const genreList = [...genre].join(`, `);
   const movieYear = getYear(date);
+
+  const isDescriptionExcess = description.length > DESCRIPTION_MAX_LENGTH;
+  const formattedDescription = isDescriptionExcess ? `${formatDescription(description.slice(0, DESCRIPTION_MAX_LENGTH - 1))}…` : description;
+
 
   const alreadyWatchListClass = watchlist ? `film-card__controls-item--active` : ``;
   const favoriteClass = favorite ? `film-card__controls-item--active` : ``;
@@ -25,7 +40,7 @@ const createMovieCard = (movie) => {
            <span class="film-card__genre">${genreList}</span>
           </p>
             <img src="./${poster}" alt="" class="film-card__poster">
-          <p class="film-card__description">${description}</p>
+          <p class="film-card__description">${formattedDescription}</p>
           <a class="film-card__comments">${comments.length} comments</a>
           <form class="film-card__controls">
             <button type="button" class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${alreadyWatchListClass}">Add to watchlist</button>

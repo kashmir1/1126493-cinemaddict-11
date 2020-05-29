@@ -21,7 +21,6 @@ const createUserRankTemplate = (count) => {
   );
 };
 
-// Класс звание пользователя
 export default class UserRank extends AbstractComponent {
   constructor(count) {
     super();

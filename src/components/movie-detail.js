@@ -1,9 +1,8 @@
-
 import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractComponent from './abstract-component.js';
 import {SMILES} from "../consts";
 import {encode} from 'he';
-
+const FORMAT_DATE_OPTION = `comment`;
 
 const createCommentsMarkup = (comments) => {
   return comments
@@ -18,7 +17,7 @@ const createCommentsMarkup = (comments) => {
             <p class="film-details__comment-text">${comment}</p>
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${author}</span>
-              <span class="film-details__comment-day">${getFormatDateTime(date, `comment`)}</span>
+              <span class="film-details__comment-day">${getFormatDateTime(date, FORMAT_DATE_OPTION)}</span>
               <button class="film-details__comment-delete">Delete</button>
             </p>
           </div>
@@ -55,9 +54,7 @@ const createReactionsMarkup = (emojis) => {
 
 const createMovieDetail = (movie) => {
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;
-  const {
-    comments
-  } = movie;
+  const {comments} = movie;
 
   const {title, totalRating, alternativeTitle, poster, ageRating, director, writers, actors, release: {date, releaseCountry}, runtime, genre, description} = movie.filmInfo;
   const release = getDate(date);
@@ -70,7 +67,8 @@ const createMovieDetail = (movie) => {
   const isAlreadyWatched = alreadyWatched ? `checked` : ``;
 
   const reactionsMarkup = createReactionsMarkup(SMILES);
-
+  const formattedWriters = [...writers].join(`, `);
+  const formattedActors = [...actors].join(`, `);
 
   return (
     `<section class="film-details">
@@ -82,7 +80,7 @@ const createMovieDetail = (movie) => {
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
               <img class="film-details__poster-img" src="./${poster}" alt="">
-          <p class="film-details__age">${ageRating}</p>
+          <p class="film-details__age">${ageRating}+</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
@@ -101,11 +99,11 @@ const createMovieDetail = (movie) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${writers}</td>
+              <td class="film-details__cell">${formattedWriters}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${actors}</td>
+              <td class="film-details__cell">${formattedActors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
@@ -120,7 +118,7 @@ const createMovieDetail = (movie) => {
               <td class="film-details__cell">${releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">Genres</td>
+              <td class="film-details__term">${genre.size === 1 ? `Genre` : `Genres`}</td>
               <td class="film-details__cell">
              ${genresMarkup}
                 </td>
@@ -164,9 +162,8 @@ const createMovieDetail = (movie) => {
 
 const parseFormData = (formData) => {
   return {
-    id: String(new Date() + Math.random()),
     comment: encode(formData.get(`comment`)),
-    date: Date.now(),
+    date: new Date().toISOString(),
     emotion: formData.get(`comment-emoji`),
     author: `User`
   };
@@ -179,12 +176,6 @@ export default class MovieDetails extends AbstractComponent {
     this._movie = movie;
     this.getData = this.getData.bind(this);
   }
-
-
-  rerender() {
-    super.rerender();
-  }
-
   getTemplate() {
     return createMovieDetail(this._movie);
   }
@@ -192,49 +183,33 @@ export default class MovieDetails extends AbstractComponent {
   setPopupCloseButtonClick(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
-
-    this._commentEmoji = null;
-    this._setPopupCloseButtonClickHandler = handler;
-  }
-
-  removePopupCloseButtonClick(handler) {
-    this.getElement().querySelector(`.film-details__close-btn`).removeEventListener(`click`, handler);
   }
 
   setOnAddToWatchlistClick(handler) {
     this.getElement().querySelector(`#watchlist`)
       .addEventListener(`click`, handler);
-
-    this._setAddToWatchlistClickHandler = handler;
   }
 
   setOnAlreadyWatchedClick(handler) {
     this.getElement().querySelector(`#watched`)
       .addEventListener(`click`, handler);
-
-    this._alreadyWatchedClickHandler = handler;
   }
 
   setOnAddToFavoritesClick(handler) {
     this.getElement().querySelector(`#favorite`)
       .addEventListener(`click`, handler);
-
-    this._addToFavoritesClickHandler = handler;
   }
 
   setOnCommentDeleteClick(handler) {
     this.getElement().querySelectorAll(`.film-details__comment-delete`)
       .forEach((button) => button.addEventListener(`click`, (evt) => {
         evt.preventDefault();
+        button.disabled = true;
+        button.textContent = `Deleting...`;
+        const commentId = button.closest(`.film-details__comment`).dataset.id;
 
-        const commentElement = button.closest(`.film-details__comment`);
-        const commentId = commentElement.dataset.id;
-
-        commentElement.remove();
-        handler(commentId);
+        handler(commentId, button);
       }));
-
-    this._commentDeleteClickHandler = handler;
   }
 
   _subscribeOnEvents() {
@@ -253,8 +228,10 @@ export default class MovieDetails extends AbstractComponent {
     const formData = new FormData(form);
 
     return {
+      /* Элементы, которые нужно заблокировать при отправке нового комментария */
+      formElements: form.querySelectorAll(`input, textarea, button`),
       comment: parseFormData(formData),
-      movie: this._movie
+      movieId: this._movie.id
     };
   }
 }
