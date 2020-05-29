@@ -2,8 +2,6 @@ import {formatRuntime, getYear} from "../utils/common";
 import AbstractComponent from "./abstract-component";
 
 const createMovieCard = (movie) => {
-
-  // создаем моки для карточки
   const {comments} = movie;
   const {title, totalRating, poster, release: {date}, runtime, genre, description} = movie.filmInfo;
   const {watchlist, favorite, alreadyWatched} = movie.userDetails;

@@ -2,7 +2,6 @@ const MOVIE_LIST_EXTRA_QUANTITY = 2;
 const SHOWING_MOVIE_COUNT_ON_START = 5;
 const SHOWING_MOVIE_COUNT_BY_BUTTON = 5;
 
-import MovieListComponent from "../components/movies-list";
 import MovieController from "./movie";
 import {remove, render, RenderPosition} from "../utils/render";
 import NoMoviesComponent from "../components/no-movies";
@@ -46,7 +45,6 @@ export default class PageController {
     this._api = api;
 
     this._showedMovieControllers = [];
-    /* Сохраняет контроллеры фильмов из дополнительных блоков отдельно, чтобы при сортировки и сбросе _showedMovieControllers они не удалялись */
     this._extraMovieControllers = [];
     this._showingMoviesCount = SHOWING_MOVIE_COUNT_ON_START;
     this._sortingComponent = new SortListComponent();
@@ -163,7 +161,6 @@ export default class PageController {
   }
 
   _renderMostCommentedMovies() {
-    /* Так как блок Most commented должен обновлятся при взаимодействии пользователя с комментариями, при рендеринге необходимо удалять блок, если он был отрисован ранее */
     const mostCommentedTitleElement = [...this._container.getElement().querySelectorAll(`.films-list__title`)]
       .find((listTitle) => listTitle.textContent.includes(`Most commented`));
 
@@ -184,7 +181,6 @@ export default class PageController {
   }
 
   _onDataChange(oldData, newData) {
-    /* newData === null в случае, когда необходимо удалить комментарий */
     if (newData === null) {
       const {movie, commentId, button} = oldData;
       this._api.deleteComment(commentId)
@@ -207,7 +203,6 @@ export default class PageController {
             .filter(({id}) => id === movie.id)
             .forEach((movieController) => movieController.shake());
         });
-      /* oldData === null в случае, когда необходимо добавить комментарий */
     } else if (oldData === null) {
       const {movieId, comment, onAddNewComment} = newData;
       this._api.addComment(movieId, comment)

@@ -1,7 +1,7 @@
 import MovieCardComponent from "../components/movie-card";
 import MovieDetailComponent from "../components/movie-detail";
 import MovieModel from './../models/movie.js';
-import {render, remove, replace, RenderPosition} from "../utils/render";
+import {render, remove, replace} from "../utils/render";
 
 const SHAKE_ANIMATION_TIMEOUT = 600;
 

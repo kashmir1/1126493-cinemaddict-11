@@ -1,6 +1,6 @@
 import SiteMenuComponent from './../components/site-menu.js';
 import {getMoviesByFilter} from './../utils/filter.js';
-import {render, replace, RenderPosition} from './../utils/render.js';
+import {render, replace} from './../utils/render.js';
 import {FilterType} from "../consts";
 
 export default class Filter {

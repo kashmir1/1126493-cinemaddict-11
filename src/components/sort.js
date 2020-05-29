@@ -20,16 +20,10 @@ const createSortList = () => {
 export default class SortList extends AbstractComponent {
   constructor() {
     super();
-
-    this._currenSortType = SortType.DEFAULT;
   }
 
   getTemplate() {
     return createSortList();
-  }
-
-  getSortType() {
-    return this._currenSortType;
   }
 
   setOnSortTypeChange(handler) {

@@ -177,12 +177,6 @@ export default class MovieDetails extends AbstractComponent {
     this._movie = movie;
     this.getData = this.getData.bind(this);
   }
-
-
-  rerender() {
-    super.rerender();
-  }
-
   getTemplate() {
     return createMovieDetail(this._movie);
   }
@@ -190,34 +184,21 @@ export default class MovieDetails extends AbstractComponent {
   setPopupCloseButtonClick(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
-
-    this._commentEmoji = null;
-    this._setPopupCloseButtonClickHandler = handler;
-  }
-
-  removePopupCloseButtonClick(handler) {
-    this.getElement().querySelector(`.film-details__close-btn`).removeEventListener(`click`, handler);
   }
 
   setOnAddToWatchlistClick(handler) {
     this.getElement().querySelector(`#watchlist`)
       .addEventListener(`click`, handler);
-
-    this._setAddToWatchlistClickHandler = handler;
   }
 
   setOnAlreadyWatchedClick(handler) {
     this.getElement().querySelector(`#watched`)
       .addEventListener(`click`, handler);
-
-    this._alreadyWatchedClickHandler = handler;
   }
 
   setOnAddToFavoritesClick(handler) {
     this.getElement().querySelector(`#favorite`)
       .addEventListener(`click`, handler);
-
-    this._addToFavoritesClickHandler = handler;
   }
 
   setOnCommentDeleteClick(handler) {
@@ -230,8 +211,6 @@ export default class MovieDetails extends AbstractComponent {
 
         handler(commentId, button);
       }));
-
-    this._commentDeleteClickHandler = handler;
   }
 
   _subscribeOnEvents() {
