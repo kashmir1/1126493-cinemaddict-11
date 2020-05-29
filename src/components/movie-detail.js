@@ -120,7 +120,7 @@ const createMovieDetail = (movie) => {
               <td class="film-details__cell">${releaseCountry}</td>
             </tr>
             <tr class="film-details__row">
-              <td class="film-details__term">Genres</td>
+              <td class="film-details__term">${genre.size === 1 ? `Genre` : `Genres`}</td>
               <td class="film-details__cell">
              ${genresMarkup}
                 </td>
