@@ -31,7 +31,7 @@ export default class MovieController {
 
   render(movie) {
     this.id = movie.id;
-
+    /* Сохраняют состояния компонентов */
     const oldMovieCardComponent = this._movieCardComponent;
     const oldMovieDetailsComponent = this._movieDetailsComponent;
 
@@ -45,7 +45,7 @@ export default class MovieController {
       replace(oldMovieDetailsComponent, this._movieDetailsComponent);
       this._subscribeOnPopupEvents(movie);
     } else {
-      render(this._container, this._movieCardComponent, RenderPosition.BEFOREEND);
+      render(this._container, this._movieCardComponent);
     }
   }
 
@@ -96,7 +96,7 @@ export default class MovieController {
     /* Добавляет обработчик клика, вызывающий показ попапа с подробной информацией о фильме */
     this._movieCardComponent.setOnDetailsOpenersClick(() => {
       this._onViewChange();
-      render(document.body, this._movieDetailsComponent, RenderPosition.BEFOREEND);
+      render(document.body, this._movieDetailsComponent);
       this._subscribeOnPopupEvents(movie);
       document.addEventListener(`keydown`, this._handlePopupKeydown);
       document.addEventListener(`keydown`, this._onAddNewComment);

@@ -42,7 +42,7 @@ export default class Filter {
     if (oldComponent) {
       replace(oldComponent, this._siteMenuComponent);
     } else {
-      render(container, this._siteMenuComponent, RenderPosition.BEFOREEND);
+      render(container, this._siteMenuComponent);
     }
   }
 

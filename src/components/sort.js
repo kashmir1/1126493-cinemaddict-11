@@ -55,3 +55,4 @@ export default class SortList extends AbstractComponent {
     });
   }
 }
+
