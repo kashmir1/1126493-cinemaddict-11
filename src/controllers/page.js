@@ -2,6 +2,14 @@ const MOVIE_LIST_EXTRA_QUANTITY = 2;
 const SHOWING_MOVIE_COUNT_ON_START = 5;
 const SHOWING_MOVIE_COUNT_BY_BUTTON = 5;
 
+const ExtraBlock = {
+  TOP_RATED: `Top rated`,
+  MOST_COMMENTED: `Most commented`
+};
+
+const COMMENT_ELEMENT = `TEXTAREA`;
+const RED_BORDER = `0 0 0 3px red`;
+
 import MovieController from "./movie";
 import {remove, render, RenderPosition} from "../utils/render";
 import NoMoviesComponent from "../components/no-movies";
@@ -10,7 +18,6 @@ import SortListComponent, {SortType} from "../components/sort";
 import ExtraMovieListComponent from './../components/extra-movies';
 
 
-// Логика сортировки
 const getSortedMovies = (movies, sortType) => {
   let sortedMovies = [];
 
@@ -154,7 +161,7 @@ export default class PageController {
       .slice(0, MOVIE_LIST_EXTRA_QUANTITY);
 
     if (topRatedMovies.length) {
-      const extraMovieListComponent = new ExtraMovieListComponent(`Top rated`);
+      const extraMovieListComponent = new ExtraMovieListComponent(ExtraBlock.TOP_RATED);
       render(this._container.getElement(), extraMovieListComponent);
       this._renderMovies(topRatedMovies, extraMovieListComponent.getElement().querySelector(`.films-list__container`));
     }
@@ -162,7 +169,7 @@ export default class PageController {
 
   _renderMostCommentedMovies() {
     const mostCommentedTitleElement = [...this._container.getElement().querySelectorAll(`.films-list__title`)]
-      .find((listTitle) => listTitle.textContent.includes(`Most commented`));
+      .find((listTitle) => listTitle.textContent.includes(ExtraBlock.MOST_COMMENTED));
 
     if (mostCommentedTitleElement) {
       mostCommentedTitleElement.parentElement.remove();
@@ -174,7 +181,7 @@ export default class PageController {
       .slice(0, MOVIE_LIST_EXTRA_QUANTITY);
 
     if (mostCommentedMovies.length) {
-      const extraMovieListComponent = new ExtraMovieListComponent(`Most commented`);
+      const extraMovieListComponent = new ExtraMovieListComponent(ExtraBlock.MOST_COMMENTED);
       render(this._container.getElement(), extraMovieListComponent);
       this._renderMovies(mostCommentedMovies, extraMovieListComponent.getElement().querySelector(`.films-list__container`));
     }
@@ -223,8 +230,8 @@ export default class PageController {
           document.querySelectorAll(`[disabled]`).forEach((element) => {
             element.disabled = false;
 
-            if (element.tagName === `TEXTAREA`) {
-              element.style.boxShadow = `0 0 0 3px red`;
+            if (element.tagName === COMMENT_ELEMENT) {
+              element.style.boxShadow = RED_BORDER;
             }
           });
 

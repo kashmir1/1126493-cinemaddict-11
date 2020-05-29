@@ -3,7 +3,8 @@ import {getDate, getFormatDateTime, formatRuntime} from "../utils/common";
 import AbstractComponent from './abstract-component.js';
 import {SMILES} from "../consts";
 import {encode} from 'he';
-// проверка
+const FORMAT_DATE_OPTION = `comment`;
+
 
 const createCommentsMarkup = (comments) => {
   return comments
@@ -18,7 +19,7 @@ const createCommentsMarkup = (comments) => {
             <p class="film-details__comment-text">${comment}</p>
             <p class="film-details__comment-info">
               <span class="film-details__comment-author">${author}</span>
-              <span class="film-details__comment-day">${getFormatDateTime(date, `comment`)}</span>
+              <span class="film-details__comment-day">${getFormatDateTime(date, FORMAT_DATE_OPTION)}</span>
               <button class="film-details__comment-delete">Delete</button>
             </p>
           </div>

@@ -1,10 +1,12 @@
 import UserRankComponent from "./components/rank";
+import FooterStatisticsComponent from "./components/footer-statistics";
 import MovieListComponent from './components/movies-list';
 import MovieCounterComponent from './components/movie-counter.js';
 import PageController from "./controllers/page";
 import MoviesModel from './models/movies.js';
 import FilterController from "./controllers/filter";
 import StatisticsComponent from './components/statistics.js';
+import MovieListPreloaderComponent from "./components/movie-list-preloader";
 import API from './api.js';
 
 import {render, replace} from "./utils/render";
