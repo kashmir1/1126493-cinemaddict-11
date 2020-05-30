@@ -96,7 +96,7 @@ export default class PageController {
 
     const movieListElement = container.querySelector(`.films-list`);
 
-    if (!movies.length) {
+    if (movies.length === 0) {
       render(movieListElement, this._noMoviesComponent);
       return;
     }
@@ -253,6 +253,7 @@ export default class PageController {
             this._showedMovieControllers.concat(this._extraMovieControllers)
               .filter(({id}) => id === oldData.id)
               .forEach((movieController) => movieController.render(movieModel));
+            this._updateMovies();
           }
         })
         .catch(() => {
