@@ -112,7 +112,7 @@ export default class PageController {
 
     const newMovies = renderMovies(movieListElement, movies, this._onDataChange, this._onViewChange);
 
-    if (!movies.length) {
+    if (movies.length === 0) {
       render(movieListElement, this._noMoviesComponent, RenderPosition.BEFORE);
       return;
     } else {
@@ -255,6 +255,7 @@ export default class PageController {
             const movies = this._moviesModel.getMovies();
             if (movies.length === 0) {
               render(movieListElement, this._noMoviesComponent);
+              return;
             } else {
               remove(this._noMoviesComponent);
             }
