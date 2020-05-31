@@ -15,6 +15,7 @@ const Mode = {
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
     this.id = null;
+    this._movie = null;
     this._container = container;
     this._mode = Mode.DEFAULT;
 
@@ -122,7 +123,8 @@ export default class MovieController {
   }
 
   _subscribeOnPopupEvents(movie) {
-    this._movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
+    const movieDetailsComponent = new MovieDetailComponent(movie);
+    movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._movieDetailsComponent.setOnAddToWatchlistClick(() => {

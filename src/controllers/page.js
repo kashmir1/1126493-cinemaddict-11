@@ -248,12 +248,21 @@ export default class PageController {
           const isSuccess = this._moviesModel.updateMovie(oldData.id, movieModel);
 
           if (isSuccess) {
-            this._updateMovie(movieModel);
+
+            this._updateMovies();
+            const container = this._container.getElement();
+            const movieListElement = container.querySelector(`.films-list`);
+            const movies = this._moviesModel.getMovies();
+            if (movies.length === 0) {
+              render(movieListElement, this._noMoviesComponent);
+              return;
+            }
+
+            render(movieListElement, this._noMoviesComponent);
             /* Находит все карточки, которые необходимо обновить */
             this._showedMovieControllers.concat(this._extraMovieControllers)
               .filter(({id}) => id === oldData.id)
               .forEach((movieController) => movieController.render(movieModel));
-            this._updateMovies();
           }
         })
         .catch(() => {
