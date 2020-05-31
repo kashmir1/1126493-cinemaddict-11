@@ -36,7 +36,6 @@ export default class Movies {
     this._movies = [...this._movies.slice(0, index), movie, ...this._movies.slice(index + 1)];
 
     this._callHandlers(this._dataChangeHandlers);
-
     return true;
   }
 

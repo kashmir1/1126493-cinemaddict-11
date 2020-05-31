@@ -60,8 +60,8 @@ export default class MovieController {
 
   destroy() {
     remove(this._movieCardComponent);
-    remove(this._movieDetailsComponent);
-    document.removeEventListener(`keydown`, this._handlePopupKeydown);
+    // remove(this._movieDetailsComponent);
+    // document.removeEventListener(`keydown`, this._handlePopupKeydown);
     document.removeEventListener(`keydown`, this._onAddNewComment);
   }
 
@@ -123,8 +123,9 @@ export default class MovieController {
   }
 
   _subscribeOnPopupEvents(movie) {
-    const movieDetailsComponent = new MovieDetailComponent(movie);
-    movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
+    this._movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
+    // const movieDetailsComponent = new MovieDetailComponent(movie);
+    // movieDetailsComponent.setPopupCloseButtonClick(this._removeMovieDetailsComponent);
     this._movieCardComponent.setPopupKeydown(this._handlePopupKeydown);
 
     this._movieDetailsComponent.setOnAddToWatchlistClick(() => {

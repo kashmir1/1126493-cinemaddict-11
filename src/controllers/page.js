@@ -258,7 +258,6 @@ export default class PageController {
               return;
             }
 
-            render(movieListElement, this._noMoviesComponent);
             /* Находит все карточки, которые необходимо обновить */
             this._showedMovieControllers.concat(this._extraMovieControllers)
               .filter(({id}) => id === oldData.id)
