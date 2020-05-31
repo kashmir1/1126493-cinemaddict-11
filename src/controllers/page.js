@@ -96,7 +96,7 @@ export default class PageController {
 
     const movieListElement = container.querySelector(`.films-list`);
 
-    if (movies.length === 0) {
+    if (!movies.length) {
       render(movieListElement, this._noMoviesComponent);
       return;
     }
@@ -111,6 +111,13 @@ export default class PageController {
     const movieListElement = container || this._container.getElement().querySelector(`.films-list__container`);
 
     const newMovies = renderMovies(movieListElement, movies, this._onDataChange, this._onViewChange);
+
+    if (!movies.length) {
+      render(movieListElement, this._noMoviesComponent, RenderPosition.BEFORE);
+      return;
+    } else {
+      remove(this._noMoviesComponent);
+    }
 
     if (container) {
       this._extraMovieControllers = this._extraMovieControllers.concat(newMovies);
@@ -250,12 +257,14 @@ export default class PageController {
           if (isSuccess) {
 
             this._updateMovies();
+
             const container = this._container.getElement();
             const movieListElement = container.querySelector(`.films-list`);
             const movies = this._moviesModel.getMovies();
             if (movies.length === 0) {
               render(movieListElement, this._noMoviesComponent);
-              return;
+            } else {
+              remove(this._noMoviesComponent);
             }
 
             /* Находит все карточки, которые необходимо обновить */
