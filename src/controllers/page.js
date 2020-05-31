@@ -139,14 +139,6 @@ export default class PageController {
     this._renderShowMoreButton();
   }
 
-  _updateMovie(movie) {
-    this._sortedMovies = this._sortedMovies.map((it) => {
-      if (it.id === movie.id) {
-        return movie;
-      }
-      return it;
-    });
-  }
 
   _renderShowMoreButton() {
     remove(this._showMoreButtonComponent);
