@@ -24,7 +24,6 @@ export default class MovieController {
 
     this._movieCardComponent = null;
     this._movieDetailsComponent = null;
-    this._n
 
     this._removeMovieDetailsComponent = this._removeMovieDetailsComponent.bind(this);
     this._onPopupCloseButtonClick = this._onPopupCloseButtonClick.bind(this);
