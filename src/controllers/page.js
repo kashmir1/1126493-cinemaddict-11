@@ -14,7 +14,7 @@ import MovieController from "./movie";
 import {remove, render, RenderPosition} from "../utils/render";
 import NoMoviesComponent from "../components/no-movies";
 import ShowMoreButtonComponent from "../components/show-more";
-import SortListComponent, {SortType} from "../components/sort";
+import SortListComponent, {SortType} from "../components/sorting";
 import ExtraMovieListComponent from './../components/extra-movies';
 
 

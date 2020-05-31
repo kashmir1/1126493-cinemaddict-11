@@ -1,5 +1,16 @@
 import moment from "moment";
 
+const userRank = {
+  NOVICE: `Novice`,
+  FAN: `Fan`,
+  MOVIE_BUFF: `Movie Buff`,
+};
+
+const watchedMoviesQuantity = {
+  AVERAGE_AMOUNT: 10,
+  MAX_AMOUNT: 20,
+};
+
 export const getFormatDateTime = (date) => {
   return moment(date).format(`YYYY/MM/DD HH:mm`);
 };
@@ -22,11 +33,11 @@ export const formatRuntime = (runtime) => {
 export const formatRank = (watchedMoviesCount) => {
   if (!watchedMoviesCount) {
     return ``;
-  } else if (watchedMoviesCount <= 10) {
-    return `Novice`;
-  } else if (watchedMoviesCount > 10 && watchedMoviesCount <= 20) {
-    return `Fan`;
+  } else if (watchedMoviesCount <= watchedMoviesQuantity.AVERAGE_AMOUNT) {
+    return userRank.NOVICE;
+  } else if (watchedMoviesCount > watchedMoviesCount.AVERAGE_AMOUNT && watchedMoviesCount <= watchedMoviesCount.MAX_AMOUNT) {
+    return userRank.FAN;
   } else {
-    return `Movie Buff`;
+    return userRank.MOVIE_BUFF;
   }
 };

@@ -17,7 +17,7 @@ const createSortList = () => {
 };
 
 // Класс сортировка
-export default class SortList extends AbstractComponent {
+export default class Sorting extends AbstractComponent {
   constructor() {
     super();
   }
